@@ -8,6 +8,8 @@ class CobolExtension {
 	String bin_main_path = 'build/bin/main/cobol'
 	String res_main_path = 'res/main/cobol'
 
+	Boolean free_format = false
+
 	def filetypePattern(){
 		'**/*' + src_file_type
 	}
@@ -61,8 +63,19 @@ class Cobol implements Plugin<Project> {
 					project.file(conf.bin_main_path).mkdirs()
 				}
 				commandLine 'cobc'
-				args = (['-x','-o', conf.absoluteBinMainPath(project), '--free', conf.absoluteSrcMainPath(project)] + list)
+
+				def arguments = []
+				arguments << '-x' // Build executable
+				arguments << '-o'
+				arguments << conf.absoluteBinMainPath(project) // Executable destination path
+				if (conf.free_format){
+					arguments << '--free'
+				}
+				arguments << conf.absoluteSrcMainPath(project)
+				arguments += list // Add all module dependencies
 				workingDir = conf.absoluteSrcMainModulePath(project)
+				args = arguments
+				println args
 			}
 		}
 
