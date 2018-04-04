@@ -42,16 +42,14 @@ class Cobol implements Plugin<Project> {
 		def conf = project.extensions.create('cobol', CobolExtension)
 
 		project.task ('cobolCompile', type:Exec, dependsOn: 'cobolClean') {
-
-			def list = []
-			def tree = project.fileTree(conf.src_main_path).include(conf.filetypePattern())
-			tree.each { File file ->
-				if (!file.path.equals(conf.absoluteSrcMainPath(project))){
-					list << file.path
-				}
-			}
-
 			doFirst {
+				def list = []
+				def tree = project.fileTree(conf.src_main_path).include(conf.filetypePattern())
+				tree.each { File file ->
+					if (!file.absolutePath.equals(conf.absoluteSrcMainPath(project))){
+						list << file.absolutePath
+					}
+				}
 				if (conf.src_main.equals('')) {
 					logger.error('No main file configured!')
 					logger.error('Please specify main file in your build.gradle')
