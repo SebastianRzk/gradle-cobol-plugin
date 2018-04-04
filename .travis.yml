@@ -1,0 +1,14 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+sudo: required
+install: 
+  - sh ci/install_requirements.sh
+
+
+script:
+     - gradle --version
+     - gradle check
+     - sh ci/endToEndTest.sh
