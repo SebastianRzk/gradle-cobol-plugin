@@ -7,7 +7,8 @@ git clone https://github.com/RosesTheN00b/gradle-cobol-plugin-example
 echo "<<<<<<<"
 
 echo ">>>>>>> install test-repo"
-sh ci/install_requirements.sh
+sh gradle-cobol-plugin-example/ci/install_requirements.sh
+echo "<<<<<<< install rest repo"
 
 echo ">>>>>>> create local repo"
 cd ..
@@ -17,7 +18,7 @@ echo "<<<<<<<"
 
 echo ">>>>>>> prepare test-repository"
 rm endToEndTest/gradle-cobol-plugin-example/settings.gradle
-cp ci/local_repo_test_settings.gradle endToEndTest/gradle-cobol-plugin-example/settings.gradle
+cp endToEndTest/gradle-cobol-plugin-example/ci/local_repo_test_settings.gradle endToEndTest/gradle-cobol-plugin-example/settings.gradle
 echo "<<<<<<<"
 
 echo ">>>>>>> exec test"
