@@ -38,10 +38,10 @@ import java.lang.Exception
 class Cobol implements Plugin<Project> {
 
 	void apply(Project project) {
+		def Logger logger = LoggerFactory.getLogger('cobolCompile')
 		def conf = project.extensions.create('cobol', CobolExtension)
 
 		project.task ('cobolCompile', type:Exec, dependsOn: 'cobolClean') {
-			Logger logger = LoggerFactory.getLogger('cobolCompile')
 
 			def list = []
 			def tree = project.fileTree(conf.src_main_path).include(conf.filetypePattern())
@@ -75,7 +75,12 @@ class Cobol implements Plugin<Project> {
 				arguments += list // Add all module dependencies
 				workingDir = conf.absoluteSrcMainModulePath(project)
 				args = arguments
-				println args
+
+				logger.info('Start cobc compile job')
+				logger.info('cobc args:')
+				logger.info(args)
+				logger.info('cobc workingDir')
+				logger.info(workingDir)
 			}
 		}
 
