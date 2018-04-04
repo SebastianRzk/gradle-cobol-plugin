@@ -1,2 +1,2 @@
 set -e
-sudo apt-get install open-cobol gradle
+sudo apt-get install gradle

@@ -6,6 +6,9 @@ cd endToEndTest
 git clone https://github.com/RosesTheN00b/gradle-cobol-plugin-example
 echo "<<<<<<<"
 
+echo ">>>>>>> install test-repo"
+sh ci/install_requirements.sh
+
 echo ">>>>>>> create local repo"
 cd ..
 gradle publish
