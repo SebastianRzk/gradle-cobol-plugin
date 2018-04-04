@@ -59,7 +59,6 @@ class Cobol implements Plugin<Project> {
 					throw new Exception('No main file configured!')
 				}
 				if (!project.file(conf.bin_main_path).exists()){
-					println 'creating dirs'
 					project.file(conf.bin_main_path).mkdirs()
 				}
 				commandLine 'cobc'
@@ -78,9 +77,9 @@ class Cobol implements Plugin<Project> {
 
 				logger.info('Start cobc compile job')
 				logger.info('cobc args:')
-				logger.info(args.join(', ')
+				logger.info(args.toString())
 				logger.info('cobc workingDir')
-				logger.info(workingDir.join(', ')
+				logger.info(workingDir.toString())
 			}
 		}
 
