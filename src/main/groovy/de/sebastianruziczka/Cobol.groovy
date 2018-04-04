@@ -121,6 +121,12 @@ class Cobol implements Plugin<Project> {
 			}
 		}
 
+		project.task ('cobolCheck', dependsOn: ['cobolConfiguration', 'cobolCompile']){
+			doLast {
+				println 'check finished'
+			}
+		}
+
 
 	}
 }
