@@ -78,9 +78,9 @@ class Cobol implements Plugin<Project> {
 
 				logger.info('Start cobc compile job')
 				logger.info('cobc args:')
-				logger.info(args)
+				logger.info(args.join(', ')
 				logger.info('cobc workingDir')
-				logger.info(workingDir)
+				logger.info(workingDir.join(', ')
 			}
 		}
 
