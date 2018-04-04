@@ -68,7 +68,9 @@ class Cobol implements Plugin<Project> {
 				arguments << '-o'
 				arguments << conf.absoluteBinMainPath(project) // Executable destination path
 				if (conf.free_format){
-					arguments << '--free'
+					arguments << '-free'
+				}else{
+					arguments << '-fixed'
 				}
 				arguments << conf.absoluteSrcMainPath(project)
 				arguments += list // Add all module dependencies
