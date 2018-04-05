@@ -44,7 +44,7 @@ And a minimal configuration:
          src_main = 'HelloWorld' // Path to your main file in src/main/cobol
     }
 
-Further configuration can be found [here](/docs/further/configure.md)
+Further configuration can be found [here](/docs/further/configuration.md)
 
 
 ## deep documentation
