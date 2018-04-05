@@ -52,7 +52,7 @@ Run your application with
 
     gradle cobolRun
 
-## deep documentation
+## Deep documentation
 
 [configuration](/docs/further/configuration.md)
 
