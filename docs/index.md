@@ -49,6 +49,6 @@ Further configuration can be found [here](/docs/further/configuration.md)
 
 ## deep documentation
 
-[configuration] (/docs/further/configuration.md)
+[configuration](/docs/further/configuration.md)
 
 
