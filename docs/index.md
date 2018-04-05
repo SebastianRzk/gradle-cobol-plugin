@@ -3,6 +3,8 @@
 
 This project is part of my master thesis.
 
+You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cobol-plugin-example)
+
 This repo is the sourcecode of the gradle-cobol-plugin. A documentation will follow later :-).
 
 
