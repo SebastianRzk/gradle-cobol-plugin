@@ -3,6 +3,5 @@
 
 This project is part of my master thesis.
 
-This repo is the sourcecode of the gradle-cobol-plugin.
+This repo is the sourcecode of the gradle-cobol-plugin. A documentation will follow later :-).
 
-More information can be found on the [Website/Documentation](docs/index.md)
