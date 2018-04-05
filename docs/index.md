@@ -8,7 +8,7 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 This repo is the sourcecode of the gradle-cobol-plugin. A documentation will follow later :-).
 
 
-## Quickstart quide
+## Quickstart guide
 
 ### Install
 
@@ -48,6 +48,9 @@ And a minimal configuration:
 
 Further configuration can be found [here](/docs/further/configuration.md)
 
+Run your application with
+
+    gradle cobolRun
 
 ## deep documentation
 
