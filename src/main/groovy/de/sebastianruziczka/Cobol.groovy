@@ -110,12 +110,13 @@ class Cobol implements Plugin<Project> {
 		project.task ('cobolGradleConfiguration') {
 			doFirst {
 				println '>>> Configured settings:'
-				println conf.dump()
-				println 'Computed paths:'
-				println 'absoluteSrcMainModulePath: ' + conf.absoluteSrcMainModulePath(project)
-				println 'absoluteSrcMainPath: ' + conf.absoluteSrcMainPath(project)
-				println 'absoluteBinMainPath: ' + conf.absoluteBinMainPath(project)
+				println conf.properties.collect{'\t'+it}.join('\n')
+				println '\t###Computed paths:###'
+				println '\tabsoluteSrcMainModulePath: ' + conf.absoluteSrcMainModulePath(project)
+				println '\tabsoluteSrcMainPath: ' + conf.absoluteSrcMainPath(project)
+				println '\tabsoluteBinMainPath: ' + conf.absoluteBinMainPath(project)
 				println '<<<'
+
 			}
 		}
 
