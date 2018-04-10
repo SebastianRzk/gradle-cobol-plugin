@@ -43,7 +43,7 @@ Add to your build.gradle:
 And a minimal configuration:
 
     cobol {
-         src_main = 'HelloWorld' // Path to your main file in src/main/cobol
+         srcMain = 'HelloWorld' // Path to your main file in src/main/cobol
     }
 
 Further configuration can be found [here](/docs/further/configuration.md)
