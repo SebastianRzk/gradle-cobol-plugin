@@ -35,6 +35,8 @@ import org.slf4j.LoggerFactory
 
 import java.lang.Exception
 
+import  org.gradle.util.GradleVersion
+
 class Cobol implements Plugin<Project> {
 
 	void apply(Project project) {
@@ -107,19 +109,24 @@ class Cobol implements Plugin<Project> {
 			args = ['--version']
 		}
 
-		project.task ('cobolGradleConfiguration') {
-			doFirst {
-				println '>>> Configured settings:'
-				println conf.dump()
-				println 'Computed paths:'
-				println 'absoluteSrcMainModulePath: ' + conf.absoluteSrcMainModulePath(project)
-				println 'absoluteSrcMainPath: ' + conf.absoluteSrcMainPath(project)
-				println 'absoluteBinMainPath: ' + conf.absoluteBinMainPath(project)
-				println '<<<'
+		project.task ('cobolGradleVersion'){
+			doLast {
+				GradleVersion gradleVersion = GradleVersion.current()
+				println gradleVersion.properties.collect{'\t'+it}.join('\n')
 			}
 		}
 
-		project.task ('cobolConfiguration', dependsOn: ['cobolCompilerVersion', 'cobolGradleConfiguration']){
+		project.task ('cobolGradleConfiguration') {
+			doFirst {
+				println conf.properties.collect{'\t'+it}.join('\n')
+				println '\t###Computed paths:###'
+				println '\tabsoluteSrcMainModulePath: ' + conf.absoluteSrcMainModulePath(project)
+				println '\tabsoluteSrcMainPath: ' + conf.absoluteSrcMainPath(project)
+				println '\tabsoluteBinMainPath: ' + conf.absoluteBinMainPath(project)
+			}
+		}
+
+		project.task ('cobolConfiguration', dependsOn: ['cobolGradleVersion', 'cobolCompilerVersion', 'cobolGradleConfiguration']){
 			doFirst {
 				println 'Conf'
 			}
