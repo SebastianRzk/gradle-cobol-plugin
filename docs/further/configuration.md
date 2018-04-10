@@ -4,7 +4,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 
 | name | default | other | required |
-| ---- | ------- | ----- | yes |
+| ---- | ------- | ----- | -------- |
 | srcFileType | '.cbl' | e.g. '.CBL' | yes |
 | srcMain | '' | | yes |
 | srcMainPath | 'src/main/cobol' || yes |
