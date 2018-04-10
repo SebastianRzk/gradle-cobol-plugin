@@ -1,41 +1,37 @@
 package de.sebastianruziczka
 
 class CobolExtension {
-	String src_file_type = '.cbl'
-	String src_main = ''
+	String srcFileType = '.cbl'
+	String srcMain = ''
 
-	String src_main_path = 'src/main/cobol'
-	String bin_main_path = 'build/bin/main/cobol'
-	String res_main_path = 'res/main/cobol'
+	String srcMainPath = 'src/main/cobol'
+	String binMainPath = 'build/bin/main/cobol'
+	String resMainPath = 'res/main/cobol'
 
-	Boolean free_format = false
+	String fileFormat = 'fixed'
 
 	def filetypePattern(){
-		'**/*' + src_file_type
+		'**/*' + srcFileType
 	}
 
 	def absoluteSrcMainModulePath(Project project){
-		return project.file(src_main_path + '/' + src_main + src_file_type).getParent()
+		return project.file(srcMainPath + '/' + srcMain + srcFileType).getParent()
 	}
 
 	def absoluteSrcMainPath(Project project){
-		return project.file(src_main_path + '/' + src_main + src_file_type).absolutePath
+		return project.file(srcMainPath + '/' + srcMain + srcFileType).absolutePath
 	}
 
 	def absoluteBinMainPath(Project project){
-		return project.file(bin_main_path + '/' +  src_main).absolutePath
+		return project.file(binMainPath + '/' +  srcMain).absolutePath
 	}
 }
 
 import org.gradle.api.*
 import org.gradle.api.tasks.*
-
+import  org.gradle.util.GradleVersion
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-
-import java.lang.Exception
-
-import  org.gradle.util.GradleVersion
 
 class Cobol implements Plugin<Project> {
 
@@ -46,20 +42,20 @@ class Cobol implements Plugin<Project> {
 		project.task ('cobolCompile', type:Exec, dependsOn: 'cobolClean') {
 			doFirst {
 				def list = []
-				def tree = project.fileTree(conf.src_main_path).include(conf.filetypePattern())
+				def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
 				tree.each { File file ->
 					if (!file.absolutePath.equals(conf.absoluteSrcMainPath(project))){
 						list << file.absolutePath
 					}
 				}
-				if (conf.src_main.equals('')) {
+				if (conf.srcMain.equals('')) {
 					logger.error('No main file configured!')
 					logger.error('Please specify main file in your build.gradle')
 					print conf.dump()
 					throw new Exception('No main file configured!')
 				}
-				if (!project.file(conf.bin_main_path).exists()){
-					project.file(conf.bin_main_path).mkdirs()
+				if (!project.file(conf.binMainPath).exists()){
+					project.file(conf.binMainPath).mkdirs()
 				}
 				commandLine 'cobc'
 
@@ -67,10 +63,8 @@ class Cobol implements Plugin<Project> {
 				arguments << '-x' // Build executable
 				arguments << '-o'
 				arguments << conf.absoluteBinMainPath(project) // Executable destination path
-				if (conf.free_format){
-					arguments << '-free'
-				}else{
-					arguments << '-fixed'
+				if (conf.fileFormat){
+					arguments << '-'+ conf.fileFormat
 				}
 				arguments << conf.absoluteSrcMainPath(project)
 				arguments += list // Add all module dependencies
@@ -85,22 +79,29 @@ class Cobol implements Plugin<Project> {
 			}
 		}
 
-		project.task ('cobolRun', type:Exec, dependsOn: ['cobolCompile', 'cobolCopyRessources']) {
-			commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
-			standardInput = System.in
+		project.task ('cobolRun', type:Exec, dependsOn: [
+			'cobolCompile',
+			'cobolCopyRessources'
+		]) {
+			doFirst {
+				//commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
+				commandLine conf.absoluteBinMainPath(project)
+				println commandLine
+				standardInput = System.in
+			}
 		}
 
 		project.task ('cobolCopyRessources', type: Copy){
 			doFirst {
 				project.file('bin/main/cobol').mkdirs()
 			}
-			from project.file(conf.res_main_path).absolutePath
-			into project.file(conf.bin_main_path).absolutePath
+			from project.file(conf.resMainPath).absolutePath
+			into project.file(conf.binMainPath).absolutePath
 		}
 
 		project.task ('cobolClean', type: Delete){
 			doFirst {
-				delete project.file(conf.bin_main_path).absolutePath
+				delete project.file(conf.binMainPath).absolutePath
 			}
 		}
 
@@ -126,19 +127,17 @@ class Cobol implements Plugin<Project> {
 			}
 		}
 
-		project.task ('cobolConfiguration', dependsOn: ['cobolGradleVersion', 'cobolCompilerVersion', 'cobolGradleConfiguration']){
-			doFirst {
-				println 'Conf'
-			}
-		}
+		project.task ('cobolConfiguration', dependsOn: [
+			'cobolGradleVersion',
+			'cobolCompilerVersion',
+			'cobolGradleConfiguration'
+		]){ doFirst { println 'Conf' } }
 
-		project.task ('cobolCheck', dependsOn: ['cobolConfiguration', 'cobolCompile']){
-			doLast {
-				println 'check finished'
-			}
-		}
+		project.task ('cobolCheck', dependsOn: [
+			'cobolConfiguration',
+			'cobolCompile'
+		]){ doLast { println 'check finished' } }
 
 
 	}
 }
-
