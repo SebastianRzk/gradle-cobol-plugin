@@ -84,8 +84,8 @@ class Cobol implements Plugin<Project> {
 			'cobolCopyRessources'
 		]) {
 			doFirst {
-				//commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
-				commandLine conf.absoluteBinMainPath(project)
+				commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
+				//commandLine conf.absoluteBinMainPath(project)
 				println commandLine
 				standardInput = System.in
 			}
