@@ -10,6 +10,9 @@ class CobolExtension {
 
 	String fileFormat = 'fixed'
 
+	String terminal = 'gnome-terminal'
+	String customTerminal = ''
+
 	def filetypePattern(){
 		'**/*' + srcFileType
 	}
@@ -84,10 +87,22 @@ class Cobol implements Plugin<Project> {
 			'cobolCopyRessources'
 		]) {
 			doFirst {
-				commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
+				standardInput = System.in
+
+				if (!conf.customTerminal.equals('')) {
+					logger.info('Compiling terminal String, replace {path} with actual executable')
+					logger.info('Before:')
+					logger.info(conf.customTerminal)
+					commandLine = conf.terminal.replace('{path}', conf.absoluteBinMainPath(project))
+					logger.info('After:')
+					logger.info(commandLine)
+					return;
+				}else if (conf.terminal.equals('gnome-terminal')) {
+					commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
+				}
+
 				//commandLine conf.absoluteBinMainPath(project)
 				println commandLine
-				standardInput = System.in
 			}
 		}
 
