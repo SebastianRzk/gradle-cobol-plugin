@@ -88,7 +88,6 @@ class Cobol implements Plugin<Project> {
 		]) {
 			doFirst {
 				standardInput = System.in
-
 				if (!conf.customTerminal.equals('')) {
 					logger.info('Compiling terminal String, replace {path} with actual executable')
 					logger.info('Before:')
@@ -100,9 +99,6 @@ class Cobol implements Plugin<Project> {
 				}else if (conf.terminal.equals('gnome-terminal')) {
 					commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
 				}
-
-				//commandLine conf.absoluteBinMainPath(project)
-				println commandLine
 			}
 		}
 
