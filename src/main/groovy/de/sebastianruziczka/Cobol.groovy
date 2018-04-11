@@ -93,7 +93,7 @@ class Cobol implements Plugin<Project> {
 					logger.info('Compiling terminal String, replace {path} with actual executable')
 					logger.info('Before:')
 					logger.info(conf.customTerminal)
-					commandLine = conf.terminal.replace('{path}', conf.absoluteBinMainPath(project))
+					commandLine = conf.customTerminal.replace('{path}', conf.absoluteBinMainPath(project))
 					logger.info('After:')
 					logger.info(commandLine)
 					return;
