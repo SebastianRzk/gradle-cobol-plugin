@@ -26,11 +26,6 @@ gradlePlugin{
 	}
 }
 
-main {
-	resources {
-		srcDir 'res/main/groovy'
-	}
-}
 
 jar {
 	manifest {
