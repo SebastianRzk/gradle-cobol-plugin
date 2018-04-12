@@ -37,7 +37,7 @@ On Arch (via yaourt):
 Add to your build.gradle:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.1'
+         id 'de.sebastianruziczka.Cobol' version '0.0.2'
     }
 
 And a minimal configuration:
@@ -54,6 +54,6 @@ Run your application with
 
 ## Deep documentation
 
-[configuration](/docs/further/configuration.md)
-
+[Plugin Configuration](/docs/further/configuration.md)
+[Terminal Configuration](/docs/further/terminalConfiguration.md)
 
