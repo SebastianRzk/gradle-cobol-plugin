@@ -1,6 +1,7 @@
 package de.sebastianruziczka.buildcycle
 
 import org.gradle.api.Project
+import org.gradle.api.tasks.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
