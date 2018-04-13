@@ -33,7 +33,7 @@ class CobolExtension {
 	}
 
 
-	def aboluteUnitTestFramworkPath(Project p, String frameWorkName) {
-		return this.absoluteBinMainPath(p) + '/' + frameWorkName
+	def aboluteUnitTestFramworkPath(Project project, String frameWorkName) {
+		return project.file(this.binMainPath).absolutePath + '/' + frameWorkName
 	}
 }

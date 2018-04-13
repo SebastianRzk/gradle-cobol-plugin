@@ -7,7 +7,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.buildcycle.CobolConfiguration
-import de.sebastianruziczka.buildcycle.CobolUnit
+import de.sebastianruziczka.cobolunit.CobolUnit
 
 class Cobol implements Plugin<Project> {
 
