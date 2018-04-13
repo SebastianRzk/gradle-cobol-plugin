@@ -32,9 +32,10 @@ class CobolUnit {
 	}
 
 	private int compileTestFramwork(String frameworkPath,String mainfile) {
-		ProcessBuilder processBuilder=new ProcessBuilder('cobc', '-x', '-std=ibm', 'mainfile')
+		ProcessBuilder processBuilder=new ProcessBuilder('cobc', '-x', '-std=ibm', mainfile)
 		def file = new File(frameworkPath)
 		processBuilder.directory(file)
+		logger.info('Framwork compile command args: ' + processBuilder.command().dump())
 		def process = processBuilder.start()
 		process.waitFor()
 		return process.exitValue()
@@ -46,12 +47,15 @@ class CobolUnit {
 		URL manifestUrl = urlClassLoader.findResource(source);
 		InputStream is = manifestUrl.openStream();
 
-		byte[] buffer = new byte[is.available()];
-		is.read(buffer);
-
 		File targetFile = new File(destination);
 		OutputStream outStream = new FileOutputStream(targetFile);
-		outStream.write(buffer);
+
+		byte[] buffer = new byte[1024];
+		int length;
+		while ((length = is.read(buffer)) > 0) {
+			outStream.write(buffer, 0, length);
+		}
+
 		outStream.close();
 		is.close();
 	}
