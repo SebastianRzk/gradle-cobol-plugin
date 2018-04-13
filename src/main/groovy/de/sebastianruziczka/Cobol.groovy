@@ -7,11 +7,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.buildcycle.CobolConfiguration
+import de.sebastianruziczka.buildcycle.CobolUnit
 
 class Cobol implements Plugin<Project> {
 
 	void apply(Project project) {
-		def Logger logger = LoggerFactory.getLogger('cobolCompile')
+		Logger logger = LoggerFactory.getLogger('cobolCompile')
 		def conf = project.extensions.create('cobol', CobolExtension)
 
 		project.task ('cobolCompile', type:Exec, dependsOn: 'cobolClean') {
@@ -85,6 +86,14 @@ class Cobol implements Plugin<Project> {
 		project.task ('cobolClean', type: Delete){
 			doFirst {
 				delete project.file(conf.binMainPath).absolutePath
+			}
+		}
+
+		project.task ('cobolUnit'){
+			doLast {
+				CobolUnit cobolUnit = new CobolUnit();
+				cobolUnit.configure(conf, project);
+				cobolUnit.prepare();
 			}
 		}
 

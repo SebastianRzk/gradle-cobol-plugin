@@ -15,6 +15,7 @@ class CobolExtension {
 	String terminal = 'gnome-terminal'
 	String customTerminal = ''
 
+
 	def filetypePattern(){
 		'**/*' + srcFileType
 	}
@@ -29,5 +30,10 @@ class CobolExtension {
 
 	def absoluteBinMainPath(Project project){
 		return project.file(binMainPath + '/' +  srcMain).absolutePath
+	}
+
+
+	def aboluteUnitTestFramworkPath(Project p, String frameWorkName) {
+		return this.absoluteBinMainPath(p) + '/' + frameWorkName
 	}
 }
