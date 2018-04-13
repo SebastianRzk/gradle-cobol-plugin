@@ -33,7 +33,7 @@ class CobolRun {
 		}
 
 		project.task ('cobolCopyCopybooks', type:Copy){
-			from project.file(conf.resMainPath).absolutePath
+			from project.file(conf.srcMainPath).absolutePath
 			into project.file(conf.binMainPath).absolutePath
 			exclude conf.filetypePattern()
 		}
