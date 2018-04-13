@@ -55,9 +55,16 @@ class Cobol implements Plugin<Project> {
 			}
 		}
 
+		project.task ('cobolCopyCopybooks', type:Copy){
+			from project.file(conf.resMainPath).absolutePath
+			into project.file(conf.binMainPath).absolutePath
+			exclude conf.filetypePattern()
+		}
+
 		project.task ('cobolRun', type:Exec, dependsOn: [
 			'cobolCompile',
-			'cobolCopyRessources'
+			'cobolCopyRessources',
+			'cobolCopyCopybooks'
 		]) {
 			doFirst {
 				standardInput = System.in
