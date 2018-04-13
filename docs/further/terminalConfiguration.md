@@ -1,7 +1,7 @@
-== Terminal configuration
+## Terminal configuration
 
 
-=== preconfigured terminals
+### preconfigured terminals
 
 
 Set the parameter _terminal_ in the cobol block in your build gradle, to use one of the preconfigured terminals.
@@ -11,7 +11,7 @@ Set the parameter _terminal_ in the cobol block in your build gradle, to use one
 | gnome-terminal | 'gnome-terminal' |
 
 
-=== configure own terminal
+### configure own terminal
 
 Set the parameter _customTerminal_ in the cobol clock in your build.gradle to use a custom terminal commands.
 

@@ -14,7 +14,7 @@ dependencies {
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
-version = '0.0.2'
+version = '0.0.3'
 
 gradlePlugin{
 	plugins {
@@ -34,6 +34,9 @@ jar {
 			"Implementation-Version": version,
 			"Build-Date": new Date().format( 'dd.MM.yyyy' )
 	)
+	}
+	into 'res', {
+		from 'res/main/groovy'
 	}
 }
 
