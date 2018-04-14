@@ -18,6 +18,7 @@ class CobolRun {
 		]) {
 			doFirst {
 				standardInput = System.in
+				workingDir = conf.binMainPath
 				if (!conf.customTerminal.equals('')) {
 					logger.info('Compiling terminal String, replace {path} with actual executable')
 					logger.info('Before:')
@@ -25,10 +26,8 @@ class CobolRun {
 					commandLine = conf.customTerminal.replace('{path}', conf.absoluteBinMainPath(project))
 					logger.info('After:')
 					logger.info(commandLine)
-					workingDir = conf.binMainPath
 					return;
 				}else if (conf.terminal.equals('gnome-terminal')) {
-					workingDir = conf.binMainPath
 					commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
 				}
 			}

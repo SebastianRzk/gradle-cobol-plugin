@@ -11,6 +11,9 @@ class CobolUnit {
 
 	private CobolExtension configuration;
 	private Project project;
+	private def defaultConf = ["ZUTZCWS", "SAMPLET"]
+	private final static MAIN_FRAMEWORK_PROGRAMM =  'ZUTZCPC.CBL'
+	private final static DEFAULT_CONF_NAME = 'DEFAULT.CONF'
 
 	void configure(CobolExtension configuration, Project project) {
 		this.configuration = configuration;
@@ -19,16 +22,22 @@ class CobolUnit {
 
 	int prepare() {
 		def files = [
-			'ZUTZCPC.CBL',
+			MAIN_FRAMEWORK_PROGRAMM,
 			'ZUTZCPD.CPY',
 			'ZUTZCWS.CPY'
 		]
-		String binFramworkPath = this.configuration.aboluteUnitTestFramworkPath(this.project, this.getClass().getSimpleName()) + '/';
+		String binFramworkPath = this.configuration.absoluteUnitTestFramworkPath(this.project, this.getClass().getSimpleName()) + '/';
 		new File(binFramworkPath).mkdirs()
 		logger.info('Moving sources of framwork into build')
-		files.each{ copy('res/'+it, binFramworkPath+it )}
+		files.each{
+			copy('res/'+it, binFramworkPath+it )
+		}
+
+		logger.info('Create default test.conf')
+		this.createTestConf()
+
 		logger.info('Start compiling cobol-unit test framework')
-		return compileTestFramwork(binFramworkPath, 'ZUTZCPC.CBL')
+		return this.compileTestFramwork(binFramworkPath, MAIN_FRAMEWORK_PROGRAMM)
 	}
 
 	private int compileTestFramwork(String frameworkPath,String mainfile) {
@@ -39,6 +48,22 @@ class CobolUnit {
 		def process = processBuilder.start()
 		process.waitFor()
 		return process.exitValue()
+	}
+
+	private void createTestConf() {
+		String path = this.defaultConfPath()
+		logger.info('Using Path: '+path)
+		def defaultConfFile = new File(path)
+		defaultConfFile.delete()
+
+		defaultConfFile.withWriter { out ->
+			this.defaultConf.each { out.println it }
+		}
+	}
+
+
+	private String defaultConfPath() {
+		return this.configuration.absoluteUnitTestFramworkPath(this.project, this.getClass().getSimpleName()) + '/' + DEFAULT_CONF_NAME
 	}
 
 	private void copy(String source, String destination) {
@@ -58,5 +83,50 @@ class CobolUnit {
 
 		outStream.close();
 		is.close();
+	}
+
+	public void test(String srcName, String testName) {
+		this.preprocessTest('Main.CBL', 'Main_Test.CBL', null)
+	}
+
+	private int preprocessTest(String mainFile, String testFile, String testConfig) {
+		String zutzcpcPath = this.configuration.absoluteUnitTestFramworkPath(this.project, this.getClass().getSimpleName()) + '/' + this.getFileName(MAIN_FRAMEWORK_PROGRAMM)
+		ProcessBuilder processBuilder=new ProcessBuilder(zutzcpcPath)
+
+		def env = processBuilder.environment()
+		env.put('SRCPRG', this.configuration.absoluteSrcMainModulePath(this.project)+ '/'+ mainFile)
+		env.put('TESTPRG', this.configuration.absoluteUnitTestFramworkPath(this.project, this.getClass().getSimpleName()) + '/' + testFile)
+		env.put('TESTNAME', this.getFileName(testFile))
+		if (testConfig == null) {
+			env.put('UTSTCFG', this.defaultConfPath())
+		}else {
+			env.put('UTSTCFG', testConfig)
+		}
+		String copybooks = this.getParent(mainFile) + ':' + this.getParent(testFile)
+		env.put('COBCOPY', copybooks)
+		env.put('UTESTS', this.configuration.absoluteSrcTestPath(this.project) + '/' + testFile)
+
+		logger.info('Environment: ' + env.dump())
+
+		processBuilder.redirectOutput(new File("precompile.log"))
+
+		logger.info('Test precompile command args: ' + processBuilder.command().dump())
+		def process = processBuilder.start()
+		process.waitFor()
+		return process.exitValue()
+	}
+
+	private String getFileName(String path) {
+		File file = new File(path)
+		String name = file.getName()
+		if (name.contains(".")) {
+			name = name.split("\\.")[0]
+		}
+		return name
+	}
+
+	private String getParent(String path) {
+		File file = new File(path)
+		return file.getParent()
 	}
 }
