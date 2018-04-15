@@ -28,7 +28,7 @@ class CobolRun {
 					logger.info(commandLine)
 					return;
 				}else if (conf.terminal.equals('gnome-terminal')) {
-					commandLine 'gnome-terminal', '--wait', '--', conf.absoluteBinMainPath(project)
+					commandLine 'gnome-terminal', '--wait', '--geometry=80x43', '--', conf.absoluteBinMainPath(project)
 				}
 			}
 		}
