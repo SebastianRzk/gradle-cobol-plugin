@@ -75,9 +75,10 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 Set the parameter _terminal_ in the cobol block in your build gradle, to use one of the preconfigured terminals.
 
-| terminal | value |
-| -------- | ----- |
-| gnome-terminal | 'gnome-terminal' |
+| terminal | value | default |
+| -------- | ----- | --------|
+| gnome-terminal | 'gnome-terminal' ||
+| xterm | 'xterm' | yes |
 
 
 #### configure own terminal
