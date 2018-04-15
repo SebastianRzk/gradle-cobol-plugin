@@ -13,7 +13,7 @@ class CobolExtension {
 
 	String fileFormat = 'fixed'
 
-	String terminal = 'gnome-terminal'
+	String terminal = 'xterm'
 	String customTerminal = ''
 
 
