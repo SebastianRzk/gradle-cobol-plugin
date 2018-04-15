@@ -32,12 +32,16 @@ class Cobol implements Plugin<Project> {
 				CobolUnit cobolUnit = new CobolUnit();
 				cobolUnit.configure(conf, project);
 				cobolUnit.prepare();
+				println 'precompile test'
+				cobolUnit.test(null, null)
+				println 'precompile done'
 			}
 		}
 
 		project.task ('cobolCheck', dependsOn: [
 			'cobolConfiguration',
 			'cobolCompile'
-		]){ doLast { println 'check finished' } }
+		]){ doLast { println 'check finished'
+			} }
 	}
 }

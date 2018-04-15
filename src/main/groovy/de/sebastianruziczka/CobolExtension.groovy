@@ -9,10 +9,11 @@ class CobolExtension {
 	String srcMainPath = 'src/main/cobol'
 	String binMainPath = 'build/bin/main/cobol'
 	String resMainPath = 'res/main/cobol'
+	String srcTestPath = 'src/test/cobol'
 
 	String fileFormat = 'fixed'
 
-	String terminal = 'gnome-terminal'
+	String terminal = 'xterm'
 	String customTerminal = ''
 
 
@@ -32,8 +33,12 @@ class CobolExtension {
 		return project.file(binMainPath + '/' +  srcMain).absolutePath
 	}
 
+	def absoluteSrcTestPath(Project project) {
+		return project.file(this.srcTestPath).absolutePath
+	}
 
-	def aboluteUnitTestFramworkPath(Project project, String frameWorkName) {
+
+	def absoluteUnitTestFramworkPath(Project project, String frameWorkName) {
 		return project.file(this.binMainPath).absolutePath + '/' + frameWorkName
 	}
 }

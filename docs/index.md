@@ -46,7 +46,6 @@ And a minimal configuration:
          srcMain = 'HelloWorld' // Path to your main file in src/main/cobol
     }
 
-Further configuration can be found [here](/docs/further/configuration.md)
 
 Run your application with
 
@@ -54,6 +53,37 @@ Run your application with
 
 ## Deep documentation
 
-[Plugin Configuration](/docs/further/configuration.md)
-[Terminal Configuration](/docs/further/terminalConfiguration.md)
+### Configuration of the plugin
+
+Following properties can be modified in the _cobol_ block in your _build.gradle_ :
+
+
+| name | default | other | required |
+| ---- | ------- | ----- | -------- |
+| srcFileType | '.cbl' | e.g. '.CBL' | yes |
+| srcMain | '' | | yes |
+| srcMainPath | 'src/main/cobol' || yes |
+| binMainPath | 'build/bin/main/cobol' || yes |
+| resMainPath | 'res/main/cobol' || yes |
+| fileFormat | 'fixed' |'free'| yes |
+
+### Terminal configuration
+
+
+#### preconfigured terminals
+
+
+Set the parameter _terminal_ in the cobol block in your build gradle, to use one of the preconfigured terminals.
+
+| terminal | value | default |
+| -------- | ----- | --------|
+| gnome-terminal | 'gnome-terminal' ||
+| xterm | 'xterm' | yes |
+
+
+#### configure own terminal
+
+Set the parameter _customTerminal_ in the cobol clock in your build.gradle to use a custom terminal commands.
+
+Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable.
 
