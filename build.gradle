@@ -5,10 +5,14 @@ apply plugin: 'java-gradle-plugin'
 apply plugin: 'ivy-publish'
 apply plugin: 'maven-publish'
 
+repositories {
+	mavenCentral()
+}
 
 dependencies {
 	compile gradleApi()
 	compile localGroovy()
+	compileOnly group: 'org.reflections', name: 'reflections', version: '0.9.11'
 }
 
 
@@ -37,6 +41,9 @@ jar {
 	}
 	into 'res', {
 		from 'res/main/groovy'
+	}
+	from {
+		configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }
 	}
 }
 

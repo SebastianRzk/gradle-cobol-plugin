@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.api.CobolUnitFramework
+import de.sebastianruziczka.api.CobolUnitFrameworkProvider
 import de.sebastianruziczka.process.ProcessWrapper
 
+@CobolUnitFrameworkProvider
 class CobolUnit implements CobolUnitFramework{
 	Logger logger = LoggerFactory.getLogger('cobolUnit')
 
