@@ -93,7 +93,34 @@ class CobolUnit {
 
 		this.preprocessTest(main, test, null)
 		this.compileTest(srcModulePath, testModulePath, test)
+		println 'compiling test done'
+		String result = this.executeTest(this.frameworkBinModuleOf(test), this.getFileName(test))
 	}
+
+	private String executeTest(String binModulePath, String execName) {
+		def logFilePath = binModulePath + '/' + 'TESTEXEC.LOG'
+		File logOutput = new File(logFilePath)
+
+		ProcessBuilder processBuilder = new ProcessBuilder(binModulePath + '/' + execName)
+		processBuilder.directory(new File(binModulePath))
+		processBuilder.redirectOutput(logOutput)
+
+		logger.info('Executing test file: '+ binModulePath + '/' + execName)
+
+
+		Process process = processBuilder.start()
+		process.waitFor()
+		String output = new File(logFilePath).text
+		if (process.exitValue() != 0) {
+			logger.error(output)
+			throw new IllegalArgumentException('Test execution returned non zero value: '+ process.exitValue())
+		}
+		logger.info(output)
+		return output
+	}
+
+
+
 
 	private String srcModuleOf(String relativePath) {
 		String absolutePath = this.configuration.absoluteSrcMainPath(this.project) + '/' + relativePath
