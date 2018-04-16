@@ -6,6 +6,7 @@ import org.gradle.api.tasks.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import de.sebastianruziczka.api.CobolUnitFramework
 import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
 import de.sebastianruziczka.buildcycle.CobolRun
@@ -64,7 +65,7 @@ class Cobol implements Plugin<Project> {
 					return
 				}
 				logger.info('Number of Src<>Test pairs found: ' + cobolTestPairs.size())
-				CobolUnit cobolUnit = new CobolUnit();
+				CobolUnitFramework cobolUnit = new CobolUnit();
 				cobolUnit.configure(conf, project);
 				cobolUnit.prepare();
 				cobolTestPairs.each{
@@ -77,7 +78,6 @@ class Cobol implements Plugin<Project> {
 			'cobolUnit',
 			'cobolCompile',
 			'cobolConfiguration'
-		]){ doLast { println 'check finished'
-			} }
+		]){ doLast { println 'check finished' } }
 	}
 }
