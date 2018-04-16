@@ -5,6 +5,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.process.ProcessWrapper
 
 class CobolUnit {
 	Logger logger = LoggerFactory.getLogger('cobolUnit')
@@ -45,9 +46,9 @@ class CobolUnit {
 		def file = new File(frameworkPath)
 		processBuilder.directory(file)
 		logger.info('Framwork compile command args: ' + processBuilder.command().dump())
-		def process = processBuilder.start()
-		process.waitFor()
-		return process.exitValue()
+
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'FramweorkCompile', this.frameworkBin() + '/' + 'ZUTZCPC.LOG')
+		return processWrapper.exec()
 	}
 
 	private void createTestConf() {
@@ -99,24 +100,14 @@ class CobolUnit {
 
 	private String executeTest(String binModulePath, String execName) {
 		def logFilePath = binModulePath + '/' + 'TESTEXEC.LOG'
-		File logOutput = new File(logFilePath)
 
 		ProcessBuilder processBuilder = new ProcessBuilder(binModulePath + '/' + execName)
 		processBuilder.directory(new File(binModulePath))
-		processBuilder.redirectOutput(logOutput)
-
 		logger.info('Executing test file: '+ binModulePath + '/' + execName)
 
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'Execute Unittest '+ execName, logFilePath)
 
-		Process process = processBuilder.start()
-		process.waitFor()
-		String output = new File(logFilePath).text
-		if (process.exitValue() != 0) {
-			logger.error(output)
-			throw new IllegalArgumentException('Test execution returned non zero value: '+ process.exitValue())
-		}
-		logger.info(output)
-		return output
+		return processWrapper.exec()
 	}
 
 
@@ -142,19 +133,18 @@ class CobolUnit {
 		ProcessBuilder processBuilder = new ProcessBuilder('cobc', '-x', precompiledTestPath)
 		def modulePath = this.frameworkBinModuleOf(testName)
 		processBuilder.directory(new File(modulePath))
-		def logPath = modulePath+ '/' + this.getFileName(testName) + '_' + 'TESTCOMPILE.LOG'
-		processBuilder.redirectOutput(new File(logPath))
 		def env = processBuilder.environment()
 		String cobCopyEnvValue = srcModulePath + ':' + testModulePath
 		env.put('COBCOPY', cobCopyEnvValue)
 		logger.info('Compiling precompiled test')
 		logger.info('Module path: ' + modulePath)
-		logger.info('Log-path: ' + logPath)
 		logger.info('Precompiled test path: ' + precompiledTestPath)
 		logger.info('ENV: ' + env)
-		def process = processBuilder.start()
-		process.waitFor()
-		return process.exitValue()
+
+		def logPath = modulePath+ '/' + this.getFileName(testName) + '_' + 'TESTCOMPILE.LOG'
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'Compile UnitTest '+ testName, logPath)
+
+		return processWrapper.exec()
 	}
 
 	private String frameworkBin() {
@@ -179,12 +169,11 @@ class CobolUnit {
 		env.put('UTESTS', this.configuration.absoluteSrcTestPath(this.project) + '/' + testFile)
 
 		logger.info('Environment: ' + env.dump())
-
-		processBuilder.redirectOutput(new File(this.frameworkBinModuleOf(mainFile) + '/' + this.getFileName(testFile) + '_' + 'PRECOMPILER.LOG'))
 		logger.info('Test precompile command args: ' + processBuilder.command().dump())
-		def process = processBuilder.start()
-		process.waitFor()
-		return process.exitValue()
+
+		def logPath = this.frameworkBinModuleOf(mainFile) + '/' + this.getFileName(testFile) + '_' + 'PRECOMPILER.LOG'
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'Preprocess UnitTest '+ testFile, logPath)
+		return processWrapper.exec()
 	}
 
 	private String getFileName(String path) {
