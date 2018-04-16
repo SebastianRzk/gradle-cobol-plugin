@@ -86,15 +86,15 @@ class CobolUnit {
 	}
 
 	public void test(String srcName, String testName) {
-		String main = 'Main.CBL'
-		String test = 'Main_Test.CBL'
-		String srcModulePath = this.srcModuleOf(main)
-		String testModulePath = this.testModuleOf(test)
+		String srcModulePath = this.srcModuleOf(srcName)
+		String testModulePath = this.testModuleOf(testName)
 
-		this.preprocessTest(main, test, null)
-		this.compileTest(srcModulePath, testModulePath, test)
-		println 'compiling test done'
-		String result = this.executeTest(this.frameworkBinModuleOf(test), this.getFileName(test))
+		logger.info('Preprocess Test: ' + testName)
+		this.preprocessTest(srcName, testName, null)
+		logger.info('Compile Test: ' + testName)
+		this.compileTest(srcModulePath, testModulePath, testName)
+		logger.info('Run Test: ' + testName)
+		String result = this.executeTest(this.frameworkBinModuleOf(testName), this.getFileName(testName))
 	}
 
 	private String executeTest(String binModulePath, String execName) {
@@ -181,7 +181,6 @@ class CobolUnit {
 		logger.info('Environment: ' + env.dump())
 
 		processBuilder.redirectOutput(new File(this.frameworkBinModuleOf(mainFile) + '/' + this.getFileName(testFile) + '_' + 'PRECOMPILER.LOG'))
-
 		logger.info('Test precompile command args: ' + processBuilder.command().dump())
 		def process = processBuilder.start()
 		process.waitFor()

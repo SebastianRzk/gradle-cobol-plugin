@@ -6,7 +6,7 @@ class CobolExtension {
 	String srcFileType = '.cbl'
 	String srcMain = ''
 
-	String unittestPostfix = '_UT'
+	String unittestPostfix = 'UT'
 
 	String srcMainPath = 'src/main/cobol'
 	String binMainPath = 'build/bin/main/cobol'
