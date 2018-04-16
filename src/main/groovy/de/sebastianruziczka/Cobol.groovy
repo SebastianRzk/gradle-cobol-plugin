@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory
 import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
 import de.sebastianruziczka.buildcycle.CobolRun
+import de.sebastianruziczka.cobolunit.CobolTestPair
 import de.sebastianruziczka.cobolunit.CobolUnit
 
 class Cobol implements Plugin<Project> {
@@ -29,18 +30,53 @@ class Cobol implements Plugin<Project> {
 
 		project.task ('cobolUnit'){
 			doLast {
+				def testTree = project.fileTree(conf.srcTestPath).include(conf.unitTestFileTypePattern())
+				def allTests = []
+
+				testTree.each { File file ->
+					allTests << file.absolutePath
+				}
+
+				def srcTree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
+				def allSrc = []
+				srcTree.each { File file ->
+					allSrc << file.absolutePath
+				}
+
+
+				def cobolTestPairs = []
+				int unitTestFileEndingChars = conf.unitTestFileTypePattern().length() - '**/*'.length()
+				allTests.each {
+					int lastNameIndex = it.length() - unitTestFileEndingChars
+					int firstNameIndex = conf.absoluteSrcTestPath(project).length()
+
+					String moduleName = it.substring(firstNameIndex +1,lastNameIndex)
+
+					String expectedSrcModulePath = project.file(conf.srcMainPath + '/' + moduleName + conf.srcFileType).absolutePath
+					if (allSrc.contains(expectedSrcModulePath)) {
+						allSrc.remove(expectedSrcModulePath)
+						cobolTestPairs << new CobolTestPair(moduleName + conf.srcFileType, it.substring(firstNameIndex + 1))
+					}
+				}
+
+				if (cobolTestPairs.size()== 0) {
+					logger.warn('NO TESTS FOUND')
+					return
+				}
+				logger.info('Number of Src<>Test pairs found: ' + cobolTestPairs.size())
 				CobolUnit cobolUnit = new CobolUnit();
 				cobolUnit.configure(conf, project);
 				cobolUnit.prepare();
-				println 'precompile test'
-				cobolUnit.test(null, null)
-				println 'precompile done'
+				cobolTestPairs.each{
+					cobolUnit.test(it.srcFile(), it.testFile())
+				}
 			}
 		}
 
 		project.task ('cobolCheck', dependsOn: [
-			'cobolConfiguration',
-			'cobolCompile'
+			'cobolUnit',
+			'cobolCompile',
+			'cobolConfiguration'
 		]){ doLast { println 'check finished'
 			} }
 	}

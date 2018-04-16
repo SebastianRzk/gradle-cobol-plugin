@@ -5,6 +5,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.process.ProcessWrapper
 
 class CobolUnit {
 	Logger logger = LoggerFactory.getLogger('cobolUnit')
@@ -30,7 +31,7 @@ class CobolUnit {
 		new File(binFramworkPath).mkdirs()
 		logger.info('Moving sources of framwork into build')
 		files.each{
-			copy('res/'+it, binFramworkPath+it )
+			copy('res/' + it, binFramworkPath + it )
 		}
 
 		logger.info('Create default test.conf')
@@ -45,9 +46,9 @@ class CobolUnit {
 		def file = new File(frameworkPath)
 		processBuilder.directory(file)
 		logger.info('Framwork compile command args: ' + processBuilder.command().dump())
-		def process = processBuilder.start()
-		process.waitFor()
-		return process.exitValue()
+
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'FramweorkCompile', this.frameworkBin() + '/' + 'ZUTZCPC.LOG')
+		return processWrapper.exec()
 	}
 
 	private void createTestConf() {
@@ -86,14 +87,31 @@ class CobolUnit {
 	}
 
 	public void test(String srcName, String testName) {
-		String main = 'Main.CBL'
-		String test = 'Main_Test.CBL'
-		String srcModulePath = this.srcModuleOf(main)
-		String testModulePath = this.testModuleOf(test)
+		String srcModulePath = this.srcModuleOf(srcName)
+		String testModulePath = this.testModuleOf(testName)
 
-		this.preprocessTest(main, test, null)
-		this.compileTest(srcModulePath, testModulePath, test)
+		logger.info('Preprocess Test: ' + testName)
+		this.preprocessTest(srcName, testName, null)
+		logger.info('Compile Test: ' + testName)
+		this.compileTest(srcModulePath, testModulePath, testName)
+		logger.info('Run Test: ' + testName)
+		String result = this.executeTest(this.frameworkBinModuleOf(testName), this.getFileName(testName))
 	}
+
+	private String executeTest(String binModulePath, String execName) {
+		def logFilePath = binModulePath + '/' + 'TESTEXEC.LOG'
+
+		ProcessBuilder processBuilder = new ProcessBuilder(binModulePath + '/' + execName)
+		processBuilder.directory(new File(binModulePath))
+		logger.info('Executing test file: '+ binModulePath + '/' + execName)
+
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'Execute Unittest '+ execName, logFilePath)
+
+		return processWrapper.exec()
+	}
+
+
+
 
 	private String srcModuleOf(String relativePath) {
 		String absolutePath = this.configuration.absoluteSrcMainPath(this.project) + '/' + relativePath
@@ -115,19 +133,18 @@ class CobolUnit {
 		ProcessBuilder processBuilder = new ProcessBuilder('cobc', '-x', precompiledTestPath)
 		def modulePath = this.frameworkBinModuleOf(testName)
 		processBuilder.directory(new File(modulePath))
-		def logPath = modulePath+ '/' + this.getFileName(testName) + '_' + 'TESTCOMPILE.LOG'
-		processBuilder.redirectOutput(new File(logPath))
 		def env = processBuilder.environment()
 		String cobCopyEnvValue = srcModulePath + ':' + testModulePath
 		env.put('COBCOPY', cobCopyEnvValue)
 		logger.info('Compiling precompiled test')
 		logger.info('Module path: ' + modulePath)
-		logger.info('Log-path: ' + logPath)
 		logger.info('Precompiled test path: ' + precompiledTestPath)
 		logger.info('ENV: ' + env)
-		def process = processBuilder.start()
-		process.waitFor()
-		return process.exitValue()
+
+		def logPath = modulePath+ '/' + this.getFileName(testName) + '_' + 'TESTCOMPILE.LOG'
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'Compile UnitTest '+ testName, logPath)
+
+		return processWrapper.exec()
 	}
 
 	private String frameworkBin() {
@@ -152,13 +169,11 @@ class CobolUnit {
 		env.put('UTESTS', this.configuration.absoluteSrcTestPath(this.project) + '/' + testFile)
 
 		logger.info('Environment: ' + env.dump())
-
-		processBuilder.redirectOutput(new File(this.frameworkBinModuleOf(mainFile) + '/' + this.getFileName(testFile) + '_' + 'PRECOMPILER.LOG'))
-
 		logger.info('Test precompile command args: ' + processBuilder.command().dump())
-		def process = processBuilder.start()
-		process.waitFor()
-		return process.exitValue()
+
+		def logPath = this.frameworkBinModuleOf(mainFile) + '/' + this.getFileName(testFile) + '_' + 'PRECOMPILER.LOG'
+		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, 'Preprocess UnitTest '+ testFile, logPath)
+		return processWrapper.exec()
 	}
 
 	private String getFileName(String path) {
