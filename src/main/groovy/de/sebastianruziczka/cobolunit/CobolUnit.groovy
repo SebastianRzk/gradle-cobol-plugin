@@ -30,7 +30,7 @@ class CobolUnit {
 		new File(binFramworkPath).mkdirs()
 		logger.info('Moving sources of framwork into build')
 		files.each{
-			copy('res/'+it, binFramworkPath+it )
+			copy('res/' + it, binFramworkPath + formattingit )
 		}
 
 		logger.info('Create default test.conf')
