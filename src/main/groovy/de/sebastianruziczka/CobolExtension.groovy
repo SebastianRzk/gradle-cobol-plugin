@@ -6,6 +6,8 @@ class CobolExtension {
 	String srcFileType = '.cbl'
 	String srcMain = ''
 
+	String unittestPostfix = '_UT'
+
 	String srcMainPath = 'src/main/cobol'
 	String binMainPath = 'build/bin/main/cobol'
 	String resMainPath = 'res/main/cobol'
@@ -17,28 +19,32 @@ class CobolExtension {
 	String customTerminal = ''
 
 
-	def filetypePattern(){
-		'**/*' + srcFileType
+	String filetypePattern(){
+		'**/*' + this.srcFileType
 	}
 
-	def absoluteSrcMainModulePath(Project project){
+	String unitTestFileTypePattern() {
+		return '**/*' + this.unittestPostfix + srcFileType
+	}
+
+	String absoluteSrcMainModulePath(Project project){
 		return project.file(srcMainPath + '/' + srcMain + srcFileType).getParent()
 	}
 
-	def absoluteSrcMainPath(Project project){
+	String absoluteSrcMainPath(Project project){
 		return project.file(srcMainPath + '/' + srcMain + srcFileType).absolutePath
 	}
 
-	def absoluteBinMainPath(Project project){
+	String absoluteBinMainPath(Project project){
 		return project.file(binMainPath + '/' +  srcMain).absolutePath
 	}
 
-	def absoluteSrcTestPath(Project project) {
+	String absoluteSrcTestPath(Project project) {
 		return project.file(this.srcTestPath).absolutePath
 	}
 
 
-	def absoluteUnitTestFramworkPath(Project project, String frameWorkName) {
+	String absoluteUnitTestFramworkPath(Project project, String frameWorkName) {
 		return project.file(this.binMainPath).absolutePath + '/' + frameWorkName
 	}
 }
