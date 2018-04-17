@@ -5,9 +5,13 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.api.CobolUnitFramework
+import de.sebastianruziczka.api.CobolUnitFrameworkProvider
+import de.sebastianruziczka.buildcycle.test.TestFile
 import de.sebastianruziczka.process.ProcessWrapper
 
-class CobolUnit {
+@CobolUnitFrameworkProvider
+class CobolUnit implements CobolUnitFramework{
 	Logger logger = LoggerFactory.getLogger('cobolUnit')
 
 	private CobolExtension configuration
@@ -16,11 +20,13 @@ class CobolUnit {
 	private final static MAIN_FRAMEWORK_PROGRAMM =  'ZUTZCPC.CBL'
 	private final static DEFAULT_CONF_NAME = 'DEFAULT.CONF'
 
+	@Override
 	void configure(CobolExtension configuration, Project project) {
 		this.configuration = configuration
 		this.project = project
 	}
 
+	@Override
 	int prepare() {
 		def files = [
 			MAIN_FRAMEWORK_PROGRAMM,
@@ -86,7 +92,8 @@ class CobolUnit {
 		is.close()
 	}
 
-	public void test(String srcName, String testName) {
+	@Override
+	public TestFile test(String srcName, String testName) {
 		String srcModulePath = this.srcModuleOf(srcName)
 		String testModulePath = this.testModuleOf(testName)
 
@@ -96,6 +103,8 @@ class CobolUnit {
 		this.compileTest(srcModulePath, testModulePath, testName)
 		logger.info('Run Test: ' + testName)
 		String result = this.executeTest(this.frameworkBinModuleOf(testName), this.getFileName(testName))
+
+		return new TestFile()
 	}
 
 	private String executeTest(String binModulePath, String execName) {
