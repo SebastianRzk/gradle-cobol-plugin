@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.api.CobolUnitFramework
 import de.sebastianruziczka.api.CobolUnitFrameworkProvider
+import de.sebastianruziczka.buildcycle.test.TestFile
 import de.sebastianruziczka.process.ProcessWrapper
 
 @CobolUnitFrameworkProvider
@@ -92,7 +93,7 @@ class CobolUnit implements CobolUnitFramework{
 	}
 
 	@Override
-	public void test(String srcName, String testName) {
+	public TestFile test(String srcName, String testName) {
 		String srcModulePath = this.srcModuleOf(srcName)
 		String testModulePath = this.testModuleOf(testName)
 
@@ -102,6 +103,8 @@ class CobolUnit implements CobolUnitFramework{
 		this.compileTest(srcModulePath, testModulePath, testName)
 		logger.info('Run Test: ' + testName)
 		String result = this.executeTest(this.frameworkBinModuleOf(testName), this.getFileName(testName))
+
+		return new TestFile()
 	}
 
 	private String executeTest(String binModulePath, String execName) {

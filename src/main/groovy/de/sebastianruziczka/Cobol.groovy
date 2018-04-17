@@ -13,6 +13,7 @@ import de.sebastianruziczka.api.CobolUnitFrameworkProvider
 import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
 import de.sebastianruziczka.buildcycle.CobolRun
+import de.sebastianruziczka.buildcycle.test.TestResult
 import de.sebastianruziczka.cobolunit.CobolTestPair
 
 class Cobol implements Plugin<Project> {
@@ -95,10 +96,13 @@ class Cobol implements Plugin<Project> {
 					it.prepare();
 				}
 
-				cobolTestPairs.each{
-					allUnitTestFrameworks.each{ framework ->
-						framework.test(it.srcFile(), it.testFile())
+				allUnitTestFrameworks.each{ framework ->
+					println 'Starting Cobol-Unittest with framwork: ' + framework.getClass().getSimpleName()
+					TestResult result = new TestResult()
+					cobolTestPairs.each{
+						result.addTest(framework.test(it.srcFile(), it.testFile()))
 					}
+					println 'Result: ' + result.successfullTests() + ' sucessfull tests, ' + result.failedTests() + ' tests failed'
 				}
 			}
 		}

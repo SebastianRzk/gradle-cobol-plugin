@@ -3,6 +3,7 @@ package de.sebastianruziczka.api
 import org.gradle.api.Project
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.buildcycle.test.TestFile
 
 
 interface CobolUnitFramework {
@@ -10,5 +11,5 @@ interface CobolUnitFramework {
 
 	int prepare()
 
-	void test(String srcName, String testName)
+	TestFile test(String srcName, String testName)
 }
