@@ -1,5 +1,5 @@
 plugins {
-	id 'de.sebastianruziczka.Cobol' version '0.0.6' apply false
+	id 'de.sebastianruziczka.Cobol' version '0.0.7' apply false
 }
 
 subprojects {
