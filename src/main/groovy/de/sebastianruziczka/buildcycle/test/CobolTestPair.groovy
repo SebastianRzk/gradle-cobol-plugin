@@ -1,4 +1,4 @@
-package de.sebastianruziczka.cobolunit
+package de.sebastianruziczka.buildcycle.test
 
 class CobolTestPair {
 

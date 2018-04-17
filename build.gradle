@@ -18,7 +18,7 @@ dependencies {
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
-version = '0.0.6'
+version = '0.0.7'
 
 gradlePlugin{
 	plugins {
@@ -37,10 +37,7 @@ jar {
 			"Implementation-Title": project.name,
 			"Implementation-Version": version,
 			"Build-Date": new Date().format( 'dd.MM.yyyy' )
-	)
-	}
-	into 'res', {
-		from 'res/main/groovy'
+		)
 	}
 	from {
 		configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }

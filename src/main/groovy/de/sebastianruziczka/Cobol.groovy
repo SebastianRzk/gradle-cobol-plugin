@@ -13,8 +13,8 @@ import de.sebastianruziczka.api.CobolUnitFrameworkProvider
 import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
 import de.sebastianruziczka.buildcycle.CobolRun
+import de.sebastianruziczka.buildcycle.test.CobolTestPair
 import de.sebastianruziczka.buildcycle.test.TestResult
-import de.sebastianruziczka.cobolunit.CobolTestPair
 
 class Cobol implements Plugin<Project> {
 
