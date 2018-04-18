@@ -61,6 +61,14 @@ Run your application with
 
     gradle cobolRun
 
+Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
+
+     buildscript {
+     	 dependencies {
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.1'
+     	}
+     }
+
 ## Deep documentation
 
 ### Configuration of the plugin
