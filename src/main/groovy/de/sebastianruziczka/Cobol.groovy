@@ -43,8 +43,9 @@ class Cobol implements Plugin<Project> {
 					allUnitTestFrameworks << constructor.newInstance()
 				}
 			} catch (Throwable t) {
-				logger.error('Failed while searching for cobol unit frameworks')
-				logger.error(t)
+				logger.error('Failed while searching for cobol unit frameworks', t)
+				logger.error(t.message)
+				t.printStackTrace()
 			}
 
 			doLast {
