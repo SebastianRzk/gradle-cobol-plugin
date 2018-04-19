@@ -32,7 +32,7 @@ class TestFile {
 	public int failedTests() {
 		int result = 0
 		this.testMethods.each{
-			if (it.testMethodResult == TestMethodResult.FAILED) {
+			if (it.result() == TestMethodResult.FAILED) {
 				result ++
 			}
 		}
