@@ -10,6 +10,7 @@ class ProcessWrapper {
 	private String taskName
 	private String logFilePath
 	private String processOutput = ""
+	private int exitCode = -1
 
 	public ProcessWrapper(ProcessBuilder processBuilder, String taskName, String logFilePath) {
 		this.processBuilder = processBuilder
@@ -31,7 +32,8 @@ class ProcessWrapper {
 		Process process = this.processBuilder.start()
 		process.waitFor()
 		this.processOutput = new File(this.logFilePath).text
-		if (process.exitValue() != 0) {
+		this.exitCode = process.exitValue()
+		if (this.exitCode != 0) {
 			logger.error('Process ' + this.taskName + ' ended unexpected!')
 			logger.error('Error code: ' + process.exitValue())
 			logger.error(this.processOutput)
@@ -40,10 +42,14 @@ class ProcessWrapper {
 			}
 		}
 		logger.info(this.processOutput)
-		return process.exitValue()
+		return this.exitCode
 	}
 
 	String processOutput() {
 		return this.processOutput
+	}
+
+	int exitCode() {
+		return this.exitCode
 	}
 }
