@@ -20,7 +20,7 @@ class TestFile {
 	public int successfullTests() {
 		int result = 0
 		this.testMethods.each{
-			if (it.testMethodResult == TestMethodResult.SUCCESSFUL) {
+			if (it.result() == TestMethodResult.SUCCESSFUL) {
 				result ++
 			}
 		}
