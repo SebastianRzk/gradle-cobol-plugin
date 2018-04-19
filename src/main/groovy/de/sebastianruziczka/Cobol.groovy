@@ -14,6 +14,7 @@ import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
 import de.sebastianruziczka.buildcycle.CobolRun
 import de.sebastianruziczka.buildcycle.test.CobolTestPair
+import de.sebastianruziczka.buildcycle.test.TestFailedException
 import de.sebastianruziczka.buildcycle.test.TestResult
 
 class Cobol implements Plugin<Project> {
@@ -104,6 +105,9 @@ class Cobol implements Plugin<Project> {
 						result.addTest(framework.test(it.srcFile(), it.testFile()))
 					}
 					println 'Result: ' + result.successfullTests() + ' sucessfull tests, ' + result.failedTests() + ' tests failed'
+					if (result.failedTests() != 0) {
+						throw new TestFailedException()
+					}
 				}
 			}
 		}
@@ -112,6 +116,7 @@ class Cobol implements Plugin<Project> {
 			'cobolUnit',
 			'cobolCompile',
 			'cobolConfiguration'
-		]){ doLast { println 'check finished' } }
+		]){ doLast { println 'check finished'
+			} }
 	}
 }
