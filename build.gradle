@@ -18,7 +18,7 @@ dependencies {
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
-version = '0.0.8'
+version = '0.0.9'
 
 gradlePlugin{
 	plugins {
