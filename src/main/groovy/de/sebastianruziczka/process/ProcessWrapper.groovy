@@ -9,6 +9,8 @@ class ProcessWrapper {
 	private ProcessBuilder processBuilder
 	private String taskName
 	private String logFilePath
+	private String processOutput = ""
+	private int exitCode = -1
 
 	public ProcessWrapper(ProcessBuilder processBuilder, String taskName, String logFilePath) {
 		this.processBuilder = processBuilder
@@ -18,6 +20,10 @@ class ProcessWrapper {
 	}
 
 	public int exec() {
+		return exec(false)
+	}
+
+	public int exec(boolean ignoreExitCode) {
 		this.logger.info('ProcessWrapper starting process ' + this.taskName)
 		File outputFile  = new File(this.logFilePath)
 		this.processBuilder.redirectOutput(outputFile)
@@ -25,14 +31,25 @@ class ProcessWrapper {
 
 		Process process = this.processBuilder.start()
 		process.waitFor()
-		String output = new File(this.logFilePath).text
-		if (process.exitValue() != 0) {
+		this.processOutput = new File(this.logFilePath).text
+		this.exitCode = process.exitValue()
+		if (this.exitCode != 0) {
 			logger.error('Process ' + this.taskName + ' ended unexpected!')
 			logger.error('Error code: ' + process.exitValue())
-			logger.error(output)
-			throw new ProcessFailedException('Process ' + this.taskName + ' ended unexpected!')
+			logger.error(this.processOutput)
+			if (!ignoreExitCode) {
+				throw new ProcessFailedException('Process ' + this.taskName + ' ended unexpected!')
+			}
 		}
-		logger.info(output)
-		return process.exitValue()
+		logger.info(this.processOutput)
+		return this.exitCode
+	}
+
+	String processOutput() {
+		return this.processOutput
+	}
+
+	int exitCode() {
+		return this.exitCode
 	}
 }
