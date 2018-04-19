@@ -44,7 +44,7 @@ class Cobol implements Plugin<Project> {
 				}
 			} catch (Throwable t) {
 				logger.error('Failed while searching for cobol unit frameworks')
-				logger.error(e)
+				logger.error(t)
 			}
 
 			doLast {
@@ -111,7 +111,6 @@ class Cobol implements Plugin<Project> {
 			'cobolUnit',
 			'cobolCompile',
 			'cobolConfiguration'
-		]){ doLast { println 'check finished'
-			} }
+		]){ doLast { println 'check finished' } }
 	}
 }

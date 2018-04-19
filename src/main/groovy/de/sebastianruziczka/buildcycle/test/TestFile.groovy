@@ -3,9 +3,18 @@ package de.sebastianruziczka.buildcycle.test
 class TestFile {
 
 	private def testMethods = []
+	private String name = ''
 
 	public void addTestMethod(TestMethod method) {
 		this.testMethods << method
+	}
+
+	public void addName(String name) {
+		this.name = name
+	}
+
+	public String name() {
+		return this.name
 	}
 
 	public int successfullTests() {
