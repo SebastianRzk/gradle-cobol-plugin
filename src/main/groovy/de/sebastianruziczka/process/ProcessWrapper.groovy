@@ -18,6 +18,10 @@ class ProcessWrapper {
 	}
 
 	public int exec() {
+		return exec(false)
+	}
+
+	public int exec(boolean ignoreExitCode) {
 		this.logger.info('ProcessWrapper starting process ' + this.taskName)
 		File outputFile  = new File(this.logFilePath)
 		this.processBuilder.redirectOutput(outputFile)
@@ -30,7 +34,9 @@ class ProcessWrapper {
 			logger.error('Process ' + this.taskName + ' ended unexpected!')
 			logger.error('Error code: ' + process.exitValue())
 			logger.error(output)
-			throw new ProcessFailedException('Process ' + this.taskName + ' ended unexpected!')
+			if (!ignoreExitCode) {
+				throw new ProcessFailedException('Process ' + this.taskName + ' ended unexpected!')
+			}
 		}
 		logger.info(output)
 		return process.exitValue()
