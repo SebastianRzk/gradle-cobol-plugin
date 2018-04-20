@@ -76,14 +76,19 @@ Add this lines at the top of your build.gradle to enable unittests (more informa
 Following properties can be modified in the _cobol_ block in your _build.gradle_ :
 
 
-| name | default | other | required |
-| ---- | ------- | ----- | -------- |
-| srcFileType | '.cbl' | e.g. '.CBL' | yes |
-| srcMain | '' | | yes |
-| srcMainPath | 'src/main/cobol' || yes |
-| binMainPath | 'build/bin/main/cobol' || yes |
-| resMainPath | 'res/main/cobol' || yes |
-| fileFormat | 'fixed' |'free'| yes |
+| name | usage | default | other | required |
+| ---- | ----- | ------- | ----- | -------- |
+| srcFileType | compile, run, test | '.cbl' | e.g. '.CBL' | yes |
+| srcMain | compile, run | '' | | yes |
+| srcMainPath | compile, run, test | 'src/main/cobol' || yes |
+| binMainPath | compile, run, test | 'build/bin/main/cobol' || yes |
+| resMainPath | compile, run | 'res/main/cobol' || yes |
+| srcTestPath | test | 'src/test/cobol' | | yes |
+| fileFormat | compile, run, test | 'fixed' |'free'| yes |
+| terminal | run | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
+| terminalRows | run | 80 |  | yes |
+| terminalColumns | run | 43 |  | yes |
+
 
 ### Terminal configuration
 
@@ -101,7 +106,7 @@ Set the parameter _terminal_ in the cobol block in your build gradle, to use one
 
 #### configure own terminal
 
-Set the parameter _customTerminal_ in the cobol clock in your build.gradle to use a custom terminal commands.
+Set the parameter _customTerminal_ in the cobol block in your build.gradle to use a custom terminal commands.
 
 Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable.
 
