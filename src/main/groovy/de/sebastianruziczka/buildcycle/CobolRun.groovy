@@ -28,12 +28,12 @@ class CobolRun {
 					logger.info(commandLine)
 					return;
 				}else if (conf.terminal.equals('gnome-terminal')) {
-					String geometry = '--geometry=' + conf.terminalRows + 'x' + conf.terminalColumns
+					String geometry = '--geometry=' + conf.terminalColumns + 'x' + conf.terminalRows
 					commandLine 'gnome-terminal', '--wait', geometry, '--', conf.absoluteBinMainPath(project)
 				}else if (conf.terminal.equals('xterm')) {
 					logger.warn('!!!xterm does not return the exit value of your programm!!!')
 					logger.warn('!!!The return value can be positive even though the program ended unexpectedly!!!')
-					String geometryValue = conf.terminalRows + 'x' + conf.terminalColumns
+					String geometryValue = conf.terminalColumns + 'x' + conf.terminalRows
 					commandLine 'xterm', '+hold', '-geometry', geometryValue, '-e', conf.absoluteBinMainPath(project)
 				}else {
 					throw new IllegalArgumentException('No terminal defined!')
