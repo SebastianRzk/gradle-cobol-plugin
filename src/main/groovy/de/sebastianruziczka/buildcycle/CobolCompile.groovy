@@ -28,7 +28,7 @@ class CobolCompile {
 				checkIfMainFileIsSet(logger, conf)
 				prepareBinFolder(project, conf)
 
-				conf.multiMainTargets.each{
+				conf.multiCompileTargets.each{
 					execCobolCompileForFile(project, conf, it, logger)
 				}
 			}
@@ -41,7 +41,7 @@ class CobolCompile {
 		def command = ['cobc']
 		command << '-x' // Build executable
 		command << '-o'
-		command << conf.absoluteBinMainPath(project) // Executable destination path
+		command << conf.absoluteBinMainPath(project, mainFile) // Executable destination path
 		if (conf.fileFormat){
 			command << '-'+ conf.fileFormat
 		}
