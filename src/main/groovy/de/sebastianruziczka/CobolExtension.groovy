@@ -13,6 +13,8 @@ class CobolExtension {
 	String resMainPath = 'res/main/cobol'
 	String srcTestPath = 'src/test/cobol'
 
+	def multiMainTargets = []
+
 	String fileFormat = 'fixed'
 
 	String terminal = 'xterm'

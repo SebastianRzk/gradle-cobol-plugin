@@ -19,12 +19,23 @@ class CobolCompile {
 
 				String mainFile = conf.srcMain
 
-				conf = execCobolCompileForFile(project, conf, mainFile, logger)
+				execCobolCompileForFile(project, conf, mainFile, logger)
+			}
+		}
+
+		project.task ('compileMultiTargetCobol') {
+			doFirst {
+				checkIfMainFileIsSet(logger, conf)
+				prepareBinFolder(project, conf)
+
+				conf.multiMainTargets.each{
+					execCobolCompileForFile(project, conf, it, logger)
+				}
 			}
 		}
 	}
 
-	private CobolExtension execCobolCompileForFile(Project project, CobolExtension conf, String mainFile, Logger logger) {
+	private void execCobolCompileForFile(Project project, CobolExtension conf, String mainFile, Logger logger) {
 		def dependencies = resolveCompileDependencies(project, conf, mainFile)
 
 		def command = ['cobc']
@@ -44,7 +55,6 @@ class CobolCompile {
 
 		logger.info('Start cobc compile job')
 		wrapper.exec()
-		return conf
 	}
 
 	private List resolveCompileDependencies(Project project, CobolExtension conf, String mainFile) {
