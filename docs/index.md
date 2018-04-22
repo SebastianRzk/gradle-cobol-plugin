@@ -47,7 +47,7 @@ On Arch (via yaourt):
 Add to your build.gradle:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.10'
+         id 'de.sebastianruziczka.Cobol' version '0.0.11'
     }
 
 And a minimal configuration:
