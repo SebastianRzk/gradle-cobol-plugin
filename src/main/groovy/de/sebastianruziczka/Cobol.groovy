@@ -22,7 +22,7 @@ class Cobol implements Plugin<Project> {
 		new CobolRun().apply(project, conf)
 		new CobolUnit().apply(project, conf)
 
-		project.task ('cobolClean', type: Delete){
+		project.task ('clean', type: Delete){
 			doFirst {
 				delete project.file(conf.binMainPath).absolutePath
 			}

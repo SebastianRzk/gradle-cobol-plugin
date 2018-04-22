@@ -11,7 +11,7 @@ class CobolCompile {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('compileCobol')
 
-		project.task ('compileCobol', type:Exec, dependsOn: 'cobolClean') {
+		project.task ('compileCobol', type:Exec, dependsOn: 'clean') {
 			doFirst {
 				def list = []
 				def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
