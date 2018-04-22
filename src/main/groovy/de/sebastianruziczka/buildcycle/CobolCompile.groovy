@@ -13,18 +13,18 @@ class CobolCompile {
 
 		project.task ('compileCobol', type:Exec, dependsOn: 'clean') {
 			doFirst {
+				if (conf.srcMain.equals('')) {
+					logger.error('No main file configured!')
+					logger.error('Please specify main file in your build.gradle')
+					print conf.dump()
+					throw new Exception('No main file configured!')
+				}
 				def list = []
 				def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
 				tree.each { File file ->
 					if (!file.absolutePath.equals(conf.absoluteSrcMainPath(project))){
 						list << file.absolutePath
 					}
-				}
-				if (conf.srcMain.equals('')) {
-					logger.error('No main file configured!')
-					logger.error('Please specify main file in your build.gradle')
-					print conf.dump()
-					throw new Exception('No main file configured!')
 				}
 				if (!project.file(conf.binMainPath).exists()){
 					project.file(conf.binMainPath).mkdirs()
