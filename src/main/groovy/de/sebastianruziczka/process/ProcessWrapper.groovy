@@ -37,6 +37,7 @@ class ProcessWrapper {
 			logger.error('Process ' + this.taskName + ' ended unexpected!')
 			logger.error('Error code: ' + process.exitValue())
 			logger.error(this.output)
+			logger.error('args: ' + this.processBuilder.command())
 			if (!ignoreExitCode) {
 				throw new ProcessFailedException('Process ' + this.taskName + ' ended unexpected!')
 			}

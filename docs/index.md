@@ -47,7 +47,7 @@ On Arch (via yaourt):
 Add to your build.gradle:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.10'
+         id 'de.sebastianruziczka.Cobol' version '0.0.11'
     }
 
 And a minimal configuration:
@@ -59,7 +59,7 @@ And a minimal configuration:
 
 Run your application with
 
-    gradle cobolRun
+    gradle run
 
 Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
 
@@ -78,17 +78,18 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 | name | usage | default | other | required |
 | ---- | ----- | ------- | ----- | -------- |
-| srcFileType | compile, run, test | '.cbl' | e.g. '.CBL' | yes |
+| srcFileType | compile, run, test, compileMultiTargetCobol | '.cbl' | e.g. '.CBL' | yes |
 | srcMain | compile, run | '' | | yes |
-| srcMainPath | compile, run, test | 'src/main/cobol' || yes |
+| srcMainPath | compile, run, test, compileMultiTargetCobol | 'src/main/cobol' || yes |
 | binMainPath | compile, run, test | 'build/bin/main/cobol' || yes |
 | resMainPath | compile, run | 'res/main/cobol' || yes |
 | srcTestPath | test | 'src/test/cobol' | | yes |
-| fileFormat | compile, run, test | 'fixed' |'free'| yes |
+| multiCompileTargets | compileMultiTargetCobol | [] | other files to be compiled | No |
+| fileFormat | compile, run, test, compileMultiTargetCobol | 'fixed' |'free'| yes |
 | terminal | run | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
 | terminalRows | run | 80 |  | yes |
 | terminalColumns | run | 43 |  | yes |
-
+| customTerminal | run | '' | | no |
 
 ### Terminal configuration
 

@@ -16,8 +16,8 @@ import de.sebastianruziczka.buildcycle.test.TestResult
 
 class CobolUnit {
 	void apply (Project project, CobolExtension conf){
-		Logger logger = LoggerFactory.getLogger('cobolCompile')
-		project.task ('cobolUnit'){
+		Logger logger = LoggerFactory.getLogger('testUnitCobol')
+		project.task ('testUnitCobol'){
 			def allUnitTestFrameworks = []
 			try {
 				Reflections reflections = new Reflections("de");
