@@ -14,7 +14,7 @@ import de.sebastianruziczka.buildcycle.CobolUnit
 class Cobol implements Plugin<Project> {
 
 	void apply(Project project) {
-		Logger logger = LoggerFactory.getLogger('cobolCompile')
+		Logger logger = LoggerFactory.getLogger('cobolPlugin')
 		def conf = project.extensions.create('cobol', CobolExtension)
 
 		new CobolConfiguration().apply(project, conf)
@@ -28,9 +28,9 @@ class Cobol implements Plugin<Project> {
 			}
 		}
 
-		project.task ('cobolCheck', dependsOn: [
-			'cobolUnit',
-			'cobolCompile',
+		project.task ('checkCobol', dependsOn: [
+			'testUnitCobol',
+			'compileCobol',
 			'cobolConfiguration'
 		]){ doLast { println 'check finished' } }
 	}

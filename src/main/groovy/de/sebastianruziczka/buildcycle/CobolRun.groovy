@@ -9,12 +9,11 @@ import de.sebastianruziczka.CobolExtension
 
 class CobolRun {
 	void apply (Project project, CobolExtension conf){
-		Logger logger = LoggerFactory.getLogger('cobolCompile')
+		Logger logger = LoggerFactory.getLogger('runCobol')
 
-		project.task ('cobolRun', type:Exec, dependsOn: [
-			'cobolCompile',
-			'cobolCopyRessources',
-			'cobolCopyCopybooks'
+		project.task ('runCobol', type:Exec, dependsOn: [
+			'compileCobol',
+			'cobolCopyRessources'
 		]) {
 			doFirst {
 				standardInput = System.in
@@ -41,11 +40,6 @@ class CobolRun {
 			}
 		}
 
-		project.task ('cobolCopyCopybooks', type:Copy){
-			from project.file(conf.srcMainPath).absolutePath
-			into project.file(conf.binMainPath).absolutePath
-			exclude conf.filetypePattern()
-		}
 
 		project.task ('cobolCopyRessources', type: Copy){
 			doFirst {
