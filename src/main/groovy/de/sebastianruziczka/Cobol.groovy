@@ -16,6 +16,7 @@ class Cobol implements Plugin<Project> {
 	void apply(Project project) {
 		Logger logger = LoggerFactory.getLogger('cobolPlugin')
 		def conf = project.extensions.create('cobol', CobolExtension)
+		conf.projectFileResolver = { s -> project.file(s)}
 
 		new CobolConfiguration().apply(project, conf)
 		new CobolCompile().apply(project, conf)
@@ -24,7 +25,7 @@ class Cobol implements Plugin<Project> {
 
 		project.task ('clean', type: Delete){
 			doFirst {
-				delete project.file(conf.binMainPath).absolutePath
+				delete conf.projectFileResolver(conf.binMainPath).absolutePath
 			}
 		}
 
@@ -32,6 +33,7 @@ class Cobol implements Plugin<Project> {
 			'testUnitCobol',
 			'compileCobol',
 			'cobolConfiguration'
-		]){ doLast { println 'check finished' } }
+		]){ doLast { println 'check finished'
+			} }
 	}
 }

@@ -38,9 +38,9 @@ class CobolConfiguration {
 			doFirst {
 				println conf.properties.collect{ '\t'+it }.join('\n')
 				println '\t###Computed paths:###'
-				println '\tabsoluteSrcMainModulePath: ' + conf.absoluteSrcMainModulePath(project)
-				println '\tabsoluteSrcMainPath: ' + conf.absoluteSrcMainPath(project)
-				println '\tabsoluteBinMainPath: ' + conf.absoluteBinMainPath(project)
+				println '\tabsoluteSrcMainModulePath: ' + conf.absoluteSrcMainModulePath()
+				println '\tabsoluteSrcMainPath: ' + conf.absoluteSrcMainPath()
+				println '\tabsoluteBinMainPath: ' + conf.absoluteBinMainPath()
 			}
 		}
 
@@ -49,7 +49,6 @@ class CobolConfiguration {
 			'cobolCompilerVersion',
 			'cobolPluginVersion',
 			'cobolGradleConfiguration'
-		]){ doFirst { println 'DONE'
-			} }
+		]){ doFirst { println 'DONE' } }
 	}
 }

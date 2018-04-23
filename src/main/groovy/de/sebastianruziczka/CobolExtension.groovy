@@ -22,6 +22,7 @@ class CobolExtension {
 	int terminalRows = 80
 	int terminalColumns = 43
 
+	Closure<File> projectFileResolver = null
 
 	String filetypePattern(){
 		'**/*' + this.srcFileType
@@ -31,46 +32,46 @@ class CobolExtension {
 		return '**/*' + this.unittestPostfix + srcFileType
 	}
 
-	String absoluteSrcMainModulePath(Project project){
-		return this.absoluteSrcMainModulePath(project, this.srcMain)
+	String absoluteSrcMainModulePath(){
+		return this.absoluteSrcMainModulePath(this.srcMain)
 	}
 
-	String absoluteSrcMainModulePath(Project project, String sourceFile){
+	String absoluteSrcMainModulePath(String sourceFile){
 		if (!sourceFile.endsWith(this.srcFileType)) {
 			sourceFile = sourceFile + this.srcFileType
 		}
-		return project.file(srcMainPath + '/' + sourceFile).getParent()
+		return this.projectFileResolver(srcMainPath + '/' + sourceFile).getParent()
 	}
 
-	String absoluteSrcMainPath(Project project){
-		return this.absoluteSrcMainPath(project, this.srcMain)
+	String absoluteSrcMainPath(){
+		return this.absoluteSrcMainPath(this.srcMain)
 	}
 
-	String absoluteSrcMainPath(Project project, String mainFile){
+	String absoluteSrcMainPath(String mainFile){
 		if (!mainFile.endsWith(this.srcFileType)) {
 			mainFile = mainFile + this.srcFileType
 		}
-		return project.file(srcMainPath + '/' + mainFile).absolutePath
+		return this.projectFileResolver(srcMainPath + '/' + mainFile).absolutePath
 	}
 
-	String absoluteBinMainPath(Project project){
-		return project.file(binMainPath + '/' +  srcMain).absolutePath
+	String absoluteBinMainPath(){
+		return this.projectFileResolver(binMainPath + '/' +  srcMain).absolutePath
 	}
 
-	String absoluteBinMainPath(Project project, String name){
+	String absoluteBinMainPath(String name){
 		if (name.endsWith(this.srcFileType)) {
 			name = name.substring(0, name.length() - this.srcFileType.length())
 		}
-		return project.file(binMainPath + '/' +  name).absolutePath
+		return this.projectFileResolver(binMainPath + '/' +  name).absolutePath
 	}
 
 
-	String absoluteSrcTestPath(Project project) {
-		return project.file(this.srcTestPath).absolutePath
+	String absoluteSrcTestPath() {
+		return this.projectFileResolver(this.srcTestPath).absolutePath
 	}
 
 
 	String absoluteUnitTestFramworkPath(Project project, String frameWorkName) {
-		return project.file(this.binMainPath).absolutePath + '/' + frameWorkName
+		return this.projectFileResolver(this.binMainPath).absolutePath + '/' + frameWorkName
 	}
 }

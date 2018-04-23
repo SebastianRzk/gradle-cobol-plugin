@@ -61,11 +61,11 @@ class CobolUnit {
 				int unitTestFileEndingChars = conf.unitTestFileTypePattern().length() - '**/*'.length()
 				allTests.each {
 					int lastNameIndex = it.length() - unitTestFileEndingChars
-					int firstNameIndex = conf.absoluteSrcTestPath(project).length()
+					int firstNameIndex = conf.absoluteSrcTestPath().length()
 
 					String moduleName = it.substring(firstNameIndex +1,lastNameIndex)
 
-					String expectedSrcModulePath = project.file(conf.srcMainPath + '/' + moduleName + conf.srcFileType).absolutePath
+					String expectedSrcModulePath = conf.projectFileResolver(conf.srcMainPath + '/' + moduleName + conf.srcFileType).absolutePath
 					if (allSrc.contains(expectedSrcModulePath)) {
 						allSrc.remove(expectedSrcModulePath)
 						cobolTestPairs << new CobolTestPair(moduleName + conf.srcFileType, it.substring(firstNameIndex + 1))

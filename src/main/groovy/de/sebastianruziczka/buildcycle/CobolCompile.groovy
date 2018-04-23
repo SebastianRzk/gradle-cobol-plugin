@@ -15,7 +15,7 @@ class CobolCompile {
 		project.task ('compileCobol') {
 			doFirst {
 				checkIfMainFileIsSet(logger, conf)
-				prepareBinFolder(project, conf)
+				prepareBinFolder(conf)
 
 				String mainFile = conf.srcMain
 
@@ -25,8 +25,7 @@ class CobolCompile {
 
 		project.task ('compileMultiTargetCobol') {
 			doFirst {
-				checkIfMainFileIsSet(logger, conf)
-				prepareBinFolder(project, conf)
+				prepareBinFolder(conf)
 
 				conf.multiCompileTargets.each{
 					execCobolCompileForFile(project, conf, it, logger)
@@ -41,16 +40,16 @@ class CobolCompile {
 		def command = ['cobc']
 		command << '-x' // Build executable
 		command << '-o'
-		command << conf.absoluteBinMainPath(project, mainFile) // Executable destination path
+		command << conf.absoluteBinMainPath(mainFile) // Executable destination path
 		if (conf.fileFormat){
 			command << '-'+ conf.fileFormat
 		}
-		command << conf.absoluteSrcMainPath(project, mainFile)
+		command << conf.absoluteSrcMainPath(mainFile)
 		command += dependencies // Add all module dependencies
 
 		ProcessBuilder processBuilder = new ProcessBuilder(command)
-		processBuilder.directory(new File(conf.absoluteSrcMainModulePath(project, mainFile)))
-		String logPath = project.file(conf.binMainPath + '/' + mainFile + '_COMPILE.LOG').absolutePath
+		processBuilder.directory(new File(conf.absoluteSrcMainModulePath(mainFile)))
+		String logPath = conf.projectFileResolver(conf.binMainPath + '/' + mainFile + '_COMPILE.LOG').absolutePath
 		ProcessWrapper wrapper = new ProcessWrapper(processBuilder, 'Compile ' + mainFile, logPath)
 
 		logger.info('Start cobc compile job')
@@ -61,7 +60,7 @@ class CobolCompile {
 		def list = []
 		def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
 		tree.each { File file ->
-			if (!file.absolutePath.equals(conf.absoluteSrcMainPath(project, mainFile))){
+			if (!file.absolutePath.equals(conf.absoluteSrcMainPath(mainFile))){
 				list << file.absolutePath
 			}
 		}
@@ -77,9 +76,9 @@ class CobolCompile {
 		}
 	}
 
-	private prepareBinFolder(Project project, CobolExtension conf) {
-		if (!project.file(conf.binMainPath).exists()){
-			project.file(conf.binMainPath).mkdirs()
+	private prepareBinFolder(CobolExtension conf) {
+		if (!conf.projectFileResolver(conf.binMainPath).exists()){
+			conf.projectFileResolver(conf.binMainPath).mkdirs()
 		}
 	}
 }
