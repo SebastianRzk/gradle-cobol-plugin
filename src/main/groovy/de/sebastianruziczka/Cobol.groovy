@@ -33,6 +33,7 @@ class Cobol implements Plugin<Project> {
 			'testUnitCobol',
 			'compileCobol',
 			'cobolConfiguration'
-		]){ doLast { println 'check finished' } }
+		]){ doLast { println 'check finished'
+			} }
 	}
 }

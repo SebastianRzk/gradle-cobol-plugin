@@ -11,10 +11,13 @@ class CobolRun {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('runCobol')
 
-		project.task ('runCobol', type:Exec, dependsOn: [
+
+		project.task ('buildCobol', dependsOn: [
 			'compileCobol',
 			'cobolCopyRessources'
-		]) {
+		]){}
+
+		project.task ('runCobol', type:Exec, dependsOn: ['buildCobol']) {
 			doFirst {
 				standardInput = System.in
 				workingDir = conf.binMainPath
