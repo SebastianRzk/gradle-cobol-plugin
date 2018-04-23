@@ -122,3 +122,5 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _run_ | everything in build directory | terminal process | _buildCobol_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
 | _testUnitCobol_ | `srcTest` | result of tests |  |
+| _checkCobol_ | everything | check result | _testUnitCobol_, _compileCobol_, _cobolConfiguration_ |
+
