@@ -1,7 +1,5 @@
 package de.sebastianruziczka
 
-import org.gradle.api.Project
-
 class CobolExtension {
 	String srcFileType = '.cbl'
 	String srcMain = ''
@@ -71,7 +69,7 @@ class CobolExtension {
 	}
 
 
-	String absoluteUnitTestFramworkPath(Project project, String frameWorkName) {
+	String absoluteUnitTestFrameworkPath(String frameWorkName) {
 		return this.projectFileResolver(this.binMainPath).absolutePath + '/' + frameWorkName
 	}
 }
