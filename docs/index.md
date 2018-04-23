@@ -78,7 +78,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 | name | usage | default | other | required |
 | ---- | ----- | ------- | ----- | -------- |
-| srcFileType | compile, run, test, compileMultiTargetCobol | '.cbl' | e.g. '.CBL' | yes |
+| srcFileType | compile, run, test, compileMultiTarget | '.cbl' | e.g. '.CBL' | yes |
 | srcMain | compile, run | '' | | yes |
 | srcMainPath | compile, run, test, compileMultiTargetCobol | 'src/main/cobol' || yes |
 | binMainPath | compile, run, test | 'build/bin/main/cobol' || yes |
@@ -111,3 +111,14 @@ Set the parameter _customTerminal_ in the cobol block in your build.gradle to us
 
 Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable.
 
+
+### tasks
+
+| name | input | output | dependsOn |
+| ---- | ----- | ------ | --------- |
+| _compile_ | `srcMain` | executable in `build` |  |
+| _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
+| _build_ |  | runnable programm in build directory | _compileCobol_, _cobolCopyRessources_ | 
+| _run_ | everything in build directory | terminal process | _buildCobol_ |
+| _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
+| _testUnitCobol_ | `srcTest` | result of tests |  |
