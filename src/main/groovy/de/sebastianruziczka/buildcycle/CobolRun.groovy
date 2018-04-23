@@ -22,18 +22,18 @@ class CobolRun {
 					logger.info('Compiling terminal String, replace {path} with actual executable')
 					logger.info('Before:')
 					logger.info(conf.customTerminal)
-					commandLine = conf.customTerminal.replace('{path}', conf.absoluteBinMainPath(project))
+					commandLine = conf.customTerminal.replace('{path}', conf.absoluteBinMainPath())
 					logger.info('After:')
 					logger.info(commandLine)
 					return;
 				}else if (conf.terminal.equals('gnome-terminal')) {
 					String geometry = '--geometry=' + conf.terminalColumns + 'x' + conf.terminalRows
-					commandLine 'gnome-terminal', '--wait', geometry, '--', conf.absoluteBinMainPath(project)
+					commandLine 'gnome-terminal', '--wait', geometry, '--', conf.absoluteBinMainPath()
 				}else if (conf.terminal.equals('xterm')) {
 					logger.warn('!!!xterm does not return the exit value of your programm!!!')
 					logger.warn('!!!The return value can be positive even though the program ended unexpectedly!!!')
 					String geometryValue = conf.terminalColumns + 'x' + conf.terminalRows
-					commandLine 'xterm', '+hold', '-geometry', geometryValue, '-e', conf.absoluteBinMainPath(project)
+					commandLine 'xterm', '+hold', '-geometry', geometryValue, '-e', conf.absoluteBinMainPath()
 				}else {
 					throw new IllegalArgumentException('No terminal defined!')
 				}
@@ -43,10 +43,10 @@ class CobolRun {
 
 		project.task ('cobolCopyRessources', type: Copy){
 			doFirst {
-				project.file('bin/main/cobol').mkdirs()
+				conf.projectFileResolver('bin/main/cobol').mkdirs()
 			}
-			from project.file(conf.resMainPath).absolutePath
-			into project.file(conf.binMainPath).absolutePath
+			from conf.projectFileResolver(conf.resMainPath).absolutePath
+			into conf.projectFileResolver(conf.binMainPath).absolutePath
 		}
 	}
 }
