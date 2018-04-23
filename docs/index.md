@@ -47,7 +47,7 @@ On Arch (via yaourt):
 Add to your build.gradle:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.11'
+         id 'de.sebastianruziczka.Cobol' version '0.0.12'
     }
 
 And a minimal configuration:
@@ -118,7 +118,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | ---- | ----- | ------ | --------- |
 | _compile_ | `srcMain` | executable in `build` |  |
 | _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
-| _build_ |  | runnable programm in build directory | _compileCobol_, _cobolCopyRessources_ | 
+| _buildCobol_ |  | runnable programm in build directory | _compileCobol_, _cobolCopyRessources_ | 
 | _run_ | everything in build directory | terminal process | _buildCobol_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
 | _testUnitCobol_ | `srcTest` | result of tests |  |
