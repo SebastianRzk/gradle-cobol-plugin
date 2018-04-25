@@ -65,7 +65,7 @@ Add this lines at the top of your build.gradle to enable unittests (more informa
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.4'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: 'gradle.unitVersion'
      	}
      }
 
@@ -124,3 +124,20 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _testUnitCobol_ | `srcTest` | result of tests |  |
 | _checkCobol_ | everything | check result | _testUnitCobol_, _compileCobol_, _cobolConfiguration_ |
 
+### Develop own testing plugin
+
+To use your own testing groovy/java/kotlin ... -code, several conditions must be met.
+
+Make sure your main framework class:
+	* ... is in the classpath of this plugin (via buildscript dependencies)
+ 	* ... is in the package de.*
+	* ... implements the interface de.sebastianruziczka.CobolTestFramework
+	* ... is annotated with @CobolUnitFrameworkProvider
+		
+Methods of the interface CobolTestFramework:
+
+	* `void configure(CobolExtension configuration, Project project)`: Initial configuiration call.
+	* `int prepare()`: Initial call for framework initialization. Returns a process return code (default: 0)
+	* `TestFile test(String srcName, String testName)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
+
+		

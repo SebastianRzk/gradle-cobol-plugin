@@ -1,6 +1,6 @@
 buildscript {
 	 dependencies {
-		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.4'
+		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: 'gradle.unitVersion'
 	}
 }
 
