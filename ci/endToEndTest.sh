@@ -13,6 +13,7 @@ echo "<<<<<<< install rest repo"
 
 echo ">>>>>>> create local repo"
 cd ..
+gradle generateCIVersions
 gradle publish
 mv ../repo endToEndTest/repo
 cd endToEndTest/gradle-cobol-plugin-unittest-extension
