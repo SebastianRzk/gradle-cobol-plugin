@@ -65,7 +65,7 @@ Add this lines at the top of your build.gradle to enable unittests (more informa
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.3'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.4'
      	}
      }
 

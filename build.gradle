@@ -23,6 +23,11 @@ def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
 version = '0.0.15'
 
+GradlePropertyFilter propFilter = new GradlePropertyFilter([
+	'gradle.actualVersion' : version,
+	'gradle.unitVersion' : '0.0.4'
+	])
+
 gradlePlugin{
 	plugins {
 		cobol {
@@ -72,9 +77,7 @@ task (generateDocVersions, type: Copy, dependsOn:['deleteDocs']){
 	into 'docs'
 	include '**/*.base'
 	rename {it - 'base' + 'md'}
-		filter {
-		line -> line.replaceAll('gradle.actualVersion', version)
-	}
+	filter { line ->propFilter.filter(line)}
 } 
 
 task (deleteCI, type: Delete){
@@ -88,7 +91,7 @@ task (generateCIVersions, type: Copy, dependsOn:['deleteCI']){
 	include '**/*.base'
 	rename {it - '.base'}
 		filter {
-		line -> line.replaceAll('gradle.actualVersion', version)
+		filter { line ->propFilter.filter(line)}
 	}
 }
 
