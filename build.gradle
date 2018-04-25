@@ -60,3 +60,40 @@ publishing {
         }
     }
 }
+
+
+task (deleteDocs, type: Delete){
+	delete 'docs/index.md'
+}
+
+
+task (generateDocVersions, type: Copy, dependsOn:['deleteDocs']){
+	from 'docs'
+	into 'docs'
+	include '**/*.base'
+	rename {it - 'base' + 'md'}
+		filter {
+		line -> line.replaceAll('gradle.actualVersion', version)
+	}
+} 
+
+task (deleteCI, type: Delete){
+	delete 'ci/build.gradle.replacement.base'
+}
+
+
+task (generateCIVersions, type: Copy, dependsOn:['deleteCI']){
+	from 'ci'
+	into 'ci'
+	include '**/*.base'
+	rename {it - 'base'}
+		filter {
+		line -> line.replaceAll('gradle.actualVersion', version)
+	}
+}
+
+
+
+task (generateVersions, dependsOn: [generateDocVersions, generateCIVersions]){
+	
+}

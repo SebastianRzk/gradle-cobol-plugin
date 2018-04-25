@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-	id 'de.sebastianruziczka.Cobol' version '0.0.14' apply false
+	id 'de.sebastianruziczka.Cobol' version 'gradle.actualVersion' apply false
 }
 
 subprojects {
