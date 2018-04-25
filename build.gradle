@@ -78,7 +78,7 @@ task (generateDocVersions, type: Copy, dependsOn:['deleteDocs']){
 } 
 
 task (deleteCI, type: Delete){
-	delete 'ci/build.gradle.replacement.base'
+	delete 'ci/build.gradle.replacement'
 }
 
 
