@@ -90,9 +90,7 @@ task (generateCIVersions, type: Copy, dependsOn:['deleteCI']){
 	into 'ci'
 	include '**/*.base'
 	rename {it - '.base'}
-		filter {
-		filter { line ->propFilter.filter(line)}
-	}
+	filter { line ->propFilter.filter(line)}
 }
 
 
