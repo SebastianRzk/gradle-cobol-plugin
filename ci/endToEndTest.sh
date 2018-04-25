@@ -13,7 +13,6 @@ echo "<<<<<<< install rest repo"
 
 echo ">>>>>>> create local repo"
 cd ..
-gradle generateCIVersions
 gradle publish
 mv ../repo endToEndTest/repo
 cd endToEndTest/gradle-cobol-plugin-unittest-extension
@@ -23,6 +22,7 @@ cd ..
 echo "<<<<<<<"
 
 echo ">>>>>>> prepare test-repository"
+gradle generateCIVersions
 rm -v endToEndTest/gradle-cobol-plugin-example/settings.gradle
 cp endToEndTest/gradle-cobol-plugin-example/ci/local_repo_test_settings.gradle endToEndTest/gradle-cobol-plugin-example/settings.gradle
 rm -v endToEndTest/gradle-cobol-plugin-example/build.gradle
