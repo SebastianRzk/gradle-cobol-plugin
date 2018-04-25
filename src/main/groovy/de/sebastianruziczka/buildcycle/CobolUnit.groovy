@@ -17,21 +17,16 @@ import de.sebastianruziczka.buildcycle.test.TestResult
 class CobolUnit {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('testUnitCobol')
-		project.task ('testUnitCobol'){
-			def allUnitTestFrameworks = []
-			try {
-				Reflections reflections = new Reflections("de");
-				Set<Class<? extends CobolUnitFrameworkProvider>> cobolUnitFrameworks = reflections.getTypesAnnotatedWith(CobolUnitFrameworkProvider.class)
-				cobolUnitFrameworks.each{
-					logger.info('Detected framworks: ' + cobolUnitFrameworks)
-					Constructor constructor = it.getDeclaredConstructors0(true)[0]
-					allUnitTestFrameworks << constructor.newInstance()
-				}
-			} catch (Throwable t) {
-				logger.error('Failed while searching for cobol unit frameworks', t)
-				logger.error(t.message)
-				t.printStackTrace()
+		project.task ('testUnitCobolConfiguration'){
+			doLast {
+				def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
+				println 'Detected unittest frameworks : ' + allUnitTestFrameworks.size()
+				allUnitTestFrameworks.each{ println '\t'+it.toString()}
 			}
+		}
+
+		project.task ('testUnitCobol'){
+			def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
 
 			onlyIf({this.testPresets(logger, project, conf, allUnitTestFrameworks)})
 
@@ -92,6 +87,24 @@ class CobolUnit {
 				}
 			}
 		}
+	}
+
+	private def resolveUnitTestFrameworks(Logger logger) {
+		def allUnitTestFrameworks = []
+		try {
+			Reflections reflections = new Reflections("de");
+			Set<Class<? extends CobolUnitFrameworkProvider>> cobolUnitFrameworks = reflections.getTypesAnnotatedWith(CobolUnitFrameworkProvider.class)
+			cobolUnitFrameworks.each{
+				logger.info('Detected framworks: ' + cobolUnitFrameworks)
+				Constructor constructor = it.getDeclaredConstructors0(true)[0]
+				allUnitTestFrameworks << constructor.newInstance()
+			}
+		} catch (Throwable t) {
+			logger.error('Failed while searching for cobol unit frameworks', t)
+			logger.error(t.message)
+			t.printStackTrace()
+		}
+		return allUnitTestFrameworks
 	}
 
 	private org.gradle.api.tasks.util.PatternFilterable sourceTree(Project project, CobolExtension conf) {

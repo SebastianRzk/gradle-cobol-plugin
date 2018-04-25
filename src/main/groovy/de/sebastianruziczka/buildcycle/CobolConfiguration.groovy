@@ -43,7 +43,9 @@ class CobolConfiguration {
 			'cobolGradleVersion',
 			'cobolCompilerVersion',
 			'cobolPluginVersion',
-			'cobolGradleConfiguration'
-		]){ doFirst { println 'DONE' } }
+			'cobolGradleConfiguration',
+			'testUnitCobolConfiguration'
+		]){ doFirst { println 'DONE'
+			} }
 	}
 }
