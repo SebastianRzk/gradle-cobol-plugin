@@ -80,7 +80,7 @@ class CobolUnit {
 				}
 
 				allUnitTestFrameworks.each{ framework ->
-					println 'Starting Cobol-Unittest with framwork: ' + framework.getClass().getSimpleName()
+					println 'Starting Cobol-Unittest with framework: ' + framework.toString()
 					TestResult result = new TestResult()
 					cobolTestPairs.each{
 						result.addTest(framework.test(it.srcFile(), it.testFile()))
