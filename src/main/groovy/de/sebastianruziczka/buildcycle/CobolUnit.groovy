@@ -33,24 +33,20 @@ class CobolUnit {
 				t.printStackTrace()
 			}
 
+			onlyIf({this.testPresets(logger, project, conf, allUnitTestFrameworks)})
+
 			doLast {
 				if (allUnitTestFrameworks.isEmpty()) {
-					logger.info("No cobol unit framework found.")
-					logger.info("Make sure your framwork class:")
-					logger.info("\t 1. ... is in the classpath of this plugin (via buildscript dependencies)")
-					logger.info("\t 2. ... is in the package de.*")
-					logger.info("\t 3. ... implements the interface de.sebastianruziczka.CobolUnitFramwork")
-					logger.info("\t 4. ... is annotated with @CobolUnitFrameworkProvider")
-					println 'No unittest framework found. Use --info for more information'
+					printNoUnittestFrameworkDefined(logger)
 				}
-				def testTree = project.fileTree(conf.srcTestPath).include(conf.unitTestFileTypePattern())
+				def testTree = testTree(project, conf)
 				def allTests = []
 
 				testTree.each { File file ->
 					allTests << file.absolutePath
 				}
 
-				def srcTree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
+				def srcTree = sourceTree(project, conf)
 				def allSrc = []
 				srcTree.each { File file ->
 					allSrc << file.absolutePath
@@ -73,7 +69,8 @@ class CobolUnit {
 				}
 
 				if (cobolTestPairs.size()== 0) {
-					logger.warn('NO TESTS FOUND')
+					logger.warn('NO TEST-PAIRS FOUND')
+					logger.warn('Convention: Main: <name>' + conf.srcFileType + '  Test: <name>'+conf.unittestPostfix+conf.srcFileType)
 					return
 				}
 				logger.info('Number of Src<>Test pairs found: ' + cobolTestPairs.size())
@@ -83,7 +80,7 @@ class CobolUnit {
 				}
 
 				allUnitTestFrameworks.each{ framework ->
-					println 'Starting Cobol-Unittest with framwork: ' + framework.getClass().getSimpleName()
+					println 'Starting Cobol-Unittest with framework: ' + framework.toString()
 					TestResult result = new TestResult()
 					cobolTestPairs.each{
 						result.addTest(framework.test(it.srcFile(), it.testFile()))
@@ -95,5 +92,42 @@ class CobolUnit {
 				}
 			}
 		}
+	}
+
+	private org.gradle.api.tasks.util.PatternFilterable sourceTree(Project project, CobolExtension conf) {
+		return project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
+	}
+
+	private org.gradle.api.tasks.util.PatternFilterable testTree(Project project, CobolExtension conf) {
+		return project.fileTree(conf.srcTestPath).include(conf.unitTestFileTypePattern())
+	}
+
+	private boolean testPresets(Logger logger, Project project, CobolExtension conf, def allUnitTestFrameworks) {
+		if (allUnitTestFrameworks.isEmpty()) {
+			this.printNoUnittestFrameworkDefined(logger)
+			return false
+		}
+		if (testTree(project, conf).getFiles().isEmpty()) {
+			logger.info("No test files found!")
+			println "No test files found!"
+			return false
+		}
+		if (testTree(project, conf).getFiles().isEmpty()) {
+			logger.info("No source files found!")
+			println "No source files found!"
+			return false
+		}
+
+		return true
+	}
+
+	private printNoUnittestFrameworkDefined(Logger logger) {
+		logger.info("No cobol unit framework found.")
+		logger.info("Make sure your framwork class:")
+		logger.info("\t 1. ... is in the classpath of this plugin (via buildscript dependencies)")
+		logger.info("\t 2. ... is in the package de.*")
+		logger.info("\t 3. ... implements the interface de.sebastianruziczka.CobolUnitFramwork")
+		logger.info("\t 4. ... is annotated with @CobolUnitFrameworkProvider")
+		println 'No unittest framework found. Use --info for more information'
 	}
 }

@@ -5,20 +5,16 @@ import org.gradle.api.tasks.*
 import org.gradle.util.GradleVersion
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.metainf.MetaInfPropertyResolver
 
 class CobolConfiguration {
 	void apply(Project project, CobolExtension conf) {
 
 		project.task ('cobolPluginVersion'){
 			doLast {
-				URLClassLoader urlClassLoader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-				URL manifestUrl = urlClassLoader.findResource("META-INF/MANIFEST.MF");
-				InputStream is = manifestUrl.openStream();
-				Properties props = new Properties();
-				props.load(is);
-				is.close();
-				println '\tPlugin-Version: ' +  props.get('Implementation-Version')
-				println '\tPlugin-Build-Date: '+ props.get('Build-Date')
+				MetaInfPropertyResolver resolver = new MetaInfPropertyResolver("gradle-cobol-plugin")
+				println '\tPlugin-Version: ' +  resolver.get('Implementation-Version').orElse('No version found!')
+				println '\tPlugin-Build-Date: '+ resolver.get('Build-Date').orElse('No date found!')
 			}
 		}
 
@@ -26,7 +22,6 @@ class CobolConfiguration {
 			commandLine = 'cobc'
 			args = ['--version']
 		}
-
 		project.task ('cobolGradleVersion'){
 			doLast {
 				GradleVersion gradleVersion = GradleVersion.current()
