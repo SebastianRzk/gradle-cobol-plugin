@@ -78,18 +78,18 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 | name | usage | default | other | required |
 | ---- | ----- | ------- | ----- | -------- |
-| srcFileType | compile, run, test, compileMultiTarget | '.cbl' | e.g. '.CBL' | yes |
-| srcMain | compile, run | '' | | yes |
-| srcMainPath | compile, run, test, compileMultiTargetCobol | 'src/main/cobol' || yes |
-| binMainPath | compile, run, test | 'build/bin/main/cobol' || yes |
-| resMainPath | compile, run | 'res/main/cobol' || yes |
-| srcTestPath | test | 'src/test/cobol' | | yes |
-| multiCompileTargets | compileMultiTargetCobol | [] | other files to be compiled | No |
-| fileFormat | compile, run, test, compileMultiTargetCobol | 'fixed' |'free'| yes |
-| terminal | run | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
-| terminalRows | run | 80 |  | yes |
-| terminalColumns | run | 43 |  | yes |
-| customTerminal | run | '' | | no |
+| srcFileType | _compileCobol_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' | yes |
+| srcMain | _compileCobol_, _run_ | '' | | yes |
+| srcMainPath | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' || yes |
+| binMainPath | _compileCobol_, _run_, _test_ | 'build/bin/main/cobol' || yes |
+| resMainPath | _compile_, _run_ | 'res/main/cobol' || yes |
+| srcTestPath | _test_ | 'src/test/cobol' | | yes |
+| multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled | No |
+| fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'| yes |
+| terminal | _run_ | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
+| terminalRows | _run_ | 80 |  | yes |
+| terminalColumns | _run_ | 43 |  | yes |
+| customTerminal | _run_ | '' | | no |
 
 ### Terminal configuration
 
