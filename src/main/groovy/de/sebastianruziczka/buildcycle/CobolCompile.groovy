@@ -24,6 +24,7 @@ class CobolCompile {
 		}
 
 		project.task ('compileMultiTargetCobol') {
+			onlyIf({ return !conf.multiCompileTargets.isEmpty()})
 			doFirst {
 				prepareBinFolder(conf)
 
