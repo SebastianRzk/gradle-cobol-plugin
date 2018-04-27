@@ -87,8 +87,8 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled | No |
 | fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'| yes |
 | terminal | _run_ | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
-| terminalRows | _run_ | 80 |  | yes |
-| terminalColumns | _run_ | 43 |  | yes |
+| terminalRows | _run_ | 43 |  | yes |
+| terminalColumns | _run_ | 80 |  | yes |
 | customTerminal | _run_ | '' | | no |
 
 ### Terminal configuration
@@ -129,16 +129,15 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 To use your own testing groovy/java/kotlin ... -code, several conditions must be met.
 
 Make sure your main framework class:
-
-* ... is in the classpath of this plugin (via buildscript dependencies)
-* ... is in the package `de.*`
-* ... implements the interface `de.sebastianruziczka.CobolTestFramework`
-* ... is annotated with `@CobolUnitFrameworkProvider`
-
+	* ... is in the classpath of this plugin (via buildscript dependencies)
+ 	* ... is in the package de.*
+	* ... implements the interface de.sebastianruziczka.CobolTestFramework
+	* ... is annotated with @CobolUnitFrameworkProvider
+		
 Methods of the interface CobolTestFramework:
 
-* `void configure(CobolExtension configuration, Project project)` : Initial configuration call.
-* `int prepare()` : Initial call for framework initialization. Returns a process return code (default: 0)
-* `TestFile test(String srcName, String testName)` : Called for every pair of src<->testfile. Returns an instance of `TestFile`
+	* `void configure(CobolExtension configuration, Project project)`: Initial configuiration call.
+	* `int prepare()`: Initial call for framework initialization. Returns a process return code (default: 0)
+	* `TestFile test(String srcName, String testName)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
 
 		
