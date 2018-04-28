@@ -15,9 +15,14 @@ class CobolRun {
 		project.task ('buildCobol', dependsOn: [
 			'compileCobol',
 			'cobolCopyRessources'
-		]){}
+		]){
+			group 'COBOL'
+			description 'builds an runnable programm in build folder'
+		}
 
 		project.task ('runCobol', type:Exec, dependsOn: ['buildCobol']) {
+			group 'COBOL'
+			description 'Builds a runnable programm and executes it'
 			doFirst {
 				standardInput = System.in
 				workingDir = conf.binMainPath
@@ -45,6 +50,9 @@ class CobolRun {
 
 
 		project.task ('cobolCopyRessources', type: Copy){
+			group 'COBOL'
+			description 'moves all ressources into build folder'
+			onlyIf {!project.fileTree(conf.srcMainPath).getFiles().isEmpty()}
 			doFirst {
 				conf.projectFileResolver('bin/main/cobol').mkdirs()
 			}
