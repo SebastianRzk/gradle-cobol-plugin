@@ -33,8 +33,12 @@ class Cobol implements Plugin<Project> {
 			'testUnitCobol',
 			'compileMultiTargetCobol',
 			'compileCobol',
+			'clean',
 			'cobolConfiguration'
-		]){ doLast { println 'check finished'
-			} }
+		]){
+			doLast { println 'check finished'}
+			group 'COBOL'
+			description 'Execute full build cycle (clean+compile+test)'
+		}
 	}
 }

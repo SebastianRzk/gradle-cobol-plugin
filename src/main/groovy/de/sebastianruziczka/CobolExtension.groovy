@@ -17,8 +17,8 @@ class CobolExtension {
 
 	String terminal = 'xterm'
 	String customTerminal = ''
-	int terminalRows = 80
-	int terminalColumns = 43
+	int terminalRows = 43
+	int terminalColumns = 80
 
 	Closure<File> projectFileResolver = null
 

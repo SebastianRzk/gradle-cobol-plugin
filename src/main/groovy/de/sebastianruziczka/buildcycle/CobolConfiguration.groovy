@@ -11,6 +11,8 @@ class CobolConfiguration {
 	void apply(Project project, CobolExtension conf) {
 
 		project.task ('cobolPluginVersion'){
+			group 'COBOL Configuration'
+			description 'returns version of this plugin'
 			doLast {
 				MetaInfPropertyResolver resolver = new MetaInfPropertyResolver("gradle-cobol-plugin")
 				println '\tPlugin-Version: ' +  resolver.get('Implementation-Version').orElse('No version found!')
@@ -19,10 +21,15 @@ class CobolConfiguration {
 		}
 
 		project.task ('cobolCompilerVersion', type: Exec){
+			group 'COBOL Configuration'
+			description 'returns version of used GnuCobolCompiler'
 			commandLine = 'cobc'
 			args = ['--version']
 		}
+
 		project.task ('cobolGradleVersion'){
+			group 'COBOL Configuration'
+			description 'returns version of used gradle instance'
 			doLast {
 				GradleVersion gradleVersion = GradleVersion.current()
 				println gradleVersion.properties.collect{ '\t'+it }.join('\n')
@@ -30,6 +37,8 @@ class CobolConfiguration {
 		}
 
 		project.task ('cobolGradleConfiguration') {
+			group 'COBOL Configuration'
+			description 'returns project configuration'
 			doFirst {
 				println conf.properties.collect{ '\t'+it }.join('\n')
 				println '\t###Computed paths:###'
@@ -45,7 +54,10 @@ class CobolConfiguration {
 			'cobolPluginVersion',
 			'cobolGradleConfiguration',
 			'testUnitCobolConfiguration'
-		]){ doFirst { println 'DONE'
-			} }
+		]){
+			group 'COBOL Configuration'
+			description 'returns full configuration of the project and plugin and their versions'
+			doFirst { println 'DONE' }
+		}
 	}
 }

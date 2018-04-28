@@ -87,8 +87,8 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled | No |
 | fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'| yes |
 | terminal | _run_ | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
-| terminalRows | _run_ | 80 |  | yes |
-| terminalColumns | _run_ | 43 |  | yes |
+| terminalRows | _run_ | 43 |  | yes |
+| terminalColumns | _run_ | 80 |  | yes |
 | customTerminal | _run_ | '' | | no |
 
 ### Terminal configuration
