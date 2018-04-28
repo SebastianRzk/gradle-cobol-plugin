@@ -13,6 +13,8 @@ class CobolCompile {
 		Logger logger = LoggerFactory.getLogger('compileCobol')
 
 		project.task ('compileCobol') {
+			group 'COBOL'
+			description 'Compiles cobol source code and creates executable defined in srcMain'
 			doFirst {
 				checkIfMainFileIsSet(logger, conf)
 				prepareBinFolder(conf)
@@ -24,6 +26,8 @@ class CobolCompile {
 		}
 
 		project.task ('compileMultiTargetCobol') {
+			group 'COBOL'
+			description 'Compiles additional executables when defined in multiCompileTargets'
 			onlyIf({ return !conf.multiCompileTargets.isEmpty()})
 			doFirst {
 				prepareBinFolder(conf)
