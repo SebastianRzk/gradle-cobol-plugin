@@ -11,7 +11,7 @@ class CobolConfiguration {
 	void apply(Project project, CobolExtension conf) {
 
 		project.task ('cobolPluginVersion'){
-			group 'COBOL'
+			group 'COBOL Configuration'
 			description 'returns version of this plugin'
 			doLast {
 				MetaInfPropertyResolver resolver = new MetaInfPropertyResolver("gradle-cobol-plugin")
@@ -21,14 +21,14 @@ class CobolConfiguration {
 		}
 
 		project.task ('cobolCompilerVersion', type: Exec){
-			group 'COBOL'
+			group 'COBOL Configuration'
 			description 'returns version of used GnuCobolCompiler'
 			commandLine = 'cobc'
 			args = ['--version']
 		}
 
 		project.task ('cobolGradleVersion'){
-			group 'COBOL'
+			group 'COBOL Configuration'
 			description 'returns version of used gradle instance'
 			doLast {
 				GradleVersion gradleVersion = GradleVersion.current()
@@ -37,7 +37,7 @@ class CobolConfiguration {
 		}
 
 		project.task ('cobolGradleConfiguration') {
-			group 'COBOL'
+			group 'COBOL Configuration'
 			description 'returns project configuration'
 			doFirst {
 				println conf.properties.collect{ '\t'+it }.join('\n')
@@ -55,7 +55,7 @@ class CobolConfiguration {
 			'cobolGradleConfiguration',
 			'testUnitCobolConfiguration'
 		]){
-			group 'COBOL'
+			group 'COBOL Configuration'
 			description 'returns full configuration of the project and plugin and their versions'
 			doFirst { println 'DONE' }
 		}

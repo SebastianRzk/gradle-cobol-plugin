@@ -18,7 +18,7 @@ class CobolUnit {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('testUnitCobol')
 		project.task ('testUnitCobolConfiguration'){
-			group 'COBOL'
+			group 'COBOL Configuration'
 			description 'Returns the detected unittest frameworks'
 			doLast {
 				def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
