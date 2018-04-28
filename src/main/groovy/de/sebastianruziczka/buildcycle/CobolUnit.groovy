@@ -18,6 +18,8 @@ class CobolUnit {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('testUnitCobol')
 		project.task ('testUnitCobolConfiguration'){
+			group 'COBOL'
+			description 'Returns the detected unittest frameworks'
 			doLast {
 				def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
 				println 'Detected unittest frameworks : ' + allUnitTestFrameworks.size()
@@ -26,6 +28,8 @@ class CobolUnit {
 		}
 
 		project.task ('testUnitCobol'){
+			group 'COBOL'
+			description 'Executes UnitTests'
 			def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
 
 			onlyIf({this.testPresets(logger, project, conf, allUnitTestFrameworks)})
