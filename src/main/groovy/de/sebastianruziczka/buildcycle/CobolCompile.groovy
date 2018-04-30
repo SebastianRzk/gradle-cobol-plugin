@@ -43,6 +43,7 @@ class CobolCompile {
 		def dependencies = resolveCompileDependencies(project, conf, mainFile)
 
 		def command = ['cobc']
+		command << '-verbose' //
 		command << '-x' // Build executable
 		command << '-o'
 		command << conf.absoluteBinMainPath(mainFile) // Executable destination path
