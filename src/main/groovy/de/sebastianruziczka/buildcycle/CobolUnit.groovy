@@ -95,9 +95,9 @@ class CobolUnit {
 					int failed = result.failedTests()
 					println 'Result: ' + successfull + ' sucessfull tests, ' + failed + ' tests failed'
 					if (failed != 0) {
-						println '---------------------------------------------------------------'
-						println '--------------------------FAILED TESTS-------------------------'
-						println '---------------------------------------------------------------'
+						println '-------------------------------------------------------------------------'
+						println '-------------------------------FAILED TESTS------------------------------'
+						println '-------------------------------------------------------------------------'
 						println ''
 
 						if (failed != 0) {
@@ -111,13 +111,14 @@ class CobolUnit {
 	}
 
 	private void printFailedTest(TestFile testFile, TestMethod testMethod) {
-		println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-		println testFile.name() + '>' + testMethod.name() + ':'
+		println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+		println 'File:'
+		println '\t' + testFile.name() + '>' + testMethod.name() + ':'
 		println 'Message:'
 		println '\t' + testMethod.message()
 		println 'Console:'
 		println '\t' + testMethod.console()
-		println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+		println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
 	}
 
 	private def resolveUnitTestFrameworks(Logger logger) {
