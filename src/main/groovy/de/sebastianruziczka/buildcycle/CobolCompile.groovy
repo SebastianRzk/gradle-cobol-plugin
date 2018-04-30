@@ -65,8 +65,8 @@ class CobolCompile {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(command)
 		processBuilder.directory(new File(conf.absoluteSrcMainModulePath(mainFile)))
-		//		def env = processBuilder.environment()
-		//		env.put('COBCOPY', modulePath)
+		def env = processBuilder.environment()
+		env.put('COBCOPY', modulePath)
 		String logPath = conf.projectFileResolver(conf.binMainPath + '/' + mainFile + '_COMPILE.LOG').absolutePath
 		ProcessWrapper wrapper = new ProcessWrapper(processBuilder, 'Compile ' + mainFile, logPath)
 
