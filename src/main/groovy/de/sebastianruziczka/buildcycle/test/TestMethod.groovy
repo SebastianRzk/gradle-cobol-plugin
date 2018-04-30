@@ -4,6 +4,8 @@ class TestMethod {
 	private String name
 	private TestMethodResult result
 	private String message
+	private String console = ''
+
 	public TestMethod(String name, TestMethodResult result) {
 		this(name, result, null)
 	}
@@ -12,6 +14,14 @@ class TestMethod {
 		this.result = result
 		this.name = name
 		this.message = message
+	}
+
+
+	public TestMethod(String name, TestMethodResult result, String message, String console) {
+		this.result = result
+		this.name = name
+		this.message = message
+		this.console = console
 	}
 
 	public String name() {
@@ -24,5 +34,20 @@ class TestMethod {
 
 	public String message() {
 		return this.message
+	}
+
+	public String console() {
+		return this.console
+	}
+
+	public void visitFailedTests(Closure c, TestFile parent) {
+		if (this.result == TestMethodResult.SUCCESSFUL) {
+			return
+		}
+		if (c.maximumNumberOfParameters == 1) {
+			c(this)
+			return
+		}
+		c(parent, this)
 	}
 }

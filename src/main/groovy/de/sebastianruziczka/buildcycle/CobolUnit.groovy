@@ -12,6 +12,8 @@ import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.api.CobolUnitFrameworkProvider
 import de.sebastianruziczka.buildcycle.test.CobolTestPair
 import de.sebastianruziczka.buildcycle.test.TestFailedException
+import de.sebastianruziczka.buildcycle.test.TestFile
+import de.sebastianruziczka.buildcycle.test.TestMethod
 import de.sebastianruziczka.buildcycle.test.TestResult
 
 class CobolUnit {
@@ -23,7 +25,9 @@ class CobolUnit {
 			doLast {
 				def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
 				println 'Detected unittest frameworks : ' + allUnitTestFrameworks.size()
-				allUnitTestFrameworks.each{ println '\t'+it.toString()}
+				allUnitTestFrameworks.each{
+					println '\t'+it.toString()
+				}
 			}
 		}
 
@@ -32,7 +36,9 @@ class CobolUnit {
 			description 'Executes UnitTests'
 			def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
 
-			onlyIf({this.testPresets(logger, project, conf, allUnitTestFrameworks)})
+			onlyIf({
+				this.testPresets(logger, project, conf, allUnitTestFrameworks)
+			})
 
 			doLast {
 				if (allUnitTestFrameworks.isEmpty()) {
@@ -84,13 +90,34 @@ class CobolUnit {
 					cobolTestPairs.each{
 						result.addTest(framework.test(it.srcFile(), it.testFile()))
 					}
-					println 'Result: ' + result.successfullTests() + ' sucessfull tests, ' + result.failedTests() + ' tests failed'
-					if (result.failedTests() != 0) {
-						throw new TestFailedException()
+					println 'Collecting results'
+					int successfull  = result.successfullTests()
+					int failed = result.failedTests()
+					println 'Result: ' + successfull + ' sucessfull tests, ' + failed + ' tests failed'
+					if (failed != 0) {
+						println '---------------------------------------------------------------'
+						println '--------------------------FAILED TESTS-------------------------'
+						println '---------------------------------------------------------------'
+						println ''
+
+						if (failed != 0) {
+							result.visitFailedTests ({ file,test -> printFailedTest(file, test) })
+							throw new TestFailedException()
+						}
 					}
 				}
 			}
 		}
+	}
+
+	private void printFailedTest(TestFile testFile, TestMethod testMethod) {
+		println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+		println testFile.name() + '>' + testMethod.name() + ':'
+		println 'Message:'
+		println '\t' + testMethod.message()
+		println 'Console:'
+		println '\t' + testMethod.console()
+		println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
 	}
 
 	private def resolveUnitTestFrameworks(Logger logger) {

@@ -43,6 +43,7 @@ class ProcessWrapper {
 			}
 		}
 		logger.info(this.output)
+		logger.info('Process ended with exitcode ' + this.exitCode)
 		return this.exitCode
 	}
 
