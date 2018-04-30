@@ -18,4 +18,8 @@ class TestResult {
 		this.testFiles.each{  result += it.failedTests() }
 		return result
 	}
+
+	public void visitFailedTests(Closure visitor) {
+		this.testFiles.each{ it.visitFailedTests(visitor)}
+	}
 }

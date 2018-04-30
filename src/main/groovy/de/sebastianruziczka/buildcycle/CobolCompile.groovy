@@ -42,7 +42,18 @@ class CobolCompile {
 	private void execCobolCompileForFile(Project project, CobolExtension conf, String mainFile, Logger logger) {
 		def dependencies = resolveCompileDependencies(project, conf, mainFile)
 
+		/**
+		 * Create folder in /build/ when needed
+		 */
+		String modulePath = new File(conf.absoluteBinMainPath(mainFile)).getParent()
+		File module = new File(modulePath)
+		if (!module.exists()) {
+			logger.info('Create folder for compile: ' + modulePath)
+			module.mkdirs()
+		}
+
 		def command = ['cobc']
+		command << '-v' //
 		command << '-x' // Build executable
 		command << '-o'
 		command << conf.absoluteBinMainPath(mainFile) // Executable destination path
@@ -54,6 +65,8 @@ class CobolCompile {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(command)
 		processBuilder.directory(new File(conf.absoluteSrcMainModulePath(mainFile)))
+		def env = processBuilder.environment()
+		env.put('COBCOPY', modulePath)
 		String logPath = conf.projectFileResolver(conf.binMainPath + '/' + mainFile + '_COMPILE.LOG').absolutePath
 		ProcessWrapper wrapper = new ProcessWrapper(processBuilder, 'Compile ' + mainFile, logPath)
 
@@ -63,7 +76,7 @@ class CobolCompile {
 
 	private List resolveCompileDependencies(Project project, CobolExtension conf, String mainFile) {
 		def list = []
-		def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
+		def tree = project.fileTree(conf.absoluteSrcMainModulePath(mainFile)).include(conf.filetypePattern())
 		tree.each { File file ->
 			if (!file.absolutePath.equals(conf.absoluteSrcMainPath(mainFile))){
 				list << file.absolutePath

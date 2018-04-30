@@ -39,4 +39,8 @@ class TestFile {
 
 		return result
 	}
+
+	public void visitFailedTests(Closure c) {
+		this.testMethods.each{ it.visitFailedTests(c, this)}
+	}
 }

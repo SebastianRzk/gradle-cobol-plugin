@@ -16,7 +16,7 @@ class ProcessWrapper {
 		this.processBuilder = processBuilder
 		this.taskName = taskName
 		this.logFilePath = logFilePath
-		this.logger = LoggerFactory.getLogger('PocessWrapper for ' + taskName)
+		this.logger = LoggerFactory.getLogger('ProcessWrapper for ' + taskName)
 	}
 
 	public int exec() {
@@ -27,6 +27,7 @@ class ProcessWrapper {
 		this.logger.info('ProcessWrapper starting process ' + this.taskName)
 		File outputFile  = new File(this.logFilePath)
 		this.processBuilder.redirectOutput(outputFile)
+		this.processBuilder.redirectError(outputFile)
 		this.logger.info('redirect process output to ' + this.logFilePath)
 
 		Process process = this.processBuilder.start()
@@ -43,6 +44,7 @@ class ProcessWrapper {
 			}
 		}
 		logger.info(this.output)
+		logger.info('Process ended with exitcode ' + this.exitCode)
 		return this.exitCode
 	}
 
