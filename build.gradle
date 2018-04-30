@@ -21,11 +21,11 @@ dependencies {
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
-version = '0.0.16'
+version = '0.0.17'
 
 GradlePropertyFilter propFilter = new GradlePropertyFilter([
 	'gradle.actualVersion' : version,
-	'gradle.unitVersion' : '0.0.4'
+	'gradle.unitVersion' : '0.0.5'
 	])
 
 gradlePlugin{
