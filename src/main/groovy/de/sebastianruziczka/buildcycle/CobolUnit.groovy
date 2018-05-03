@@ -152,12 +152,14 @@ class CobolUnit {
 			this.printNoUnittestFrameworkDefined(logger)
 			return false
 		}
+
 		if (testTree(project, conf).getFiles().isEmpty()) {
 			logger.info("No test files found!")
 			println "No test files found!"
 			return false
 		}
-		if (testTree(project, conf).getFiles().isEmpty()) {
+
+		if (sourceTree(project, conf).getFiles().isEmpty()) {
 			logger.info("No source files found!")
 			println "No source files found!"
 			return false
