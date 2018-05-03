@@ -99,11 +99,8 @@ class CobolUnit {
 						println '-------------------------------FAILED TESTS------------------------------'
 						println '-------------------------------------------------------------------------'
 						println ''
-
-						if (failed != 0) {
-							result.visitFailedTests ({ file,test -> printFailedTest(file, test) })
-							throw new TestFailedException()
-						}
+						result.visitFailedTests ({ file,test -> printFailedTest(file, test) })
+						throw new TestFailedException()
 					}
 				}
 			}
