@@ -80,9 +80,12 @@ class CobolUnit {
 				}
 				logger.info('Number of Src<>Test pairs found: ' + cobolTestPairs.size())
 				allUnitTestFrameworks.each{
+					logger.info('Configure: ' + it.toString())
 					it.configure(conf, project);
+					logger.info('Preparing: ' + it.toString())
 					it.prepare();
 				}
+				logger.info('All unittest frameworks prepared')
 
 				allUnitTestFrameworks.each{ framework ->
 					println 'Starting Cobol-Unittest with framework: ' + framework.toString()
