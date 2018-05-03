@@ -24,6 +24,8 @@ class Cobol implements Plugin<Project> {
 		new CobolUnit().apply(project, conf)
 
 		project.task ('clean', type: Delete){
+			group 'COBOL'
+			description 'Cleans cobol build directory'
 			doFirst {
 				delete conf.projectFileResolver(conf.binMainPath).absolutePath
 			}
