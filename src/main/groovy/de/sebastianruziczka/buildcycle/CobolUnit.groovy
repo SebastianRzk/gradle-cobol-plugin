@@ -10,11 +10,7 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.api.CobolUnitFrameworkProvider
-import de.sebastianruziczka.buildcycle.test.CobolTestPair
-import de.sebastianruziczka.buildcycle.test.TestFailedException
-import de.sebastianruziczka.buildcycle.test.TestFile
-import de.sebastianruziczka.buildcycle.test.TestMethod
-import de.sebastianruziczka.buildcycle.test.TestResult
+import de.sebastianruziczka.buildcycle.unittest.CobolUnitTestTask
 
 class CobolUnit {
 	void apply (Project project, CobolExtension conf){
@@ -31,7 +27,7 @@ class CobolUnit {
 			}
 		}
 
-		project.task ('testUnitCobol'){
+		project.task ('testUnitCobol', type:CobolUnitTestTask){
 			group 'COBOL'
 			description 'Executes UnitTests'
 
@@ -39,86 +35,12 @@ class CobolUnit {
 				this.testPresets(logger, project, conf, allUnitTestFrameworks)
 			})
 
-			doLast {
-				if (allUnitTestFrameworks.isEmpty()) {
-					printNoUnittestFrameworkDefined(logger)
-				}
-				def testTree = testTree(project, conf)
-				def allTests = []
-
-				testTree.each { File file ->
-					allTests << file.absolutePath
-				}
-
-				def srcTree = sourceTree(project, conf)
-				def allSrc = []
-				srcTree.each { File file ->
-					allSrc << file.absolutePath
-				}
-
-
-				def cobolTestPairs = []
-				int unitTestFileEndingChars = conf.unitTestFileTypePattern().length() - '**/*'.length()
-				allTests.each {
-					int lastNameIndex = it.length() - unitTestFileEndingChars
-					int firstNameIndex = conf.absoluteSrcTestPath().length()
-
-					String moduleName = it.substring(firstNameIndex +1,lastNameIndex)
-
-					String expectedSrcModulePath = conf.projectFileResolver(conf.srcMainPath + '/' + moduleName + conf.srcFileType).absolutePath
-					if (allSrc.contains(expectedSrcModulePath)) {
-						allSrc.remove(expectedSrcModulePath)
-						cobolTestPairs << new CobolTestPair(moduleName + conf.srcFileType, it.substring(firstNameIndex + 1))
-					}
-				}
-
-				if (cobolTestPairs.size()== 0) {
-					logger.warn('NO TEST-PAIRS FOUND')
-					logger.warn('Convention: Main: <name>' + conf.srcFileType + '  Test: <name>'+conf.unittestPostfix+conf.srcFileType)
-					return
-				}
-				logger.info('Number of Src<>Test pairs found: ' + cobolTestPairs.size())
-				allUnitTestFrameworks.each{
-					logger.info('Configure: ' + it.toString())
-					it.configure(conf, project);
-					logger.info('Preparing: ' + it.toString())
-					it.prepare();
-				}
-				logger.info('All unittest frameworks prepared')
-
-				allUnitTestFrameworks.each{ framework ->
-					println 'Starting Cobol-Unittest with framework: ' + framework.toString()
-					TestResult result = new TestResult()
-					cobolTestPairs.each{
-						result.addTest(framework.test(it.srcFile(), it.testFile()))
-					}
-					println 'Collecting results'
-					int successfull  = result.successfullTests()
-					int failed = result.failedTests()
-					println 'Result: ' + successfull + ' sucessfull tests, ' + failed + ' tests failed'
-					if (failed != 0) {
-						println '-------------------------------------------------------------------------'
-						println '-------------------------------FAILED TESTS------------------------------'
-						println '-------------------------------------------------------------------------'
-						println ''
-						result.visitFailedTests ({ file,test -> printFailedTest(file, test) })
-						throw new TestFailedException()
-					}
-				}
-			}
+			unitTestFrameworks = allUnitTestFrameworks
+			configuration = conf
 		}
 	}
 
-	private void printFailedTest(TestFile testFile, TestMethod testMethod) {
-		println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-		println 'File:'
-		println '\t' + testFile.name() + '>' + testMethod.name() + ':'
-		println 'Message:'
-		println '\t' + testMethod.message()
-		println 'Console:'
-		println '\t' + testMethod.console()
-		println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-	}
+
 
 	private def resolveUnitTestFrameworks(Logger logger) {
 		def allUnitTestFrameworks = []
