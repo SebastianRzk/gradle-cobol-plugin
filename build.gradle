@@ -67,34 +67,12 @@ publishing {
 }
 
 
-task (deleteDocs, type: Delete){
-	delete 'docs/index.md'
-}
 
 
-task (generateDocVersions, type: Copy, dependsOn:['deleteDocs']){
-	from 'docs'
-	into 'docs'
+task (generateVersions, type: Copy){
+	from '.'
+	into '.'
 	include '**/*.base'
 	rename {it - 'base' + 'md'}
 	filter { line ->propFilter.filter(line)}
 } 
-
-task (deleteCI, type: Delete){
-	delete 'ci/build.gradle.replacement'
-}
-
-
-task (generateCIVersions, type: Copy, dependsOn:['deleteCI']){
-	from 'ci'
-	into 'ci'
-	include '**/*.base'
-	rename {it - '.base'}
-	filter { line ->propFilter.filter(line)}
-}
-
-
-
-task (generateVersions, dependsOn: [generateDocVersions, generateCIVersions]){
-	
-}
