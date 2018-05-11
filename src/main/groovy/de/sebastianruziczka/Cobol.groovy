@@ -14,33 +14,36 @@ import de.sebastianruziczka.buildcycle.CobolUnit
 class Cobol implements Plugin<Project> {
 
 	void apply(Project project) {
-		Logger logger = LoggerFactory.getLogger('cobolPlugin')
 		def conf = project.extensions.create('cobol', CobolExtension)
-		conf.projectFileResolver = { s -> project.file(s)}
 
-		new CobolConfiguration().apply(project, conf)
-		new CobolCompile().apply(project, conf)
-		new CobolRun().apply(project, conf)
-		new CobolUnit().apply(project, conf)
+		project.afterEvaluate {
+			Logger logger = LoggerFactory.getLogger('cobolPlugin')
+			conf.projectFileResolver = { s -> project.file(s)}
 
-		project.task ('clean', type: Delete){
-			group 'COBOL'
-			description 'Cleans cobol build directory'
-			doFirst {
-				delete conf.projectFileResolver(conf.binMainPath).absolutePath
+			new CobolConfiguration().apply(project, conf)
+			new CobolCompile().apply(project, conf)
+			new CobolRun().apply(project, conf)
+			new CobolUnit().apply(project, conf)
+
+			project.task ('clean', type: Delete){
+				group 'COBOL'
+				description 'Cleans cobol build directory'
+				doFirst {
+					delete conf.projectFileResolver(conf.binMainPath).absolutePath
+				}
 			}
-		}
 
-		project.task ('checkCobol', dependsOn: [
-			'testUnitCobol',
-			'compileMultiTargetCobol',
-			'compileCobol',
-			'clean',
-			'cobolConfiguration'
-		]){
-			doLast { println 'check finished'}
-			group 'COBOL'
-			description 'Execute full build cycle (clean+compile+test)'
+			project.task ('checkCobol', dependsOn: [
+				'testUnitCobol',
+				'compileMultiTargetCobol',
+				'compileCobol',
+				'clean',
+				'cobolConfiguration'
+			]){
+				doLast { println 'check finished'}
+				group 'COBOL'
+				description 'Execute full build cycle (clean+compile+test)'
+			}
 		}
 	}
 }
