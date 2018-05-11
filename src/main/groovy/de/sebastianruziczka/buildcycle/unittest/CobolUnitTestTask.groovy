@@ -7,9 +7,8 @@ import org.gradle.api.tasks.TaskAction
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.buildcycle.test.CobolTestPair
 import de.sebastianruziczka.buildcycle.test.TestFailedException
-import de.sebastianruziczka.buildcycle.test.TestFile
-import de.sebastianruziczka.buildcycle.test.TestMethod
 import de.sebastianruziczka.buildcycle.test.TestResult
+import de.sebastianruziczka.buildcycle.test.UnitTestError
 
 class CobolUnitTestTask extends DefaultTask{
 	def unitTestFrameworks = []
@@ -63,34 +62,55 @@ class CobolUnitTestTask extends DefaultTask{
 
 		unitTestFrameworks.each{ framework ->
 			println 'Starting Cobol-Unittest with framework: ' + framework.toString()
+			def errors = []
 			TestResult result = new TestResult()
 			cobolTestPairs.each{
-				result.addTest(framework.test(it.srcFile(), it.testFile()))
+				try{
+					result.addTest(	framework.test(it.srcFile(), it.testFile()))
+				}catch (Throwable t) {
+					errors << new UnitTestError(it.srcFile(), it.testFile(), t)
+				}
 			}
 			println 'Collecting results'
 			int successfull  = result.successfullTests()
 			int failed = result.failedTests()
-			println 'Result: ' + successfull + ' sucessfull tests, ' + failed + ' tests failed'
+			println 'Result: ' + successfull + ' sucessfull tests, ' + failed + ' tests failed ' + errors.size() + ' tests errored'
 			if (failed != 0) {
 				println '-------------------------------------------------------------------------'
 				println '-------------------------------FAILED TESTS------------------------------'
 				println '-------------------------------------------------------------------------'
 				println ''
-				result.visitFailedTests ({ file,test -> printFailedTest(file, test) })
+				result.visitFailedTests ({ testFile,testMethod ->
+					println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+					println 'File:'
+					println '\t' + testFile.name() + '>' + testMethod.name() + ':'
+					println 'Message:'
+					println '\t' + testMethod.message()
+					println 'Console:'
+					println '\t' + testMethod.console()
+					println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+				})
+				throw new TestFailedException()
+			}
+
+			if (!errors.isEmpty()) {
+				println '-------------------------------------------------------------------------'
+				println '-------------------------------ERRORED TESTS-----------------------------'
+				println '-------------------------------------------------------------------------'
+				println ''
+				errors.each{
+					println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+					println 'Errored at files:'
+					println '\t' + it.srcFile() + '<>' + it.testFile()
+					println 'Exception:'
+					println '\t' + it.throwable().detailMessage
+					println 'Trace:'
+					println '\t' + it.throwable().printStackTrace()
+					println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
+				}
 				throw new TestFailedException()
 			}
 		}
-	}
-
-	private void printFailedTest(TestFile testFile, TestMethod testMethod) {
-		println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-		println 'File:'
-		println '\t' + testFile.name() + '>' + testMethod.name() + ':'
-		println 'Message:'
-		println '\t' + testMethod.message()
-		println 'Console:'
-		println '\t' + testMethod.console()
-		println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
 	}
 
 	private org.gradle.api.tasks.util.PatternFilterable sourceTree(Project project, CobolExtension conf) {
