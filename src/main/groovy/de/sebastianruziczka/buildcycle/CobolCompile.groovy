@@ -38,10 +38,8 @@ class CobolCompile {
 			})
 			doFirst {
 				prepareBinFolder(conf)
-
-				conf.multiCompileTargets.each{
-					execCobolCompileForFile(project, conf, it, logger)
-				}
+				CobolCompiler compiler = new CobolCompiler(project, conf)
+				conf.multiCompileTargets.each{ compiler.compile(it) }
 			}
 		}
 	}
