@@ -17,6 +17,8 @@ class CobolCompile {
 			group 'COBOL'
 			description 'Compiles cobol source code and creates executable defined in srcMain'
 
+			onlyIf {conf.srcMain != null && !conf.srcMain.equals('')}
+
 			outputDir = new File(conf.absoluteBinMainPath())
 			inputDir = new File(conf.absoluteSrcMainModulePath())
 
