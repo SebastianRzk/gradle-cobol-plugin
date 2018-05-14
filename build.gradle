@@ -65,14 +65,18 @@ publishing {
         }
     }
 }
-
-
-
+task (switchOffline, type:Copy){
+	from '.'
+	into '.'
+	include '**/*.offline'
+	rename {it - '.offline'}
+	filter { line ->propFilter.filter(line)}
+}
 
 task (generateVersions, type: Copy){
 	from '.'
 	into '.'
 	include '**/*.base'
-	rename {it - 'base' + 'md'}
+	rename {it - 'base'}
 	filter { line ->propFilter.filter(line)}
 } 
