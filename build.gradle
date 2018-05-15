@@ -81,6 +81,6 @@ task (generateVersions, type: Copy){
 	from '.'
 	into '.'
 	include '**/*.base'
-	rename {it - 'base'}
+	rename {it - '.base'}
 	filter { line ->propFilter.filter(line)}
 } 
