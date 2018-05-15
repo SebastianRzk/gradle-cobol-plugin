@@ -17,7 +17,7 @@ gradle publish
 gradle publish -PgenerateLatest
 mv ../repo endToEndTest/repo
 cd endToEndTest/gradle-cobol-plugin-unittest-extension
-gradle publish
+gradle publish -PgenerateLatest
 cd ..
 cd ..
 echo "<<<<<<<"

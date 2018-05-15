@@ -21,10 +21,15 @@ dependencies {
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
+
 version = '0.0.18'
+def realVersion = ''
 if (project.hasProperty("generateLatest")) {
+	realVersion = ' (' + version + ')'
+	println realVersion
 	version = 'latest'
 }
+
 
 GradlePropertyFilter propFilter = new GradlePropertyFilter([
 	'gradle.actualVersion' : version,
@@ -45,7 +50,7 @@ jar {
 	manifest {
 		attributes(
 			"Implementation-Title": project.name,
-			"Implementation-Version": version,
+			"Implementation-Version": (version + realVersion),
 			"Build-Date": new Date().format( 'dd.MM.yyyy' )
 		)
 	}
