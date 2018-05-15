@@ -28,7 +28,7 @@ if (project.hasProperty("generateLatest")) {
 
 GradlePropertyFilter propFilter = new GradlePropertyFilter([
 	'gradle.actualVersion' : version,
-	'gradle.unitVersion' : '0.0.5'
+	'gradle.unitVersion' : '0.0.6'
 	])
 
 gradlePlugin{
