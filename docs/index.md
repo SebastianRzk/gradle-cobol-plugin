@@ -44,11 +44,19 @@ On Arch (via yaourt):
 
 ### Configure the plugin
 
-Add to your build.gradle:
+Add to your build.gradle (preferred):
+
+    plugins {
+         id 'de.sebastianruziczka.Cobol' version 'latest'
+    }
+
+
+Or hardcode a specific version:
 
     plugins {
          id 'de.sebastianruziczka.Cobol' version '0.0.18'
     }
+
 
 And a minimal configuration:
 
@@ -65,7 +73,15 @@ Add this lines at the top of your build.gradle to enable unittests (more informa
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.5'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: 'latest'
+     	}
+     }
+
+Or hardcode with specific version (not preferred):
+
+     buildscript {
+     	 dependencies {
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.6'
      	}
      }
 
