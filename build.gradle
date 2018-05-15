@@ -22,6 +22,9 @@ dependencies {
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
 version = '0.0.18'
+if (project.hasProperty("generateLatest")) {
+	version = 'latest'
+}
 
 GradlePropertyFilter propFilter = new GradlePropertyFilter([
 	'gradle.actualVersion' : version,
@@ -33,11 +36,6 @@ gradlePlugin{
 		cobol {
 			id = 'de.sebastianruziczka.Cobol'
 			implementationClass = 'de.sebastianruziczka.Cobol'
-		}
-		cobollatest {
-			id = 'de.sebastianruziczka.Cobol'
-			implementationClass = 'de.sebastianruziczka.Cobol'
-			version = 'latest'
 		}
 	}
 }
