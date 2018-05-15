@@ -33,7 +33,11 @@ gradlePlugin{
 		cobol {
 			id = 'de.sebastianruziczka.Cobol'
 			implementationClass = 'de.sebastianruziczka.Cobol'
-		
+		}
+		cobollatest {
+			id = 'de.sebastianruziczka.Cobol'
+			implementationClass = 'de.sebastianruziczka.Cobol'
+			version = 'latest'
 		}
 	}
 }
