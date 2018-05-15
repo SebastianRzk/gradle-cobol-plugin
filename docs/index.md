@@ -85,9 +85,9 @@ Or hardcode with specific version (not preferred):
      	}
      }
 
-## Deep documentation
+# Deep documentation
 
-### Configuration of the plugin
+## Configuration of the plugin
 
 Following properties can be modified in the _cobol_ block in your _build.gradle_ :
 
@@ -107,10 +107,10 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | terminalColumns | _run_ | 80 |  | yes |
 | customTerminal | _run_ | '' | | no |
 
-### Terminal configuration
+## Terminal configuration
 
 
-#### preconfigured terminals
+### preconfigured terminals
 
 
 Set the parameter _terminal_ in the cobol block in your build gradle, to use one of the preconfigured terminals.
@@ -121,14 +121,14 @@ Set the parameter _terminal_ in the cobol block in your build gradle, to use one
 | xterm | 'xterm' | yes |
 
 
-#### configure own terminal
+### configure own terminal
 
 Set the parameter _customTerminal_ in the cobol block in your build.gradle to use a custom terminal commands.
 
 Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable.
 
 
-### tasks
+## tasks
 
 | name | input | output | dependsOn |
 | ---- | ----- | ------ | --------- |
@@ -140,7 +140,29 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _testUnitCobol_ | `srcTest` | result of tests |  |
 | _checkCobol_ | everything | check result | _testUnitCobol_, _compileCobol_, _cobolConfiguration_ |
 
-### Develop own testing plugin
+## Develop own testing plugin
+
+Basics how to extend this project.
+
+Example: [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension)  [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension) Adds unittests to the base plugin
+
+### Basics
+
+At first, add the gradleAPI and gradle-cobol-plugin as dependency:
+
+	repositories {
+		mavenCentral()
+		jcenter()
+		maven {
+			url 'https://sebastianruziczka.de/repo/mvn'
+		}
+	}
+
+	dependencies {
+		compileOnly gradleApi()
+		compileOnly group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin', version: 'latest'
+	}
+
 
 To use your own testing groovy/java/kotlin ... -code, several conditions must be met.
 
@@ -157,4 +179,18 @@ Methods of the interface CobolTestFramework:
 * `int prepare()`: Initial call for framework initialization. Returns a process return code (default: 0)
 * `TestFile test(String srcName, String testName)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
 
-		
+### Reuse exiting code
+
+#### ProcessWrapper (de.sebastianruziczka.process.ProcessWrapper)
+
+Wrapps an existing Java ProcessBuilder. 
+
+Features:
+
+* Waits until process is finished
+* Write process output into file
+* Writes process output into terminal (loglevel: INFO)
+* Throws exception when process returns with statuscode != 0
+* Loggs process output in terminal (loglevel: ERROR) when process returns with statuscode != 0
+
+
