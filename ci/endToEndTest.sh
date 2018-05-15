@@ -8,7 +8,7 @@ git clone https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension
 echo "<<<<<<<"
 
 echo ">>>>>>> install test-repo"
-#sh gradle-cobol-plugin-example/ci/install_requirements.sh
+sh gradle-cobol-plugin-example/ci/install_requirements.sh
 echo "<<<<<<< install rest repo"
 
 echo ">>>>>>> create local repo"
