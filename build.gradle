@@ -21,11 +21,14 @@ dependencies {
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
-version = '0.0.17'
+version = '0.0.18'
+if (project.hasProperty("generateLatest")) {
+	version = 'latest'
+}
 
 GradlePropertyFilter propFilter = new GradlePropertyFilter([
 	'gradle.actualVersion' : version,
-	'gradle.unitVersion' : '0.0.5'
+	'gradle.unitVersion' : '0.0.6'
 	])
 
 gradlePlugin{
@@ -33,7 +36,6 @@ gradlePlugin{
 		cobol {
 			id = 'de.sebastianruziczka.Cobol'
 			implementationClass = 'de.sebastianruziczka.Cobol'
-		
 		}
 	}
 }
@@ -67,34 +69,18 @@ publishing {
 }
 
 
-task (deleteDocs, type: Delete){
-	delete 'docs/index.md'
+task (switchOffline, type:Copy){
+	from '.'
+	into '.'
+	include '**/*.offline'
+	rename {it - '.offline'}
 }
 
 
-task (generateDocVersions, type: Copy, dependsOn:['deleteDocs']){
-	from 'docs'
-	into 'docs'
-	include '**/*.base'
-	rename {it - 'base' + 'md'}
-	filter { line ->propFilter.filter(line)}
-} 
-
-task (deleteCI, type: Delete){
-	delete 'ci/build.gradle.replacement'
-}
-
-
-task (generateCIVersions, type: Copy, dependsOn:['deleteCI']){
-	from 'ci'
-	into 'ci'
+task (generateVersions, type: Copy){
+	from '.'
+	into '.'
 	include '**/*.base'
 	rename {it - '.base'}
 	filter { line ->propFilter.filter(line)}
-}
-
-
-
-task (generateVersions, dependsOn: [generateDocVersions, generateCIVersions]){
-	
-}
+} 
