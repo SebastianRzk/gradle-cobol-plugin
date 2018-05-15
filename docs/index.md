@@ -175,7 +175,7 @@ Make sure your main framework class:
 		
 Methods of the interface CobolTestFramework:
 
-* `void configure(CobolExtension configuration, Project project)`: Initial configuiration call. Here you can define new gradle tasks, if needed.
+* `void configure(CobolExtension configuration, Project project)`: Initial configuration call. Here you can define new gradle tasks, if needed.
 * `int prepare()`: Initial call for framework initialization. Returns a process return code (default: 0)
 * `TestFile test(String srcName, String testName)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
 
@@ -188,7 +188,7 @@ Wrapps an existing Java ProcessBuilder.
 Features:
 
 * Waits until process is finished
-* Write process output into file
+* Writes process output into file
 * Writes process output into terminal (loglevel: INFO)
 * Throws exception when process returns with statuscode != 0
 * Loggs process output in terminal (loglevel: ERROR) when process returns with statuscode != 0
