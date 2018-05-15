@@ -23,7 +23,7 @@ def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
 
 version = '0.0.18'
-realVersion = ''
+def realVersion = ''
 if (project.hasProperty("generateLatest")) {
 	realVersion = ' (' + version + ')'
 	version = 'latest'
