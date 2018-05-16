@@ -29,7 +29,7 @@ class CobolCompiler {
 			module.mkdirs()
 		}
 		conf.compiler//
-				.buildExecutable()//
+				.buildExecutable(this.conf)//
 				.addDependencyPaths(dependencies)
 				.addIncludePath(modulePath)
 				.setTargetAndBuild(conf.absoluteSrcMainPath(mainFile))
