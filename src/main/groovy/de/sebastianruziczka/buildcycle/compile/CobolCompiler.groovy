@@ -5,7 +5,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
-import de.sebastianruziczka.process.ProcessWrapper
 
 class CobolCompiler {
 	private Project project
@@ -29,27 +28,14 @@ class CobolCompiler {
 			logger.info('Create folder for compile: ' + modulePath)
 			module.mkdirs()
 		}
-
-		def command = ['cobc']
-		command << '-v' //
-		command << '-x' // Build executable
-		command << '-o'
-		command << conf.absoluteBinMainPath(mainFile) // Executable destination path
-		if (conf.fileFormat){
-			command << '-'+ conf.fileFormat
-		}
-		command << conf.absoluteSrcMainPath(mainFile)
-		command += dependencies // Add all module dependencies
-
-		ProcessBuilder processBuilder = new ProcessBuilder(command)
-		processBuilder.directory(new File(conf.absoluteSrcMainModulePath(mainFile)))
-		def env = processBuilder.environment()
-		env.put('COBCOPY', modulePath)
-		String logPath = conf.projectFileResolver(conf.binMainPath + '/' + mainFile + '_COMPILE.LOG').absolutePath
-		ProcessWrapper wrapper = new ProcessWrapper(processBuilder, 'Compile ' + mainFile, logPath)
-
-		logger.info('Start cobc compile job')
-		wrapper.exec()
+		conf.compiler//
+				.buildExecutable(this.conf)//
+				.addDependencyPaths(dependencies)
+				.addIncludePath(modulePath)
+				.setTargetAndBuild(conf.absoluteSrcMainPath(mainFile))
+				.addAdditionalOption(conf.fileFormat)
+				.setExecutableDestinationPath(conf.absoluteBinMainPath(mainFile))
+				.execute("COMPILE TASK")
 	}
 
 	private List resolveCompileDependencies(Project project, CobolExtension conf, String mainFile) {
@@ -62,5 +48,4 @@ class CobolCompiler {
 		}
 		return list
 	}
-
 }

@@ -1,5 +1,8 @@
 package de.sebastianruziczka
 
+import de.sebastianruziczka.compiler.api.CompilerBuilder
+import de.sebastianruziczka.compiler.gnucobol.GnuCompilerBuilder
+
 class CobolExtension {
 	String srcFileType = '.cbl'
 	String srcMain = ''
@@ -21,6 +24,10 @@ class CobolExtension {
 	int terminalColumns = 80
 
 	Closure<File> projectFileResolver = null
+
+	CompilerBuilder compiler = new GnuCompilerBuilder()
+
+	String compilerLogLevel = 'FINE'
 
 	String filetypePattern(){
 		'**/*' + this.srcFileType

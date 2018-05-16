@@ -23,7 +23,7 @@ class CobolConfiguration {
 		project.task ('cobolCompilerVersion', type: Exec){
 			group 'COBOL Configuration'
 			description 'Returns version of used GnuCobolCompiler'
-			commandLine = 'cobc'
+			commandLine = conf.compiler.getBaseCompilerCommand()
 			args = ['--version']
 		}
 
