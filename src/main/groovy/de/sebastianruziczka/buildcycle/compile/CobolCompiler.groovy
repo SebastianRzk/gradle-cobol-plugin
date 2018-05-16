@@ -28,7 +28,6 @@ class CobolCompiler {
 			logger.info('Create folder for compile: ' + modulePath)
 			module.mkdirs()
 		}
-		logger.error("EEEEEEEEEEEEEEEEEEERRRRRRRRRORRRRRRRRRRRRRR!")
 		conf.compiler//
 				.buildExecutable()//
 				.addDependencyPaths(dependencies)
