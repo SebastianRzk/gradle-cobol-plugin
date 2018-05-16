@@ -26,7 +26,7 @@ version = '0.0.19'
 def realVersion = ''
 if (project.hasProperty("generateLatest")) {
 	realVersion = ' (' + version + ')'
-	println realVersion
+	println 'Publishing latest-' + realVersion
 	version = 'latest'
 }
 
