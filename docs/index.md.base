@@ -106,7 +106,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | terminalRows | _run_ | 43 |  | yes |
 | terminalColumns | _run_ | 80 |  | yes |
 | customTerminal | _run_ | '' | | no |
-
+| compiler | all tasks | instance of GnuCobol |  | yes |
 ## Terminal configuration
 
 
@@ -193,4 +193,7 @@ Features:
 * Throws exception when process returns with statuscode != 0
 * Loggs process output in terminal (loglevel: ERROR) when process returns with statuscode != 0
 
+#### CompilerBuilder (de.sebastianruziczka.compiler.api.CompilerBuilder)
+
+Interface to the configured compiler. An instance is located in `CobolExtension.compiler`
 
