@@ -1,10 +1,12 @@
 package de.sebastianruziczka.compiler.api
 
+import de.sebastianruziczka.CobolExtension
+
 interface CompilerBuilder {
 
 	String getBaseCompilerCommand()
 
-	ExecutableCompilerBuilder buildExecutable()
+	ExecutableCompilerBuilder buildExecutable(CobolExtension configuration)
 }
 
 

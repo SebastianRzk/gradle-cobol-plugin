@@ -27,6 +27,8 @@ class CobolExtension {
 
 	CompilerBuilder compiler = new GnuCompilerBuilder()
 
+	String compilerLogLevel = 'FINE'
+
 	String filetypePattern(){
 		'**/*' + this.srcFileType
 	}

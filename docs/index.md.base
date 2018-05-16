@@ -107,6 +107,8 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | terminalColumns | _run_ | 80 |  | yes |
 | customTerminal | _run_ | '' | | no |
 | compiler | all tasks | instance of GnuCobol |  | yes |
+| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' | no |
+
 ## Terminal configuration
 
 
