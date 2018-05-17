@@ -12,7 +12,7 @@ import de.sebastianruziczka.CobolExtension
 class CobolCompileTask extends DefaultTask{
 
 	CobolExtension configuration
-	CobolCompiler compiler
+	CobolCompilerDirectExectuatble compiler
 	String target
 	Project pr
 

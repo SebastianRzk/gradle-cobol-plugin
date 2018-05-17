@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 
-class CobolCompiler {
+class CobolCompilerDirectExectuatble {
 	private Project project
 	private CobolExtension conf
 	private Logger logger = LoggerFactory.getLogger('COBOL COMPILER')
 
-	public CobolCompiler(Project project, CobolExtension conf) {
+	public CobolCompilerDirectExectuatble(Project project, CobolExtension conf) {
 		this.project = project
 		this.conf = conf
 	}

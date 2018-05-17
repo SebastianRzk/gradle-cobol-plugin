@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.buildcycle.compile.CobolCompileTask
-import de.sebastianruziczka.buildcycle.compile.CobolCompiler
+import de.sebastianruziczka.buildcycle.compile.CobolCompilerDirectExectuatble
 
 class CobolCompile {
 	void apply (Project project, CobolExtension conf){
@@ -23,7 +23,7 @@ class CobolCompile {
 			inputDir = new File(conf.absoluteSrcMainModulePath())
 
 			configuration = conf
-			compiler = new CobolCompiler(project, conf)
+			compiler = new CobolCompilerDirectExectuatble(project, conf)
 			target = conf.srcMain
 
 			doFirst {
@@ -40,7 +40,7 @@ class CobolCompile {
 			})
 			doFirst {
 				prepareBinFolder(conf)
-				CobolCompiler compiler = new CobolCompiler(project, conf)
+				CobolCompilerDirectExectuatble compiler = new CobolCompilerDirectExectuatble(project, conf)
 				conf.multiCompileTargets.each{ compiler.compile(it) }
 			}
 		}
