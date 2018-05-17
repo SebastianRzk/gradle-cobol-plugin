@@ -24,17 +24,12 @@ class CobolCompileSingleFileTask extends DefaultTask{
 
 	@TaskAction
 	public def compile() {
-		this.compile(this.target)
-	}
-
-	public void compile(String mainFile) {
-		def dependencies = resolveCompileDependencies(project, conf, mainFile)
-
+		def dependencies = resolveCompileDependencies(project, conf, target)
+		String modulePath = new File(conf.absoluteBinMainPath(target)).getParent()
+		File module = new File(modulePath)
 		/**
 		 * Create folder in /build/ when needed
 		 */
-		String modulePath = new File(conf.absoluteBinMainPath(mainFile)).getParent()
-		File module = new File(modulePath)
 		if (!module.exists()) {
 			logger.info('Create folder for compile: ' + modulePath)
 			module.mkdirs()
@@ -43,10 +38,11 @@ class CobolCompileSingleFileTask extends DefaultTask{
 				.buildExecutable(this.conf)//
 				.addDependencyPaths(dependencies)
 				.addIncludePath(modulePath)
-				.setTargetAndBuild(conf.absoluteSrcMainPath(mainFile))
+				.setTargetAndBuild(conf.absoluteSrcMainPath(target))
 				.addAdditionalOption(conf.fileFormat)
-				.setExecutableDestinationPath(conf.absoluteBinMainPath(mainFile))
+				.setExecutableDestinationPath(conf.absoluteBinMainPath(target))
 				.execute("COMPILE TASK")
+
 	}
 
 	private List resolveCompileDependencies(Project project, CobolExtension conf, String mainFile) {
