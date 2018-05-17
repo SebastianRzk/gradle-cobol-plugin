@@ -6,32 +6,81 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
-import de.sebastianruziczka.buildcycle.compile.CobolCompileTask
 import de.sebastianruziczka.buildcycle.compile.CobolCompilerDirectExectuatble
 
 class CobolCompile {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('compileCobol')
 
-		project.task ('compileCobol', type:CobolCompileTask) {
-			group 'COBOL'
-			description 'Compiles cobol source code and creates executable defined in srcMain'
+		if (conf.incrementalBuild) {
+			project.task ('compileCobolFilesIncremental', type:CobolCompileTask) {
+				group 'COBOL'
+				description 'Compiles cobol source code'
 
-			onlyIf {conf.srcMain != null && !conf.srcMain.equals('')}
+				onlyIf {
+					conf.srcMain != null && !conf.srcMain.equals('')
+				}
 
-			outputDir = new File(conf.absoluteBinMainPath())
-			inputDir = new File(conf.absoluteSrcMainModulePath())
+				outputDir = new File(conf.absoluteBinMainPath())
+				inputDir = new File(conf.absoluteSrcMainModulePath())
 
-			configuration = conf
-			compiler = new CobolCompilerDirectExectuatble(project, conf)
-			target = conf.srcMain
+				configuration = conf
+				compiler = new CobolCompilerDirectExectuatble(project, conf)
+				target = conf.srcMain
 
-			doFirst {
-				checkIfMainFileIsSet(logger, conf)
-				prepareBinFolder(conf)
+				doFirst {
+					checkIfMainFileIsSet(logger, conf)
+					prepareBinFolder(conf)
+				}
+			}
+			project.task ('createExecutable', type:CobolCompileTask, dependsOn: [
+				'compileCobolFilesIncremental'
+			]) {
+				group 'COBOL'
+				description 'Creates an executable from compiled cobol files'
+
+				onlyIf {
+					conf.srcMain != null && !conf.srcMain.equals('')
+				}
+
+				outputDir = new File(conf.absoluteBinMainPath())
+				inputDir = new File(conf.absoluteSrcMainModulePath())
+
+				configuration = conf
+				compiler = new CobolCompilerDirectExectuatble(project, conf)
+				target = conf.srcMain
+
+				doFirst {
+					checkIfMainFileIsSet(logger, conf)
+					prepareBinFolder(conf)
+				}
+			}
+			project.task ('compileCobol', dependsOn: ['createExecutable']) {
+				group 'COBOL'
+				description 'Compiles CobolCompileTaskcobol source code and creates executable defined in srcMain. Incremental build enabled.'
 			}
 		}
+		else {
+			project.task ('compileCobol', type:CobolCompileTask) {
+				group 'COBOL'
+				description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
 
+				onlyIf {
+					conf.srcMain != null && !conf.srcMain.equals('')
+				}
+
+				outputDir = new File(conf.absoluteBinMainPath())
+				inputDir = new File(conf.absoluteSrcMainModulePath())
+
+				configuration = conf
+				target = conf.srcMain
+
+				doFirst {
+					checkIfMainFileIsSet(logger, conf)
+					prepareBinFolder(conf)
+				}
+			}
+		}
 		project.task ('compileMultiTargetCobol') {
 			group 'COBOL'
 			description 'Compiles additional executables when defined in multiCompileTargets'

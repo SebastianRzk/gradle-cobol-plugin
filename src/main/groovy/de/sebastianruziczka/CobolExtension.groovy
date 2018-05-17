@@ -13,6 +13,7 @@ class CobolExtension {
 	String binMainPath = 'build/bin/main/cobol'
 	String resMainPath = 'res/main/cobol'
 	String srcTestPath = 'src/test/cobol'
+	String incrementsBuildPath = 'build/incremental/'
 
 	def multiCompileTargets = []
 

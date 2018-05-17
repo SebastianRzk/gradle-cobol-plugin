@@ -9,10 +9,9 @@ import org.gradle.api.tasks.TaskAction
 
 import de.sebastianruziczka.CobolExtension
 
-class CobolCompileTask extends DefaultTask{
+class CobolCompileMultibleFilesTask extends DefaultTask{
 
 	CobolExtension configuration
-	CobolCompilerDirectExectuatble compiler
 	String target
 	Project pr
 
@@ -25,6 +24,6 @@ class CobolCompileTask extends DefaultTask{
 
 	@TaskAction
 	public def compile() {
-		this.compiler.compile(this.target)
+		println 'chello'
 	}
 }
