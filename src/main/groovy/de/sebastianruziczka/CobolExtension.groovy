@@ -30,8 +30,6 @@ class CobolExtension {
 
 	String compilerLogLevel = 'FINE'
 
-	boolean incrementalBuild = false
-
 	String filetypePattern(){
 		'**/*' + this.srcFileType
 	}

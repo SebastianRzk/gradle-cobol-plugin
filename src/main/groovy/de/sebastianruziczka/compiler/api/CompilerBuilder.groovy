@@ -7,7 +7,18 @@ interface CompilerBuilder {
 	String getBaseCompilerCommand()
 
 	ExecutableCompilerBuilder buildExecutable(CobolExtension configuration)
+
+	Stage1CompilerBuilder buildStage1(CobolExtension configuration)
 }
+
+interface Stage1CompilerBuilder {
+	Stage1CompilerBuilder setCompileStandard(CompileStandard standard)
+
+	Stage1CompilerBuilder addIncludePath(String path)
+
+	CompileJob setTargetAndBuild(String targetPath)
+}
+
 
 
 interface ExecutableCompilerBuilder{
@@ -18,7 +29,7 @@ interface ExecutableCompilerBuilder{
 
 	ExecutableCompilerBuilder addDependencyPath(String path)
 
-	ExecutableCompilerBuilder addDependencyPaths(ArrayList<String> list)
+	ExecutableCompilerBuilder addDependencyPaths(List<String> list)
 
 	CompileJob setTargetAndBuild(String targetPath)
 }
