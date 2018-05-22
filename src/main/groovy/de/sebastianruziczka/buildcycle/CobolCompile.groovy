@@ -13,7 +13,7 @@ class CobolCompile {
 		Logger logger = LoggerFactory.getLogger('compileCobol')
 
 
-		project.task ('compileCobol', type:CobolCompileTask) {
+		project.task ('compileCobol', type:CobolCompileSingleFileTask) {
 			group 'COBOL'
 			description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
 
