@@ -6,14 +6,14 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
-import de.sebastianruziczka.buildcycle.compile.CobolCompileSingleFileTask
+import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
 
 class CobolCompile {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('compileCobol')
 
 
-		project.task ('compileCobol', type:CobolCompileSingleFileTask) {
+		project.task ('compileCobol', type:CobolCompileExecutableTask) {
 			group 'COBOL'
 			description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
 
@@ -42,7 +42,7 @@ class CobolCompile {
 			doFirst {
 				prepareBinFolder(conf)
 				conf.multiCompileTargets.each{
-					CobolCompileSingleFileTask compiler = new CobolCompileSingleFileTask()
+					CobolCompileExecutableTask compiler = new CobolCompileExecutableTask()
 					compiler.configuration = conf
 					compiler.pr = project
 					compiler.target = it
