@@ -9,7 +9,7 @@ import org.gradle.api.tasks.TaskAction
 
 import de.sebastianruziczka.CobolExtension
 
-class CobolCompileSingleFileTask extends DefaultTask{
+class CobolCompileExecutableTask extends DefaultTask{
 
 	CobolExtension configuration
 	String target
@@ -24,7 +24,7 @@ class CobolCompileSingleFileTask extends DefaultTask{
 
 	@TaskAction
 	public def compile() {
-		def dependencies = resolveCompileDependencies(project, conf, target)
+		def dependencies = resolveCompileDependencies(project, configuration, target)
 		String modulePath = new File(conf.absoluteBinMainPath(target)).getParent()
 		File module = new File(modulePath)
 		/**
@@ -35,7 +35,7 @@ class CobolCompileSingleFileTask extends DefaultTask{
 			module.mkdirs()
 		}
 		conf.compiler//
-				.buildExecutable(this.conf)//
+				.buildExecutable(this.configuration)//
 				.addDependencyPaths(dependencies)
 				.addIncludePath(modulePath)
 				.setTargetAndBuild(conf.absoluteSrcMainPath(target))
