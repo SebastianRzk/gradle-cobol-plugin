@@ -22,14 +22,21 @@ Further Reading:
 
 ### Install
 
-Build your own plugin-jar with the command
 
-    gradle publish
-
-or import it from the provided repo (in your settings.gradle):
+Import the plugin from the provided repo (in your settings.gradle):
 
     mvn: https://sebastianruziczka.de/repo/mvn
     ivy: https://sebastianruziczka.de/repo/ivy
+    
+
+or build your your own versioned jar with the command
+
+    gradle publish
+
+use the parameter `-PgenerateLatest` for publishing a jar with the version _latest_:
+
+    gradle publish -PgenerateLatest
+
 
 To use the plugin, you need [GNUCobol](https://sourceforge.net/projects/open-cobol/) and [Gradle](https://gradle.org/).
 
@@ -67,7 +74,11 @@ And a minimal configuration:
 
 Run your application with
 
-    gradle run
+    gradle runDebugCobol
+
+or build an complete executable and run it with:
+
+    gradle runExecutableCobol
 
 Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
 
@@ -92,22 +103,22 @@ Or hardcode with specific version (not preferred):
 Following properties can be modified in the _cobol_ block in your _build.gradle_ :
 
 
-| name | usage | default | other | required |
-| ---- | ----- | ------- | ----- | -------- |
-| srcFileType | _compileCobol_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' | yes |
-| srcMain | _compileCobol_, _run_ | '' | | yes |
-| srcMainPath | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' || yes |
-| binMainPath | _compileCobol_, _run_, _test_ | 'build/bin/main/cobol' || yes |
-| resMainPath | _compile_, _run_ | 'res/main/cobol' || yes |
-| srcTestPath | _test_ | 'src/test/cobol' | | yes |
-| multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled | No |
-| fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'| yes |
-| terminal | _run_ | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
-| terminalRows | _run_ | 43 |  | yes |
-| terminalColumns | _run_ | 80 |  | yes |
-| customTerminal | _run_ | '' | | no |
-| compiler | all tasks | instance of GnuCobol |  | yes |
-| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' | no |
+| name | usage | default | other |
+| ---- | ----- | ------- | ----- |
+| srcFileType | _compileCobol_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' |
+| srcMain | _compileCobol_, _run_ | '' | |
+| srcMainPath | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' ||
+| binMainPath | _compileCobol_, _run_, _test_ | 'build/bin/main/cobol' ||
+| resMainPath | _compile_, _run_ | 'res/main/cobol' ||
+| srcTestPath | _test_ | 'src/test/cobol' | |
+| multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled |
+| fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'|
+| terminal | _run_ | 'xterm' | 'gnome-terminal' |
+| terminalRows | _run_ | 43 |  |
+| terminalColumns | _run_ | 80 |  |
+| customTerminal | _run_ | '' | |
+| compiler | all tasks, key variable to use the configured cobol compiler | instance of GnuCobol |  |
+| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' |
 
 ## Terminal configuration
 
@@ -127,17 +138,20 @@ Set the parameter _terminal_ in the cobol block in your build gradle, to use one
 
 Set the parameter _customTerminal_ in the cobol block in your build.gradle to use a custom terminal commands.
 
-Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable.
+Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable (runCobol) or the terminal command (runDebugCobol).
 
 
 ## tasks
 
 | name | input | output | dependsOn |
 | ---- | ----- | ------ | --------- |
-| _compile_ | `srcMain` | executable in `build` |  |
+| _compileCobol_ | `srcMain` | executable in `build` |  |
+| _compileDebugCobol | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
 | _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
-| _buildCobol_ |  | runnable programm in build directory | _compileCobol_, _cobolCopyRessources_ | 
-| _run_ | everything in build directory | terminal process | _buildCobol_ |
+| _buildCobol_ |  | runnable programm in build directory | _compileCobol_, _cobolCopyRessources_ |
+| _buildDebugCobol | | compiled cobol files in build directory witrh ressources | _compileDebugCobol_, _cobolCopyRessources_ |
+| _runExecutableCobol_ | everything in build directory | terminal process | _buildCobol_ |
+| _runDebugCobol_ | everything in build directory | terminal process | _buildDebugCobol_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
 | _testUnitCobol_ | `srcTest` | result of tests |  |
 | _checkCobol_ | everything | check result | _testUnitCobol_, _compileCobol_, _cobolConfiguration_ |
@@ -198,4 +212,7 @@ Features:
 #### CompilerBuilder (de.sebastianruziczka.compiler.api.CompilerBuilder)
 
 Interface to the configured compiler. An instance is located in `CobolExtension.compiler`
+
+This builder enables executable files and modules to be compiled.
+
 
