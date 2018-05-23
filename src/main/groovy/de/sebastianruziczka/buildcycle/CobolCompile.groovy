@@ -6,6 +6,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableImpl
 import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
 
 class CobolCompile {
@@ -33,6 +34,28 @@ class CobolCompile {
 			}
 		}
 
+		project.task ('compileDebugCobol', type:CobolCompileExecutableTask) {
+			group 'COBOL'
+			description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
+
+			onlyIf {
+				conf.srcMain != null && !conf.srcMain.equals('')
+			}
+
+			outputDir = new File(conf.absoluteBinMainPath())
+			inputDir = new File(conf.absoluteSrcMainModulePath())
+
+			configuration = conf
+			target = conf.srcMain
+
+			doFirst {
+				checkIfMainFileIsSet(logger, conf)
+				prepareBinFolder(conf)
+			}
+		}
+
+
+
 		project.task ('compileMultiTargetCobol') {
 			group 'COBOL'
 			description 'Compiles additional executables when defined in multiCompileTargets'
@@ -42,11 +65,7 @@ class CobolCompile {
 			doFirst {
 				prepareBinFolder(conf)
 				conf.multiCompileTargets.each{
-					CobolCompileExecutableTask compiler = new CobolCompileExecutableTask()
-					compiler.configuration = conf
-					compiler.pr = project
-					compiler.target = it
-					compiler.compile()
+					new CobolCompileExecutableImpl().compile(project, conf, it)
 				}
 			}
 		}
