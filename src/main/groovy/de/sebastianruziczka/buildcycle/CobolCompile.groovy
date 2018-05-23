@@ -36,7 +36,7 @@ class CobolCompile {
 		}
 
 		project.task ('compileDebugCobol', type:CobolCompileDebugTask) {
-			group 'COBOL'
+			group 'COBOL Development'
 			description 'Compiles each cobol source code itself to *.so into build folder.'
 
 			onlyIf {

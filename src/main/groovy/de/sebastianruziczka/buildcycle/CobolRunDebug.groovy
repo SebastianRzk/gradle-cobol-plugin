@@ -16,12 +16,12 @@ class CobolRunDebug {
 			'compileDebugCobol',
 			'copyRessources'
 		]){
-			group 'COBOL'
+			group 'COBOL Development'
 			description 'Builds incremental an cobcrun-runnable programm in build folder'
 		}
 
 		project.task ('runDebugCobol', type:Exec, dependsOn: ['buildDebugCobol']) {
-			group 'COBOL'
+			group 'COBOL Development'
 			description 'Compiles incremental the cobol programm sourcecode and runs it with cobcrun'
 			doFirst {
 				standardInput = System.in
