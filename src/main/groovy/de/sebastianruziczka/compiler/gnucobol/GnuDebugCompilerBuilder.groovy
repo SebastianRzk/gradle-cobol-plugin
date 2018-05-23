@@ -37,7 +37,7 @@ class GnuDebugCompilerBuilder implements DebugCompilerBuilder {
 
 	@Override
 	public CompileJob setTargetAndBuild(String targetPath) {
-		return new GnuDebugCompileJob(target, this.includePaths, this.compileStandard, this.configuration)
+		return new GnuDebugCompileJob(targetPath, this.includePaths, this.compileStandard, this.configuration)
 	}
 }
 
@@ -87,8 +87,8 @@ class GnuDebugCompileJob implements CompileJob {
 
 		args << new GnuCobolLoglevelOptionResolver().resolve(this.configuration)
 
-		if (this.standard != CompileStandard.none) {
-			args << '-std=' + this.standard.toString()
+		if (this.compileStandard != CompileStandard.none) {
+			args << '-std=' + this.compileStandard.toString()
 		}
 
 		for (String dependency : this.includePaths) {
@@ -97,10 +97,10 @@ class GnuDebugCompileJob implements CompileJob {
 		}
 
 		String logPath = this.target + '_COMPILE.LOG'
-		if (this.outputPath) {
+		if (this.destinationPath) {
 			args << '-o'
-			args << this.outputPath
-			logPath = this.outputPath + '_COMPILE.LOG'
+			args << this.destinationPath
+			logPath = this.destinationPath + '_COMPILE.LOG'
 		}
 
 		if ( this.additionalOptions.size() > 0) {

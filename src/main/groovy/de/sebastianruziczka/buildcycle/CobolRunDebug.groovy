@@ -14,34 +14,55 @@ class CobolRunDebug {
 
 		project.task ('buildDebugCobol', dependsOn: [
 			'compileDebugCobol',
-			'cobolCopyRessources'
+			'copyRessources'
 		]){
 			group 'COBOL'
-			description 'Builds an runnable programm in build folder'
+			description 'Builds incremental an cobcrun-runnable programm in build folder'
 		}
 
 		project.task ('runDebugCobol', type:Exec, dependsOn: ['buildDebugCobol']) {
 			group 'COBOL'
-			description 'Builds a runnable programm and executes it'
+			description 'Compiles incremental the cobol programm sourcecode and runs it with cobcrun'
 			doFirst {
 				standardInput = System.in
 				workingDir = conf.binMainPath
+				def terminalCommand = ['cobcrun']
+				terminalCommand << '-M'
+				terminalCommand << conf.absoluteBinMainModule(conf.srcMain) + '/ '// Add dynamic module path
+				terminalCommand << conf.srcMain
+
 				if (!conf.customTerminal.equals('')) {
-					logger.info('Compiling terminal String, replace {path} with actual executable')
+					logger.info('Compiling terminal String, replace {path} with actual terminal command')
 					logger.info('Before:')
 					logger.info(conf.customTerminal)
-					commandLine = conf.customTerminal.replace('{path}', conf.absoluteBinMainPath())
+					commandLine = conf.customTerminal.replace('{path}', terminalCommand)
 					logger.info('After:')
 					logger.info(commandLine)
 					return;
 				}else if (conf.terminal.equals('gnome-terminal')) {
 					String geometry = '--geometry=' + conf.terminalColumns + 'x' + conf.terminalRows
-					commandLine 'gnome-terminal', '--wait', geometry, '--', conf.absoluteBinMainPath()
+					def commandList = [
+						"gnome-terminal",
+						"--wait",
+						geometry,
+						"--"
+					]
+					commandList.addAll(terminalCommand)
+					println 'terminalCommand: ' + terminalCommand
+					commandLine = commandList
 				}else if (conf.terminal.equals('xterm')) {
 					logger.warn('!!!xterm does not return the exit value of your programm!!!')
 					logger.warn('!!!The return value can be positive even though the program ended unexpectedly!!!')
 					String geometryValue = conf.terminalColumns + 'x' + conf.terminalRows
-					commandLine 'xterm', '+hold', '-geometry', geometryValue, '-e', conf.absoluteBinMainPath()
+					def commandList =  [
+						'xterm',
+						'+hold',
+						'-geometry',
+						geometryValue,
+						'-e'
+					]
+					commandList.addAll(terminalCommand)
+					commandLine commandList
 				}else {
 					throw new IllegalArgumentException('No terminal defined!')
 				}

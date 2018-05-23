@@ -6,6 +6,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.buildcycle.compile.CobolCompileDebugTask
 import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableImpl
 import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
 
@@ -34,9 +35,9 @@ class CobolCompile {
 			}
 		}
 
-		project.task ('compileDebugCobol', type:CobolCompileExecutableTask) {
+		project.task ('compileDebugCobol', type:CobolCompileDebugTask) {
 			group 'COBOL'
-			description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
+			description 'Compiles each cobol source code itself to *.so into build folder.'
 
 			onlyIf {
 				conf.srcMain != null && !conf.srcMain.equals('')
@@ -46,7 +47,6 @@ class CobolCompile {
 			inputDir = new File(conf.absoluteSrcMainModulePath())
 
 			configuration = conf
-			target = conf.srcMain
 
 			doFirst {
 				checkIfMainFileIsSet(logger, conf)

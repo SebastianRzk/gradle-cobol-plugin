@@ -10,11 +10,9 @@ import org.gradle.api.tasks.incremental.IncrementalTaskInputs
 
 import de.sebastianruziczka.CobolExtension
 
-class CobolCompileModulesTask extends DefaultTask{
+class CobolCompileDebugTask extends DefaultTask{
 
 	CobolExtension configuration
-	String target
-	Project pr
 
 	@SkipWhenEmpty
 	@InputDirectory
@@ -25,20 +23,25 @@ class CobolCompileModulesTask extends DefaultTask{
 
 	@TaskAction
 	public def compile(IncrementalTaskInputs inputs) {
+		String sourceModule = this.configuration.projectFileResolver(this.configuration.srcMainPath).absolutePath
 		inputs.outOfDate { change ->
-			compilerFile(change.file)
+			if (!change.file.name.endsWith(this.configuration.srcFileType)) {
+				return
+			}
+			String target = change.file.absolutePath.replace(sourceModule, '')
+			compileFile(target, change.file.absolutePath)
 		}
 
 		inputs.removed { change ->
-			def targetFile = project.file(change.file.absolutePath())
+			def targetFile = this.configuration.projectFileResolver(change.file.absolutePath())
 			if (targetFile.exists()) {
 				targetFile.delete()
 			}
 		}
 	}
 
-	private compileFile(File file) {
-		String modulePath = new File(conf.absoluteBinMainPath(target)).getParent()
+	void compileFile(String target, String absoluteTargetPath) {
+		String modulePath = new File(absoluteTargetPath).getParent()
 		File module = new File(modulePath)
 		/**
 		 * Create folder in /build/ when needed
@@ -47,14 +50,10 @@ class CobolCompileModulesTask extends DefaultTask{
 			logger.info('Create folder for compile: ' + modulePath)
 			module.mkdirs()
 		}
-		conf.compiler//
-				.buildExecutable(this.configuration)//
-				.addDependencyPaths(dependencies)
-				.addIncludePath(modulePath)
-				.setTargetAndBuild(conf.absoluteSrcMainPath(target))
-				.addAdditionalOption(conf.fileFormat)
-				.setExecutableDestinationPath(conf.absoluteBinMainPath(target))
-				.execute("COMPILE TASK")
+		this.configuration.compiler.buildDebug(this.configuration)
+				.setTargetAndBuild(absoluteTargetPath)
+				.setExecutableDestinationPath(this.configuration.absoluteDebugMainPath(target))
+				.execute('COMPILE DEBUG: ' + target)
 	}
 
 	private List resolveCompileDependencies(Project project, CobolExtension conf, String mainFile) {

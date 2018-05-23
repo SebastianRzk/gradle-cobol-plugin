@@ -7,22 +7,22 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 
-class CobolRun {
+class CobolRunExecutable {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('runCobol')
 
 
 		project.task ('buildCobol', dependsOn: [
 			'compileCobol',
-			'cobolCopyRessources'
+			'copyRessources'
 		]){
 			group 'COBOL'
 			description 'Builds an runnable programm in build folder'
 		}
 
-		project.task ('runCobol', type:Exec, dependsOn: ['buildCobol']) {
+		project.task ('runExecutableCobol', type:Exec, dependsOn: ['buildCobol']) {
 			group 'COBOL'
-			description 'Builds a runnable programm and executes it'
+			description 'Builds a runnable programm file and executes it'
 			doFirst {
 				standardInput = System.in
 				workingDir = conf.binMainPath
@@ -49,7 +49,7 @@ class CobolRun {
 		}
 
 
-		project.task ('cobolCopyRessources', type: Copy){
+		project.task ('copyRessources', type: Copy){
 			group 'COBOL'
 			description 'Moves all ressources into build folder'
 			onlyIf {!project.fileTree(conf.srcMainPath).getFiles().isEmpty()}

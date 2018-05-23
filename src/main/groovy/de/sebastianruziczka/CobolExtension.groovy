@@ -49,6 +49,13 @@ class CobolExtension {
 		return this.projectFileResolver(srcMainPath + '/' + sourceFile).getParent()
 	}
 
+	String absoluteBinMainModule(String sourceFile){
+		if (!sourceFile.endsWith(this.srcFileType)) {
+			sourceFile = sourceFile + this.srcFileType
+		}
+		return this.projectFileResolver(this.binMainPath + '/' + sourceFile).getParent()
+	}
+
 	String absoluteSrcMainPath(){
 		return this.absoluteSrcMainPath(this.srcMain)
 	}
@@ -71,6 +78,9 @@ class CobolExtension {
 		return this.projectFileResolver(binMainPath + '/' +  name).absolutePath
 	}
 
+	String absoluteDebugMainPath(String name) {
+		return this.absoluteBinMainPath(name) + '.so'
+	}
 
 	String absoluteSrcTestPath() {
 		return this.projectFileResolver(this.srcTestPath).absolutePath
