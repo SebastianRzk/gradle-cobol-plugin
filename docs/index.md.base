@@ -146,10 +146,10 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | name | input | output | dependsOn |
 | ---- | ----- | ------ | --------- |
 | _compileCobol_ | `srcMain` | executable in `build` |  |
-| _compileDebugCobol | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
+| _compileDebugCobol_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
 | _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
 | _buildCobol_ |  | runnable programm in build directory | _compileCobol_, _cobolCopyRessources_ |
-| _buildDebugCobol | | compiled cobol files in build directory witrh ressources | _compileDebugCobol_, _cobolCopyRessources_ |
+| _buildDebugCobol_ | | compiled cobol files in build directory witrh ressources | _compileDebugCobol_, _cobolCopyRessources_ |
 | _runExecutableCobol_ | everything in build directory | terminal process | _buildCobol_ |
 | _runDebugCobol_ | everything in build directory | terminal process | _buildDebugCobol_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
