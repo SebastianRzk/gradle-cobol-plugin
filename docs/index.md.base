@@ -67,7 +67,11 @@ And a minimal configuration:
 
 Run your application with
 
-    gradle run
+    gradle runDebugCobol
+
+or build an complete executable and run it with:
+
+    gradle runExecutableCobol
 
 Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
 
@@ -92,22 +96,22 @@ Or hardcode with specific version (not preferred):
 Following properties can be modified in the _cobol_ block in your _build.gradle_ :
 
 
-| name | usage | default | other | required |
-| ---- | ----- | ------- | ----- | -------- |
-| srcFileType | _compileCobol_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' | yes |
-| srcMain | _compileCobol_, _run_ | '' | | yes |
-| srcMainPath | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' || yes |
-| binMainPath | _compileCobol_, _run_, _test_ | 'build/bin/main/cobol' || yes |
-| resMainPath | _compile_, _run_ | 'res/main/cobol' || yes |
-| srcTestPath | _test_ | 'src/test/cobol' | | yes |
-| multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled | No |
-| fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'| yes |
-| terminal | _run_ | 'xterm' | 'gnome-terminal' | (yes) (or  _customTerminal_) |
-| terminalRows | _run_ | 43 |  | yes |
-| terminalColumns | _run_ | 80 |  | yes |
-| customTerminal | _run_ | '' | | no |
-| compiler | all tasks | instance of GnuCobol |  | yes |
-| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' | no |
+| name | usage | default | other |
+| ---- | ----- | ------- | ----- |
+| srcFileType | _compileCobol_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' |
+| srcMain | _compileCobol_, _run_ | '' | |
+| srcMainPath | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' ||
+| binMainPath | _compileCobol_, _run_, _test_ | 'build/bin/main/cobol' ||
+| resMainPath | _compile_, _run_ | 'res/main/cobol' ||
+| srcTestPath | _test_ | 'src/test/cobol' | |
+| multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled |
+| fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'|
+| terminal | _run_ | 'xterm' | 'gnome-terminal' |
+| terminalRows | _run_ | 43 |  |
+| terminalColumns | _run_ | 80 |  |
+| customTerminal | _run_ | '' | |
+| compiler | all tasks | instance of GnuCobol |  |
+| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' |
 
 ## Terminal configuration
 
