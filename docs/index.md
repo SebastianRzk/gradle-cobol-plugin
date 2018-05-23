@@ -61,7 +61,7 @@ Add to your build.gradle (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.19'
+         id 'de.sebastianruziczka.Cobol' version '0.0.20'
     }
 
 
