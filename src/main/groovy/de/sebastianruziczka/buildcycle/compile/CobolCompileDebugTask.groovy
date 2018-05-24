@@ -44,7 +44,7 @@ class CobolCompileDebugTask extends DefaultTask{
 	}
 
 	void compileFile(String target, String absoluteTargetPath) {
-		String modulePath = new File(absoluteTargetPath).getParent()
+		String modulePath = new File(this.configuration.absoluteBinMainPath(target)).getParent()
 		File module = new File(modulePath)
 		/**
 		 * Create folder in /build/ when needed
