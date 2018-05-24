@@ -43,7 +43,7 @@ class CobolCompile {
 				conf.srcMain != null && !conf.srcMain.equals('')
 			}
 
-			outputDir = new File(conf.absoluteBinMainPath())
+			outputDir = conf.projectFileResolver(conf.binMainPath)
 			inputDir = new File(conf.absoluteSrcMainModulePath())
 
 			configuration = conf

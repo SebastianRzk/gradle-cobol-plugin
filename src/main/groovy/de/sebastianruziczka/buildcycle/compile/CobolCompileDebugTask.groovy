@@ -3,7 +3,7 @@ package de.sebastianruziczka.buildcycle.compile
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.InputDirectory
-import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.SkipWhenEmpty
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs
@@ -18,19 +18,22 @@ class CobolCompileDebugTask extends DefaultTask{
 	@InputDirectory
 	def File inputDir
 
-	@OutputFile
+	@OutputDirectory
 	def File outputDir
 
 	@TaskAction
 	public def compile(IncrementalTaskInputs inputs) {
 		String sourceModule = this.configuration.projectFileResolver(this.configuration.srcMainPath).absolutePath
+		Set<String> done = new HashSet<>()
 		inputs.outOfDate { change ->
-			if (!change.file.name.endsWith(this.configuration.srcFileType)) {
+			if (change.file.name.endsWith(this.configuration.srcFileType) && change.file.absolutePath.startsWith(sourceModule)) {
+				def name = change.file.absolutePath.replace(sourceModule, '')
+				compileFile(name, change.file.absolutePath)
+				done.add(name)
 				return
 			}
-			String target = change.file.absolutePath.replace(sourceModule, '')
-			compileFile(target, change.file.absolutePath)
 		}
+		logger.info('Compiled Files: ' + done)
 
 		inputs.removed { change ->
 			def targetFile = this.configuration.projectFileResolver(change.file.absolutePath())
@@ -65,5 +68,28 @@ class CobolCompileDebugTask extends DefaultTask{
 			}
 		}
 		return list
+	}
+}
+
+class CompileTarget {
+	private String name
+	private String absolutePath
+
+	public CompileTarget (String name, String absolutePath) {
+		this.name = name
+		this.absolutePath = absolutePath
+	}
+
+	public String name() {
+		return this.name
+	}
+
+	public String absolutePath () {
+		return this.absolutePath
+	}
+
+	@Override
+	public String toString() {
+		return 'COMPILETARGET{' + this.name + ',' + this.absolutePath + '}'
 	}
 }
