@@ -26,7 +26,7 @@ class CobolCompileDebugTask extends DefaultTask{
 		String sourceModule = this.configuration.projectFileResolver(this.configuration.srcMainPath).absolutePath
 		Set<String> done = new HashSet<>()
 		inputs.outOfDate { change ->
-			if (change.file.name.endsWith(this.configuration.srcFileType) && change.file.absolutePath.startsWith(sourceModule)) {
+			if (change.file.name.endsWith(this.configuration.srcFileType)) {
 				def name = change.file.absolutePath.replace(sourceModule, '')
 				compileFile(name, change.file.absolutePath)
 				done.add(name)
@@ -44,7 +44,7 @@ class CobolCompileDebugTask extends DefaultTask{
 	}
 
 	void compileFile(String target, String absoluteTargetPath) {
-		String modulePath = new File(absoluteTargetPath).getParent()
+		String modulePath = new File(this.configuration.absoluteBinMainPath(target)).getParent()
 		File module = new File(modulePath)
 		/**
 		 * Create folder in /build/ when needed

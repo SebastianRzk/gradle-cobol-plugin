@@ -53,9 +53,6 @@ class CobolRunExecutable {
 			group 'COBOL'
 			description 'Moves all ressources into build folder'
 			onlyIf {!project.fileTree(conf.srcMainPath).getFiles().isEmpty()}
-			doFirst {
-				conf.projectFileResolver('bin/main/cobol').mkdirs()
-			}
 			from conf.projectFileResolver(conf.resMainPath).absolutePath
 			into conf.projectFileResolver(conf.binMainPath).absolutePath
 		}
