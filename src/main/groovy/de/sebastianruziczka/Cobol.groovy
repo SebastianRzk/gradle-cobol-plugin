@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
-import de.sebastianruziczka.buildcycle.CobolRun
+import de.sebastianruziczka.buildcycle.CobolRunDebug
+import de.sebastianruziczka.buildcycle.CobolRunExecutable
 import de.sebastianruziczka.buildcycle.CobolUnit
 
 class Cobol implements Plugin<Project> {
@@ -22,7 +23,8 @@ class Cobol implements Plugin<Project> {
 
 			new CobolConfiguration().apply(project, conf)
 			new CobolCompile().apply(project, conf)
-			new CobolRun().apply(project, conf)
+			new CobolRunExecutable().apply(project, conf)
+			new CobolRunDebug().apply(project, conf)
 			new CobolUnit().apply(project, conf)
 
 			project.task ('clean', type: Delete){

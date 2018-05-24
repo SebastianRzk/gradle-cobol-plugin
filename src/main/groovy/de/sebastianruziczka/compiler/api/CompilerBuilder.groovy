@@ -7,20 +7,8 @@ interface CompilerBuilder {
 	String getBaseCompilerCommand()
 
 	ExecutableCompilerBuilder buildExecutable(CobolExtension configuration)
-}
 
-
-interface ExecutableCompilerBuilder{
-
-	ExecutableCompilerBuilder setCompileStandard(CompileStandard standard)
-
-	ExecutableCompilerBuilder addIncludePath(String path)
-
-	ExecutableCompilerBuilder addDependencyPath(String path)
-
-	ExecutableCompilerBuilder addDependencyPaths(ArrayList<String> list)
-
-	CompileJob setTargetAndBuild(String targetPath)
+	DebugCompilerBuilder buildDebug(CobolExtension configuration)
 }
 
 interface CompileJob {

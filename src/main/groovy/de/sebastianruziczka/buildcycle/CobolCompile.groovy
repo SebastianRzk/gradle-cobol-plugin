@@ -6,24 +6,27 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
-import de.sebastianruziczka.buildcycle.compile.CobolCompileTask
-import de.sebastianruziczka.buildcycle.compile.CobolCompiler
+import de.sebastianruziczka.buildcycle.compile.CobolCompileDebugTask
+import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableImpl
+import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
 
 class CobolCompile {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('compileCobol')
 
-		project.task ('compileCobol', type:CobolCompileTask) {
-			group 'COBOL'
-			description 'Compiles cobol source code and creates executable defined in srcMain'
 
-			onlyIf {conf.srcMain != null && !conf.srcMain.equals('')}
+		project.task ('compileCobol', type:CobolCompileExecutableTask) {
+			group 'COBOL'
+			description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
+
+			onlyIf {
+				conf.srcMain != null && !conf.srcMain.equals('')
+			}
 
 			outputDir = new File(conf.absoluteBinMainPath())
 			inputDir = new File(conf.absoluteSrcMainModulePath())
 
 			configuration = conf
-			compiler = new CobolCompiler(project, conf)
 			target = conf.srcMain
 
 			doFirst {
@@ -31,6 +34,27 @@ class CobolCompile {
 				prepareBinFolder(conf)
 			}
 		}
+
+		project.task ('compileDebugCobol', type:CobolCompileDebugTask) {
+			group 'COBOL Development'
+			description 'Compiles each cobol source code itself to *.so into build folder.'
+
+			onlyIf {
+				conf.srcMain != null && !conf.srcMain.equals('')
+			}
+
+			outputDir = conf.projectFileResolver(conf.binMainPath)
+			inputDir = new File(conf.absoluteSrcMainModulePath())
+
+			configuration = conf
+
+			doFirst {
+				checkIfMainFileIsSet(logger, conf)
+				prepareBinFolder(conf)
+			}
+		}
+
+
 
 		project.task ('compileMultiTargetCobol') {
 			group 'COBOL'
@@ -40,8 +64,9 @@ class CobolCompile {
 			})
 			doFirst {
 				prepareBinFolder(conf)
-				CobolCompiler compiler = new CobolCompiler(project, conf)
-				conf.multiCompileTargets.each{ compiler.compile(it) }
+				conf.multiCompileTargets.each{
+					new CobolCompileExecutableImpl().compile(project, conf, it)
+				}
 			}
 		}
 	}

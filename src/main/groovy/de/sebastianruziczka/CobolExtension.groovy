@@ -13,6 +13,7 @@ class CobolExtension {
 	String binMainPath = 'build/bin/main/cobol'
 	String resMainPath = 'res/main/cobol'
 	String srcTestPath = 'src/test/cobol'
+	String incrementsBuildPath = 'build/incremental/'
 
 	def multiCompileTargets = []
 
@@ -48,6 +49,13 @@ class CobolExtension {
 		return this.projectFileResolver(srcMainPath + '/' + sourceFile).getParent()
 	}
 
+	String absoluteBinMainModule(String sourceFile){
+		if (!sourceFile.endsWith(this.srcFileType)) {
+			sourceFile = sourceFile + this.srcFileType
+		}
+		return this.projectFileResolver(this.binMainPath + '/' + sourceFile).getParent()
+	}
+
 	String absoluteSrcMainPath(){
 		return this.absoluteSrcMainPath(this.srcMain)
 	}
@@ -70,6 +78,10 @@ class CobolExtension {
 		return this.projectFileResolver(binMainPath + '/' +  name).absolutePath
 	}
 
+	String debugFileType = '.so'
+	String absoluteDebugMainPath(String name) {
+		return this.absoluteBinMainPath(name) + this.debugFileType
+	}
 
 	String absoluteSrcTestPath() {
 		return this.projectFileResolver(this.srcTestPath).absolutePath
