@@ -13,7 +13,7 @@ class CobolRunDebug {
 
 
 		project.task ('buildDebugCobol', dependsOn: [
-			'compileDebugCobol',
+			'compileDebug',
 			'copyRessources'
 		]){
 			group 'COBOL Development'

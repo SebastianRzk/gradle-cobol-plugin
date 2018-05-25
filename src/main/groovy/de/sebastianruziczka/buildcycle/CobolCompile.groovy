@@ -35,7 +35,7 @@ class CobolCompile {
 			}
 		}
 
-		project.task ('compileDebugCobol', type:CobolCompileDebugTask) {
+		project.task ('compileDebug', type:CobolCompileDebugTask) {
 			group 'COBOL Development'
 			description 'Compiles each cobol source code itself to *.so into build folder.'
 
