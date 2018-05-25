@@ -20,7 +20,7 @@ class CobolRunDebug {
 			description 'Builds incremental an cobcrun-runnable programm in build folder'
 		}
 
-		project.task ('runDebugCobol', type:Exec, dependsOn: ['buildDebug']) {
+		project.task ('runDebug', type:Exec, dependsOn: ['buildDebug']) {
 			group 'COBOL Development'
 			description 'Compiles incremental the cobol programm sourcecode and runs it with cobcrun'
 			doFirst {

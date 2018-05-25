@@ -74,7 +74,7 @@ And a minimal configuration:
 
 Run your application with
 
-    gradle runDebugCobol
+    gradle runDebug
 
 or build an complete executable and run it with:
 
@@ -138,7 +138,7 @@ Set the parameter _terminal_ in the cobol block in your build gradle, to use one
 
 Set the parameter _customTerminal_ in the cobol block in your build.gradle to use a custom terminal commands.
 
-Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable (runCobol) or the terminal command (runDebugCobol).
+Insert the full qualified terminal command string. Use `{path}` as placeholder for the absolute path to the executable (runExecutable) or the terminal command (runDebug).
 
 
 ## tasks
@@ -151,7 +151,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _build_ |  | runnable programm in build directory | _compile_, _cobolCopyRessources_ |
 | _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runExecutable_ | everything in build directory | terminal process | _build_ |
-| _runDebugCobol_ | everything in build directory | terminal process | _buildDebug_ |
+| _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
 | _testUnitCobol_ | `srcTest` | result of tests |  |
 | _check_ | everything | check result | _testUnitCobol_, _compile_, _cobolConfiguration_ |
