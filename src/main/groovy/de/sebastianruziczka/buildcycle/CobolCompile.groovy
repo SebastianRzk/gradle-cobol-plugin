@@ -56,7 +56,7 @@ class CobolCompile {
 
 
 
-		project.task ('compileMultiTargetCobol') {
+		project.task ('compileMultiTarget') {
 			group 'COBOL'
 			description 'Compiles additional executables when defined in multiCompileTargets'
 			onlyIf({

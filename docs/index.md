@@ -107,12 +107,12 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | ---- | ----- | ------- | ----- |
 | srcFileType | _compile_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' |
 | srcMain | _compile_, _run_ | '' | |
-| srcMainPath | _compile_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' ||
+| srcMainPath | _compile_, _run_, _test_, _compileMultiTarget_ | 'src/main/cobol' ||
 | binMainPath | _compile_, _run_, _test_ | 'build/bin/main/cobol' ||
 | resMainPath | _compile_, _run_ | 'res/main/cobol' ||
 | srcTestPath | _test_ | 'src/test/cobol' | |
-| multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled |
-| fileFormat | _compile_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'|
+| multiCompileTargets | _compileMultiTarget_ | [] | other files to be compiled |
+| fileFormat | _compile_, _run_, _test_, _compileMultiTarget_ | 'fixed' |'free'|
 | terminal | _run_ | 'xterm' | 'gnome-terminal' |
 | terminalRows | _run_ | 43 |  |
 | terminalColumns | _run_ | 80 |  |
