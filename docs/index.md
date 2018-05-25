@@ -78,7 +78,7 @@ Run your application with
 
 or build an complete executable and run it with:
 
-    gradle runExecutableCobol
+    gradle runExecutable
 
 Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
 
@@ -150,7 +150,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
 | _build_ |  | runnable programm in build directory | _compile_, _cobolCopyRessources_ |
 | _buildDebugCobol_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
-| _runExecutableCobol_ | everything in build directory | terminal process | _build_ |
+| _runExecutable_ | everything in build directory | terminal process | _build_ |
 | _runDebugCobol_ | everything in build directory | terminal process | _buildDebugCobol_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
 | _testUnitCobol_ | `srcTest` | result of tests |  |

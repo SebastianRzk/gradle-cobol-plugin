@@ -20,7 +20,7 @@ class CobolRunExecutable {
 			description 'Builds an runnable programm in build folder'
 		}
 
-		project.task ('runExecutableCobol', type:Exec, dependsOn: ['build']) {
+		project.task ('runExecutable', type:Exec, dependsOn: ['build']) {
 			group 'COBOL'
 			description 'Builds a runnable programm file and executes it'
 			doFirst {
