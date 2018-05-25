@@ -12,7 +12,7 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 * Incremental compilation
 * Create and run cobol-unit-tests
 * Expandable with custom plugin extensions
-* Simple and fast contunuous integration e.g. with jenkins or travis.
+* Simple and fast continuous integration e.g. with jenkins or travis.
 
 ## Gradle-cobol environment
 
