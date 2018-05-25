@@ -5,6 +5,14 @@ This project is part of my master thesis.
 
 You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cobol-plugin-example)
 
+## Features
+
+* Compile, assemble and run your cobol code with a single command
+* Simple and adaptable configuration
+* Incremental compilation
+* Create and run cobol-unit-tests
+* Expandable with custom plugin extensions
+* Simple and fast contunuous integration e.g. with jenkins or travis.
 
 ## Gradle-cobol environment
 
