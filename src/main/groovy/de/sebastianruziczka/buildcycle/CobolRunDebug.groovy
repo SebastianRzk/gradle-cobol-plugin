@@ -9,18 +9,18 @@ import de.sebastianruziczka.CobolExtension
 
 class CobolRunDebug {
 	void apply (Project project, CobolExtension conf){
-		Logger logger = LoggerFactory.getLogger('runDebugCobol')
+		Logger logger = LoggerFactory.getLogger('runDebug')
 
 
-		project.task ('buildDebugCobol', dependsOn: [
-			'compileDebugCobol',
+		project.task ('buildDebug', dependsOn: [
+			'compileDebug',
 			'copyRessources'
 		]){
 			group 'COBOL Development'
 			description 'Builds incremental an cobcrun-runnable programm in build folder'
 		}
 
-		project.task ('runDebugCobol', type:Exec, dependsOn: ['buildDebugCobol']) {
+		project.task ('runDebug', type:Exec, dependsOn: ['buildDebug']) {
 			group 'COBOL Development'
 			description 'Compiles incremental the cobol programm sourcecode and runs it with cobcrun'
 			doFirst {

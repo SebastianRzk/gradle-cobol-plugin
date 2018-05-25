@@ -12,15 +12,15 @@ class CobolRunExecutable {
 		Logger logger = LoggerFactory.getLogger('runCobol')
 
 
-		project.task ('buildCobol', dependsOn: [
-			'compileCobol',
+		project.task ('build', dependsOn: [
+			'compile',
 			'copyRessources'
 		]){
 			group 'COBOL'
 			description 'Builds an runnable programm in build folder'
 		}
 
-		project.task ('runExecutableCobol', type:Exec, dependsOn: ['buildCobol']) {
+		project.task ('runExecutable', type:Exec, dependsOn: ['build']) {
 			group 'COBOL'
 			description 'Builds a runnable programm file and executes it'
 			doFirst {

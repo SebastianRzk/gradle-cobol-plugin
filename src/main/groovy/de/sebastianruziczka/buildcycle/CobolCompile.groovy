@@ -12,10 +12,10 @@ import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
 
 class CobolCompile {
 	void apply (Project project, CobolExtension conf){
-		Logger logger = LoggerFactory.getLogger('compileCobol')
+		Logger logger = LoggerFactory.getLogger('COBOL COMPILE')
 
 
-		project.task ('compileCobol', type:CobolCompileExecutableTask) {
+		project.task ('compile', type:CobolCompileExecutableTask) {
 			group 'COBOL'
 			description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
 
@@ -35,7 +35,7 @@ class CobolCompile {
 			}
 		}
 
-		project.task ('compileDebugCobol', type:CobolCompileDebugTask) {
+		project.task ('compileDebug', type:CobolCompileDebugTask) {
 			group 'COBOL Development'
 			description 'Compiles each cobol source code itself to *.so into build folder.'
 
@@ -56,7 +56,7 @@ class CobolCompile {
 
 
 
-		project.task ('compileMultiTargetCobol') {
+		project.task ('compileMultiTarget') {
 			group 'COBOL'
 			description 'Compiles additional executables when defined in multiCompileTargets'
 			onlyIf({

@@ -35,10 +35,10 @@ class Cobol implements Plugin<Project> {
 				}
 			}
 
-			project.task ('checkCobol', dependsOn: [
-				'testUnitCobol',
-				'compileMultiTargetCobol',
-				'compileCobol',
+			project.task ('check', dependsOn: [
+				'testUnit',
+				'compileMultiTarget',
+				'compile',
 				'clean',
 				'cobolConfiguration'
 			]){
