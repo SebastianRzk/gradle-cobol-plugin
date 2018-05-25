@@ -153,8 +153,8 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _runExecutable_ | everything in build directory | terminal process | _build_ |
 | _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
-| _testUnitCobol_ | `srcTest` | result of tests |  |
-| _check_ | everything | check result | _testUnitCobol_, _compile_, _cobolConfiguration_ |
+| _testUnit_ | `srcTest` | result of tests |  |
+| _check_ | everything | check result | _testUnit_, _compile_, _cobolConfiguration_ |
 
 ## Develop own testing plugin
 

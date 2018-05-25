@@ -36,7 +36,7 @@ class Cobol implements Plugin<Project> {
 			}
 
 			project.task ('check', dependsOn: [
-				'testUnitCobol',
+				'testUnit',
 				'compileMultiTarget',
 				'compile',
 				'clean',

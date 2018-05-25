@@ -14,7 +14,7 @@ import de.sebastianruziczka.buildcycle.unittest.CobolUnitTestTask
 
 class CobolUnit {
 	void apply (Project project, CobolExtension conf){
-		Logger logger = LoggerFactory.getLogger('testUnitCobol')
+		Logger logger = LoggerFactory.getLogger('testUnit')
 		def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
 		project.task ('cobolUnitTestConfiguration'){
 			group 'COBOL Configuration'
@@ -27,7 +27,7 @@ class CobolUnit {
 			}
 		}
 
-		project.task ('testUnitCobol', type:CobolUnitTestTask){
+		project.task ('testUnit', type:CobolUnitTestTask){
 			group 'COBOL'
 			description 'Executes UnitTests'
 
