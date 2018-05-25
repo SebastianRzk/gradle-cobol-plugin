@@ -105,14 +105,14 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 | name | usage | default | other |
 | ---- | ----- | ------- | ----- |
-| srcFileType | _compileCobol_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' |
-| srcMain | _compileCobol_, _run_ | '' | |
-| srcMainPath | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' ||
-| binMainPath | _compileCobol_, _run_, _test_ | 'build/bin/main/cobol' ||
+| srcFileType | _compile_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' |
+| srcMain | _compile_, _run_ | '' | |
+| srcMainPath | _compile_, _run_, _test_, _compileMultiTargetCobol_ | 'src/main/cobol' ||
+| binMainPath | _compile_, _run_, _test_ | 'build/bin/main/cobol' ||
 | resMainPath | _compile_, _run_ | 'res/main/cobol' ||
 | srcTestPath | _test_ | 'src/test/cobol' | |
 | multiCompileTargets | _compileMultiTargetCobol_ | [] | other files to be compiled |
-| fileFormat | _compileCobol_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'|
+| fileFormat | _compile_, _run_, _test_, _compileMultiTargetCobol_ | 'fixed' |'free'|
 | terminal | _run_ | 'xterm' | 'gnome-terminal' |
 | terminalRows | _run_ | 43 |  |
 | terminalColumns | _run_ | 80 |  |
@@ -145,16 +145,16 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 
 | name | input | output | dependsOn |
 | ---- | ----- | ------ | --------- |
-| _compileCobol_ | `srcMain` | executable in `build` |  |
+| _compile_ | `srcMain` | executable in `build` |  |
 | _compileDebugCobol_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
 | _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
-| _buildCobol_ |  | runnable programm in build directory | _compileCobol_, _cobolCopyRessources_ |
+| _buildCobol_ |  | runnable programm in build directory | _compile_, _cobolCopyRessources_ |
 | _buildDebugCobol_ | | compiled cobol files in build directory witrh ressources | _compileDebugCobol_, _cobolCopyRessources_ |
 | _runExecutableCobol_ | everything in build directory | terminal process | _buildCobol_ |
 | _runDebugCobol_ | everything in build directory | terminal process | _buildDebugCobol_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
 | _testUnitCobol_ | `srcTest` | result of tests |  |
-| _checkCobol_ | everything | check result | _testUnitCobol_, _compileCobol_, _cobolConfiguration_ |
+| _check_ | everything | check result | _testUnitCobol_, _compile_, _cobolConfiguration_ |
 
 ## Develop own testing plugin
 

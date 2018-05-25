@@ -13,7 +13,7 @@ class CobolRunExecutable {
 
 
 		project.task ('buildCobol', dependsOn: [
-			'compileCobol',
+			'compile',
 			'copyRessources'
 		]){
 			group 'COBOL'

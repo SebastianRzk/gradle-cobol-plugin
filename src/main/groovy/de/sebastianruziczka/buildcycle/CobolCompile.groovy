@@ -12,10 +12,10 @@ import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
 
 class CobolCompile {
 	void apply (Project project, CobolExtension conf){
-		Logger logger = LoggerFactory.getLogger('compileCobol')
+		Logger logger = LoggerFactory.getLogger('COBOL COMPILE')
 
 
-		project.task ('compileCobol', type:CobolCompileExecutableTask) {
+		project.task ('compile', type:CobolCompileExecutableTask) {
 			group 'COBOL'
 			description 'Compiles cobol source code and creates executable defined in srcMain. Incremental build disabled.'
 
