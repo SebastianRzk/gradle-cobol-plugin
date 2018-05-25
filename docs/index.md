@@ -149,9 +149,9 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _compileDebug_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
 | _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
 | _build_ |  | runnable programm in build directory | _compile_, _cobolCopyRessources_ |
-| _buildDebugCobol_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
+| _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runExecutable_ | everything in build directory | terminal process | _build_ |
-| _runDebugCobol_ | everything in build directory | terminal process | _buildDebugCobol_ |
+| _runDebugCobol_ | everything in build directory | terminal process | _buildDebug_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
 | _testUnitCobol_ | `srcTest` | result of tests |  |
 | _check_ | everything | check result | _testUnitCobol_, _compile_, _cobolConfiguration_ |

@@ -53,7 +53,7 @@ class CobolConfiguration {
 			'cobolCompilerVersion',
 			'cobolPluginVersion',
 			'cobolGradleConfiguration',
-			'testUnitCobolConfiguration'
+			'cobolUnitTestConfiguration'
 		]){
 			group 'COBOL Configuration'
 			description 'Returns full configuration of the project and plugin and their versions'
