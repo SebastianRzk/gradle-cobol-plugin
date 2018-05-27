@@ -151,18 +151,27 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 
 ## tasks
 
+### Cobol compile executable
+
 | name | input | output | dependsOn |
 | ---- | ----- | ------ | --------- |
-| _compile_ | `srcMain` | executable in `build` |  |
-| _compileDebug_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
+| _compileExecutable_ | `srcMain` | executable in `build` |  |
 | _cobolCopyRessources_ | `resMain` | ressources in build directory |  |
 | _build_ |  | runnable programm in build directory | _compile_, _cobolCopyRessources_ |
-| _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runExecutable_ | everything in build directory | terminal process | _build_ |
-| _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
 | _compileMultiTarget_ | defined main files in `multiCompileTargets` | executables in build directory |  |
+
+
+### Cobol development
+
+| name | input | output | dependsOn |
+| ---- | ----- | ------ | --------- |
+| _compileDebug_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
+| _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
+| _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
 | _testUnit_ | `srcTest` | result of tests |  |
 | _check_ | everything | check result | _testUnit_, _compile_, _cobolConfiguration_ |
+
 
 ## Develop own testing plugin
 
