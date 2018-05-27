@@ -10,6 +10,7 @@ class CobolExtension {
 	String unittestPostfix = 'UT'
 
 	String srcMainPath = 'src/main/cobol'
+	String buildPath = 'build'
 	String binMainPath = 'build/bin/main/cobol'
 	String resMainPath = 'res/main/cobol'
 	String srcTestPath = 'src/test/cobol'
@@ -89,6 +90,6 @@ class CobolExtension {
 
 
 	String absoluteUnitTestFrameworkPath(String frameWorkName) {
-		return this.projectFileResolver(this.binMainPath).absolutePath + '/' + frameWorkName
+		return this.projectFileResolver(this.buildPath).absolutePath + '/' + frameWorkName
 	}
 }
