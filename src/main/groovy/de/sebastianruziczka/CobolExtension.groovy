@@ -8,6 +8,7 @@ class CobolExtension {
 	String srcMain = ''
 
 	String unittestPostfix = 'UT'
+	String unittestCodeCoverage = false
 
 	String srcMainPath = 'src/main/cobol'
 	String buildPath = 'build'

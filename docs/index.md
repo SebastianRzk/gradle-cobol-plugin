@@ -11,6 +11,7 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 * Simple and adaptable configuration
 * Incremental compilation
 * Create and run cobol-unit-tests
+* Compute code coverage of your cobol-unit-tests (work in progress)
 * Expandable with custom plugin extensions
 * Simple and fast continuous integration e.g. with jenkins or travis.
 
@@ -110,6 +111,7 @@ Or hardcode with specific version (not preferred):
 
 Following properties can be modified in the _cobol_ block in your _build.gradle_ :
 
+### Compile
 
 | name | usage | default | other |
 | ---- | ----- | ------- | ----- |
@@ -118,15 +120,28 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | srcMainPath | _compile_, _run_, _test_, _compileMultiTarget_ | 'src/main/cobol' ||
 | binMainPath | _compile_, _run_, _test_ | 'build/bin/main/cobol' ||
 | resMainPath | _compile_, _run_ | 'res/main/cobol' ||
-| srcTestPath | _test_ | 'src/test/cobol' | |
 | multiCompileTargets | _compileMultiTarget_ | [] | other files to be compiled |
 | fileFormat | _compile_, _run_, _test_, _compileMultiTarget_ | 'fixed' |'free'|
+| compiler | all tasks, key variable to use the configured cobol compiler | instance of GnuCobol |  |
+| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' |
+
+
+### Run
+
+| name | usage | default | other |
+| ---- | ----- | ------- | ----- |
 | terminal | _run_ | 'xterm' | 'gnome-terminal' |
 | terminalRows | _run_ | 43 |  |
 | terminalColumns | _run_ | 80 |  |
 | customTerminal | _run_ | '' | |
-| compiler | all tasks, key variable to use the configured cobol compiler | instance of GnuCobol |  |
-| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' |
+
+### Test
+
+| name | usage | default | other |
+| ---- | ----- | ------- | ----- |
+| srcTestPath | _testUnit_ | 'src/test/cobol' | |
+| unittestCodeCoverage | _testUnit_ | `false` | `true` |
+| unittestPostfix | _testUnit_ | 'UT' | e.g. 'UNIT', 'TEST' ... |
 
 ## Terminal configuration
 
