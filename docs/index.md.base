@@ -139,7 +139,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 | name | usage | default | other |
 | ---- | ----- | ------- | ----- |
-| srcTestPath | _test_ | 'src/test/cobol' | |
+| srcTestPath | _testUnit_ | 'src/test/cobol' | |
 | unittestCodeCoverage | _testUnit_ | `false` | `true` |
 | unittestPostfix | _testUnit_ | 'UT' | e.g. 'UNIT', 'TEST' ... |
 
