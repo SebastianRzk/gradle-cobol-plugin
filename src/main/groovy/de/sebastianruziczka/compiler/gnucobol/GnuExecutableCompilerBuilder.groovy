@@ -133,10 +133,9 @@ class GnuCompileJob implements CompileJob  {
 			args += dependencyPaths
 		}
 
-		ProcessBuilder processBuilder = new ProcessBuilder(args)
 		File folder = new File(this.target).getParentFile()
-		processBuilder.directory(folder)
-		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, processName, logPath)
+		ProcessWrapper processWrapper = new ProcessWrapper(args, folder, processName, logPath)
+
 		return processWrapper.exec()
 	}
 
