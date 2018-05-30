@@ -23,6 +23,10 @@ class ProcessWrapper {
 		return exec(false)
 	}
 
+	public void setEnvironmentVariable(String key, String value) {
+		this.processBuilder.environment.putAt(key, value)
+	}
+
 	public int exec(boolean ignoreExitCode) {
 		this.logger.info('ProcessWrapper starting process ' + this.taskName)
 		File outputFile  = new File(this.logFilePath)
