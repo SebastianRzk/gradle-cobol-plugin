@@ -117,4 +117,9 @@ class GnuDebugCompileJob implements CompileJob {
 		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, processName, logPath)
 		return processWrapper.exec()
 	}
+
+	@Override
+	public CompileJob addCodeCoverageOption() {
+		return this.addAdditionalOption('ftraceall');
+	}
 }

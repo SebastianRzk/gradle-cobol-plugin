@@ -150,4 +150,9 @@ class GnuCompileJob implements CompileJob  {
 		copy.additionalOptions.add(option)
 		return copy
 	}
+
+	@Override
+	public CompileJob addCodeCoverageOption() {
+		return this.addAdditionalOption('ftraceall');
+	}
 }
