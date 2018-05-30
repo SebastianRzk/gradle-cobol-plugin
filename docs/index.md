@@ -70,7 +70,7 @@ Add to your build.gradle (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.23'
+         id 'de.sebastianruziczka.Cobol' version '0.0.24'
     }
 
 
@@ -101,7 +101,7 @@ Or hardcode with specific version (not preferred):
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.6'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.8'
      	}
      }
 
