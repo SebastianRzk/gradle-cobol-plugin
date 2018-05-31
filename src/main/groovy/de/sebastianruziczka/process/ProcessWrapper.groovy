@@ -12,6 +12,11 @@ class ProcessWrapper {
 	private String output = ""
 	private int exitCode = -1
 
+
+	public ProcessWrapper(List<String> commandArgs, File directory, String taskName ,String logFilePath) {
+		this(toProcessBuilder(directory, commandArgs), taskName, logFilePath)
+	}
+
 	public ProcessWrapper(ProcessBuilder processBuilder, String taskName, String logFilePath) {
 		this.processBuilder = processBuilder
 		this.taskName = taskName
@@ -19,8 +24,18 @@ class ProcessWrapper {
 		this.logger = LoggerFactory.getLogger('ProcessWrapper for ' + taskName)
 	}
 
+	private static ProcessBuilder toProcessBuilder(File directory, List<String> commandArgs) {
+		ProcessBuilder builder = new ProcessBuilder(commandArgs)
+		builder.directory(directory)
+		return builder
+	}
+
 	public int exec() {
 		return exec(false)
+	}
+
+	public void setEnvironmentVariable(String key, String value) {
+		this.processBuilder.environment.putAt(key, value)
 	}
 
 	public int exec(boolean ignoreExitCode) {

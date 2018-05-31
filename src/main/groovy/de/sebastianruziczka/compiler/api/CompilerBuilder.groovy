@@ -17,6 +17,8 @@ interface CompileJob {
 
 	CompileJob addAdditionalOption(String option)
 
+	CompileJob addCodeCoverageOption()
+
 	int execute(String processName)
 }
 

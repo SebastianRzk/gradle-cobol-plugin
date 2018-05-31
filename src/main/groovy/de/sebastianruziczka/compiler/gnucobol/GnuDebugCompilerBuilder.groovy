@@ -111,10 +111,13 @@ class GnuDebugCompileJob implements CompileJob {
 
 		args << this.target
 
-		ProcessBuilder processBuilder = new ProcessBuilder(args)
 		File folder = new File(this.target).getParentFile()
-		processBuilder.directory(folder)
-		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, processName, logPath)
+		ProcessWrapper processWrapper = new ProcessWrapper(args, folder, processName, logPath)
 		return processWrapper.exec()
+	}
+
+	@Override
+	public CompileJob addCodeCoverageOption() {
+		return this.addAdditionalOption('ftraceall');
 	}
 }

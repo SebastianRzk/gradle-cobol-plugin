@@ -133,10 +133,9 @@ class GnuCompileJob implements CompileJob  {
 			args += dependencyPaths
 		}
 
-		ProcessBuilder processBuilder = new ProcessBuilder(args)
 		File folder = new File(this.target).getParentFile()
-		processBuilder.directory(folder)
-		ProcessWrapper processWrapper = new ProcessWrapper(processBuilder, processName, logPath)
+		ProcessWrapper processWrapper = new ProcessWrapper(args, folder, processName, logPath)
+
 		return processWrapper.exec()
 	}
 
@@ -149,5 +148,10 @@ class GnuCompileJob implements CompileJob  {
 		copy.additionalOptions = new LinkedList(this.additionalOptions)
 		copy.additionalOptions.add(option)
 		return copy
+	}
+
+	@Override
+	public CompileJob addCodeCoverageOption() {
+		return this.addAdditionalOption('ftraceall');
 	}
 }
