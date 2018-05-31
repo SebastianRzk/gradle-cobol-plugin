@@ -13,9 +13,14 @@ class ProcessWrapper {
 	private int exitCode = -1
 
 
-	public ProcessWrapper( String[] commandArgs, File directory, String taskName ,String logFilePath) {
+	public ProcessWrapper(String[] commandArgs, File directory, String taskName ,String logFilePath) {
 		this(this.toProcessBuilder(commandArgs, directory), taskName, logFilePath)
 	}
+
+	public ProcessWrapper(List<String> commandArgs, File directory, String taskName ,String logFilePath) {
+		this(this.toProcessBuilder(commandArgs, directory), taskName, logFilePath)
+	}
+
 	public ProcessWrapper(ProcessBuilder processBuilder, String taskName, String logFilePath) {
 		this.processBuilder = processBuilder
 		this.taskName = taskName
@@ -28,6 +33,13 @@ class ProcessWrapper {
 		builder.directory(directory)
 		return builder
 	}
+
+	private ProcessBuilder toProcessBuilder(List<String> commandArgs, File directory) {
+		ProcessBuilder builder = new ProcessBuilder(commandArgs)
+		builder.directory(directory)
+		return builder
+	}
+
 
 	public int exec() {
 		return exec(false)
