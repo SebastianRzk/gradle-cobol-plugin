@@ -14,11 +14,11 @@ class ProcessWrapper {
 
 
 	public ProcessWrapper(String[] commandArgs, File directory, String taskName ,String logFilePath) {
-		this(this.toProcessBuilder(commandArgs, directory), taskName, logFilePath)
+		this(this.toProcessBuilder(directory, commandArgs), taskName, logFilePath)
 	}
 
 	public ProcessWrapper(List<String> commandArgs, File directory, String taskName ,String logFilePath) {
-		this(this.toProcessBuilder(commandArgs, directory), taskName, logFilePath)
+		this(this.toProcessBuilder(directory, commandArgs), taskName, logFilePath)
 	}
 
 	public ProcessWrapper(ProcessBuilder processBuilder, String taskName, String logFilePath) {
@@ -28,13 +28,13 @@ class ProcessWrapper {
 		this.logger = LoggerFactory.getLogger('ProcessWrapper for ' + taskName)
 	}
 
-	private ProcessBuilder toProcessBuilder(String[] commandArgs, File directory) {
+	private ProcessBuilder toProcessBuilder(File directory, String[] commandArgs) {
 		ProcessBuilder builder = new ProcessBuilder(commandArgs)
 		builder.directory(directory)
 		return builder
 	}
 
-	private ProcessBuilder toProcessBuilder(List<String> commandArgs, File directory) {
+	private ProcessBuilder toProcessBuilder(File directory, List<String> commandArgs) {
 		ProcessBuilder builder = new ProcessBuilder(commandArgs)
 		builder.directory(directory)
 		return builder
