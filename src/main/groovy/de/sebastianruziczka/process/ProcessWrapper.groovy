@@ -35,7 +35,7 @@ class ProcessWrapper {
 	}
 
 	public void setEnvironmentVariable(String key, String value) {
-		this.processBuilder.environment.putAt(key, value)
+		this.processBuilder.environment().put(key, value)
 	}
 
 	public int exec(boolean ignoreExitCode) {

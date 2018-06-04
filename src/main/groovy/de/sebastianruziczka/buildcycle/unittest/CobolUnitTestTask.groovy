@@ -103,7 +103,7 @@ class CobolUnitTestTask extends DefaultTask{
 					println 'Errored at files:'
 					println '\t' + it.srcFile() + '<>' + it.testFile()
 					println 'Exception:'
-					println '\t' + it.throwable().detailMessage
+					println '\t' + it.throwable().dump()
 					println 'Trace:'
 					println '\t' + it.throwable().printStackTrace()
 					println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
