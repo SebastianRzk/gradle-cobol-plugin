@@ -118,6 +118,6 @@ class GnuDebugCompileJob implements CompileJob {
 
 	@Override
 	public CompileJob addCodeCoverageOption() {
-		return this.addAdditionalOption('ftraceall');
+		return this.addAdditionalOption('debug').addAdditionalOption('ftraceall');
 	}
 }
