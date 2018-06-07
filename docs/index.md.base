@@ -142,6 +142,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | srcTestPath | _testUnit_ | 'src/test/cobol' | |
 | unittestCodeCoverage | _testUnit_ | `false` | `true` |
 | unittestPostfix | _testUnit_ | 'UT' | e.g. 'UNIT', 'TEST' ... |
+| unittestCodeCoverage | | false | true |
 
 ## Terminal configuration
 

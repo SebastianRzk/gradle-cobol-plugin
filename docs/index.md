@@ -70,7 +70,7 @@ Add to your build.gradle (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.25'
+         id 'de.sebastianruziczka.Cobol' version '0.0.26'
     }
 
 
@@ -101,7 +101,7 @@ Or hardcode with specific version (not preferred):
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.8'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.9'
      	}
      }
 
@@ -142,6 +142,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | srcTestPath | _testUnit_ | 'src/test/cobol' | |
 | unittestCodeCoverage | _testUnit_ | `false` | `true` |
 | unittestPostfix | _testUnit_ | 'UT' | e.g. 'UNIT', 'TEST' ... |
+| unittestCodeCoverage | | false | true |
 
 ## Terminal configuration
 
