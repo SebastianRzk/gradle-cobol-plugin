@@ -15,7 +15,7 @@ import de.sebastianruziczka.buildcycle.unittest.CobolUnitTestTask
 class CobolUnit {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('testUnit')
-		def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger)
+		def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger, conf, project)
 		project.task ('cobolUnitTestConfiguration'){
 			group 'COBOL Configuration'
 			description 'Returns the detected unittest frameworks'
@@ -42,7 +42,7 @@ class CobolUnit {
 
 
 
-	private def resolveUnitTestFrameworks(Logger logger) {
+	private def resolveUnitTestFrameworks(Logger logger, CobolExtension configuration, Project project) {
 		def allUnitTestFrameworks = []
 		try {
 			Reflections reflections = new Reflections("de");
@@ -50,7 +50,9 @@ class CobolUnit {
 			cobolUnitFrameworks.each{
 				logger.info('Detected framworks: ' + cobolUnitFrameworks)
 				Constructor constructor = it.getDeclaredConstructors0(true)[0]
-				allUnitTestFrameworks << constructor.newInstance()
+				def cobolUnitInstance = constructor.newInstance()
+				allUnitTestFrameworks << cobolUnitInstance
+				cobolUnitInstance.configure(configuration, project);
 			}
 		} catch (Throwable t) {
 			logger.error('Failed while searching for cobol unit frameworks', t)

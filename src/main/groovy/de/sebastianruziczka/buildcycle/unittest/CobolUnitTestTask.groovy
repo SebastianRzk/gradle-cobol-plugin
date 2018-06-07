@@ -53,8 +53,6 @@ class CobolUnitTestTask extends DefaultTask{
 
 		logger.info('Number of Src<>Test pairs found: ' + cobolTestPairs.size())
 		unitTestFrameworks.each{
-			logger.info('Configure: ' + it.toString())
-			it.configure(configuration, project);
 			logger.info('Preparing: ' + it.toString())
 			it.prepare();
 		}
