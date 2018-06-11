@@ -19,9 +19,9 @@ class CobolSourceFile {
 
 	public String getRelativePath(CobolCodeType type) {
 		if (type  == CobolCodeType.unit_test) {
-			return this.mainFileModule + this.configuration.unittestPostfix + this.configuration.srcFileType
+			return this.configuration.srcTestPath + '/' + this.mainFileModule + this.configuration.unittestPostfix + this.configuration.srcFileType
 		}else if (type == CobolCodeType.source) {
-			return this.mainFileModule + this.configuration.srcFileType
+			return this.configuration.srcMainPath + '/' + this.mainFileModule + this.configuration.srcFileType
 		}
 		return null
 	}
