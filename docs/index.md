@@ -19,7 +19,8 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 
 * [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin)  [gradle-cobol-plugin](https://github.com/RosesTheN00b/gradle-cobol-plugin) The base gradle plugin (compile, run)
 * [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension)  [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension) Adds unittests to the base plugin
-* [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example)  [gradle-cobol-plugin-example](https://github.com/RosesTheN00b/gradle-cobol-plugin-example) This Project contains many gradle-cobol example projects
+* [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example)[![codecov](https://codecov.io/gh/RosesTheN00b/gradle-cobol-plugin-example/branch/master/graph/badge.svg)](https://codecov.io/gh/RosesTheN00b/gradle-cobol-plugin-example)[gradle-cobol-plugin-example](https://github.com/RosesTheN00b/gradle-cobol-plugin-example) 
+This Project contains many gradle-cobol example projects
 
 Further Reading:
 
@@ -70,7 +71,7 @@ Add to your build.gradle (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.26'
+         id 'de.sebastianruziczka.Cobol' version '0.0.27'
     }
 
 
@@ -101,7 +102,7 @@ Or hardcode with specific version (not preferred):
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.9'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.18'
      	}
      }
 
@@ -226,7 +227,8 @@ Methods of the interface CobolTestFramework:
 
 * `void configure(CobolExtension configuration, Project project)`: Initial configuration call. Here you can define new gradle tasks, if needed.
 * `int prepare()`: Initial call for framework initialization. Returns a process return code (default: 0)
-* `TestFile test(String srcName, String testName)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
+* `clean()` : Called before all tests are executed
+* `TestFile test(CobolSourceFile file)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
 
 ### Reuse exiting code
 

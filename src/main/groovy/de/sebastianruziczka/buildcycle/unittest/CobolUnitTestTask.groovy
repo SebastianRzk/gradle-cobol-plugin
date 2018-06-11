@@ -5,7 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.TaskAction
 
 import de.sebastianruziczka.CobolExtension
-import de.sebastianruziczka.buildcycle.test.CobolTestPair
+import de.sebastianruziczka.api.CobolSourceFile
 import de.sebastianruziczka.buildcycle.test.TestFailedException
 import de.sebastianruziczka.buildcycle.test.TestResult
 import de.sebastianruziczka.buildcycle.test.UnitTestError
@@ -16,6 +16,8 @@ class CobolUnitTestTask extends DefaultTask{
 
 	@TaskAction
 	public void test() {
+		unitTestFrameworks.forEach({ it.clean() })
+
 		def testTree = testTree(project, configuration)
 		def allTests = []
 
@@ -41,7 +43,7 @@ class CobolUnitTestTask extends DefaultTask{
 			String expectedSrcModulePath = configuration.projectFileResolver(configuration.srcMainPath + '/' + moduleName + configuration.srcFileType).absolutePath
 			if (allSrc.contains(expectedSrcModulePath)) {
 				allSrc.remove(expectedSrcModulePath)
-				cobolTestPairs << new CobolTestPair(moduleName + configuration.srcFileType, it.substring(firstNameIndex + 1))
+				cobolTestPairs << new CobolSourceFile(this.configuration, moduleName + configuration.srcFileType)
 			}
 		}
 
@@ -64,9 +66,9 @@ class CobolUnitTestTask extends DefaultTask{
 			TestResult result = new TestResult()
 			cobolTestPairs.each{
 				try{
-					result.addTest(	framework.test(it.srcFile(), it.testFile()))
+					result.addTest(	framework.test(it))
 				}catch (Throwable t) {
-					errors << new UnitTestError(it.srcFile(), it.testFile(), t)
+					errors << new UnitTestError(it, t)
 				}
 			}
 			println 'Collecting results'
