@@ -227,7 +227,8 @@ Methods of the interface CobolTestFramework:
 
 * `void configure(CobolExtension configuration, Project project)`: Initial configuration call. Here you can define new gradle tasks, if needed.
 * `int prepare()`: Initial call for framework initialization. Returns a process return code (default: 0)
-* `TestFile test(String srcName, String testName)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
+* `clean()` : Called before all tests are executed
+* `TestFile test(CobolSourceFile file)`: Called for every pair of src<->testfile. Returns an instance of `TestFile`
 
 ### Reuse exiting code
 
