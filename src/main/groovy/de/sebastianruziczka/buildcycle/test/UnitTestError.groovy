@@ -14,11 +14,11 @@ class UnitTestError {
 	}
 
 	public String srcFile() {
-		return this.file.getModulePath(source)
+		return this.file.getRelativePath(source)
 	}
 
 	public String testFile() {
-		return this.file.getModulePath(unit_test)
+		return this.file.getRelativePath(unit_test)
 	}
 
 	public Throwable throwable() {

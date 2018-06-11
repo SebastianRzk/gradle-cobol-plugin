@@ -17,7 +17,7 @@ class CobolSourceFile {
 		}
 	}
 
-	public String getModulePath(CobolCodeType type) {
+	public String getRelativePath(CobolCodeType type) {
 		if (type  == CobolCodeType.unit_test) {
 			return this.mainFileModule + this.configuration.unittestPostfix + this.configuration.srcFileType
 		}else if (type == CobolCodeType.source) {
@@ -26,8 +26,12 @@ class CobolSourceFile {
 		return null
 	}
 
+	public String getAbsoluteModulePath(CobolCodeType type) {
+		return this.configuration.projectFileResolver(this.getAbsolutePath(type)).getParent()
+	}
+
 	public String getAbsolutePath(CobolCodeType type) {
-		return this.configuration.projectFileResolver(this.getModulePath(type))
+		return this.configuration.projectFileResolver(this.getRelativePath(type))
 	}
 
 	public void setMeta(String key, String value) {
