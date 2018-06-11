@@ -11,5 +11,7 @@ interface CobolTestFramework {
 
 	int prepare()
 
-	TestFile test(String srcName, String testName)
+	TestFile test(CobolSourceFile file)
+
+	void clean()
 }
