@@ -1,7 +1,7 @@
 package de.sebastianruziczka.buildcycle.test
 
 import static de.sebastianruziczka.api.CobolCodeType.source
-import static de.sebastianruziczka.api.CobolCodeType.test
+import static de.sebastianruziczka.api.CobolCodeType.unit_test
 
 import de.sebastianruziczka.api.CobolSourceFile
 
@@ -18,7 +18,7 @@ class UnitTestError {
 	}
 
 	public String testFile() {
-		return this.file.getModulePath(test)
+		return this.file.getModulePath(unit_test)
 	}
 
 	public Throwable throwable() {

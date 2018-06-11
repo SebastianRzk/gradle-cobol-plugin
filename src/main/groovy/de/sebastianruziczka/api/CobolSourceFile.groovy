@@ -18,7 +18,7 @@ class CobolSourceFile {
 	}
 
 	public String getModulePath(CobolCodeType type) {
-		if (type  == CobolCodeType.test) {
+		if (type  == CobolCodeType.unit_test) {
 			return this.mainFileModule + this.configuration.unittestPostfix + this.configuration.srcFileType
 		}else if (type == CobolCodeType.source) {
 			return this.mainFileModule + this.configuration.srcFileType

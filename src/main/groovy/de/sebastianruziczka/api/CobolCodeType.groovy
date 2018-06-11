@@ -1,5 +1,5 @@
 package de.sebastianruziczka.api
 
 enum CobolCodeType {
-	source, test
+	source, unit_test
 }
