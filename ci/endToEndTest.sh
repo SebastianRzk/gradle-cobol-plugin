@@ -28,5 +28,10 @@ echo "<<<<<<<"
 
 echo ">>>>>>> exec test"
 cd endToEndTest/gradle-cobol-plugin-example
-gradle check
+cd ./project-cobol-fixed-format && gradle check && cd ..
+cd ./project-cobol-free-format && gradle check && cd ..
+cd ./project-cobol-unit-test && gradle check && cd ..
+cd ./project-cobol-unit-test && gradle testUnit computeTestCoverage && cd ..
+cat ./project-cobol-unit-test/build/CobolUnit/coverage.xml
+
 echo "<<<<<<<"
