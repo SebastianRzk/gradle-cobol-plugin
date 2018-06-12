@@ -22,7 +22,7 @@ dependencies {
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
 
-version = '0.0.28'
+version = '0.0.29'
 def realVersion = ''
 if (project.hasProperty("generateLatest")) {
 	realVersion = ' (' + version + ')'
@@ -33,7 +33,7 @@ if (project.hasProperty("generateLatest")) {
 
 GradlePropertyFilter propFilter = new GradlePropertyFilter([
 	'gradle.actualVersion' : version,
-	'gradle.unitVersion' : '0.0.18'
+	'gradle.unitVersion' : '0.0.20'
 	])
 
 gradlePlugin{
@@ -53,6 +53,9 @@ jar {
 			"Implementation-Version": (version + realVersion),
 			"Build-Date": new Date().format( 'dd.MM.yyyy' )
 		)
+	}
+	into 'res', {
+		from 'res/main/groovy'
 	}
 	from {
 		configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }

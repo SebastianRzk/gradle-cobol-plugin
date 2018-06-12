@@ -11,7 +11,7 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 * Simple and adaptable configuration
 * Incremental compilation
 * Create and run cobol-unit-tests
-* Compute code coverage of your cobol-unit-tests (work in progress)
+* Compute code coverage of your cobol-unit-tests (generates an cobertura coverage xml file)
 * Expandable with custom plugin extensions
 * Simple and fast continuous integration e.g. with jenkins or travis.
 
@@ -28,9 +28,21 @@ Further Reading:
 * [cobol-unit-test](https://github.com/neopragma/cobol-unit-test) The documentation of the unit-test feature
 
 
-## Quickstart guide
+## Compatibility
 
-### Install
+| Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | testcoverage (plugin) |
+| -------- | ----------- | ------------------ | --------------------- | ------------------ | --------------------- |
+| GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support |
+| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested yet | not tested yet |
+| GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support |
+| GnuCobol 2 | free | full support | full support | not tested yet | not tested yet |
+| GnuCobol 3rc | not tested yet | not tested yet | not tested yet |
+
+
+
+## 3-Steps Quickstart
+
+### 1. Install
 
 
 Import the plugin from the provided repo (in your settings.gradle):
@@ -59,7 +71,7 @@ On Arch (via yaourt):
     yaourt gnu-cobol gradle
 
 
-### Configure the plugin
+### 2. Add the plugin to your project
 
 Add to your build.gradle (preferred):
 
@@ -71,16 +83,16 @@ Add to your build.gradle (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.28'
+         id 'de.sebastianruziczka.Cobol' version '0.0.29'
     }
 
+### 3. Run HELLOWORLD.cbl
 
-And a minimal configuration:
+Insert HelloWorld in src/main/cobol and run it with the single command:
 
-    cobol {
-         srcMain = 'HelloWorld' // Path to your main file in src/main/cobol
-    }
+    gradle helloWorld
 
+### Running
 
 Run your application with
 
@@ -89,6 +101,16 @@ Run your application with
 or build an complete executable and run it with:
 
     gradle runExecutable
+
+### Additional configuration
+
+A minimal configuration for more than one file:
+
+    cobol {
+         srcMain = 'HelloWorld' // Path to your main file in src/main/cobol without the file extension .cbl
+    }
+
+### Unit testing
 
 Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
 
@@ -102,7 +124,7 @@ Or hardcode with specific version (not preferred):
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.18'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.20'
      	}
      }
 
@@ -156,7 +178,8 @@ Set the parameter _terminal_ in the cobol block in your build gradle, to use one
 | terminal | value | default |
 | -------- | ----- | --------|
 | gnome-terminal | 'gnome-terminal' ||
-| xterm | 'xterm' | yes |
+| xterm | 'xterm' ||
+| current terminal | 'current' | yes |
 
 
 ### configure own terminal
@@ -183,6 +206,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 
 | name | input | output | dependsOn |
 | ---- | ----- | ------ | --------- |
+| _helloWorld_ |  | HELLOWORLD.cbl + executable | _runDebug_ |
 | _compileDebug_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
 | _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runDebug_ | everything in build directory | terminal process | _buildDebug_ |

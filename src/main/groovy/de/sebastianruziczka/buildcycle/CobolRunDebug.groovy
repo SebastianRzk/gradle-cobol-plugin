@@ -63,6 +63,11 @@ class CobolRunDebug {
 					]
 					commandList.addAll(terminalCommand)
 					commandLine commandList
+				}else if (conf.terminal.equals('current')){
+					logger.warn('Default terminal hast no tty')
+					logger.warn('Please set parameter `terminal` in the cobol block in your build.gradle')
+					commandLine terminalCommand[0]
+					args terminalCommand[1..-1]
 				}else {
 					throw new IllegalArgumentException('No terminal defined!')
 				}

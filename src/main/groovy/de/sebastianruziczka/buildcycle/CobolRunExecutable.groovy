@@ -42,7 +42,11 @@ class CobolRunExecutable {
 					logger.warn('!!!The return value can be positive even though the program ended unexpectedly!!!')
 					String geometryValue = conf.terminalColumns + 'x' + conf.terminalRows
 					commandLine 'xterm', '+hold', '-geometry', geometryValue, '-e', conf.absoluteBinMainPath()
-				}else {
+				}else if (conf.terminal.equals('current')){
+					logger.warn('Default terminal hast no tty')
+					logger.warn('Please set parameter `terminal` in the cobol block in your build.gradle')
+					commandLine './' + conf.srcMain
+				} else {
 					throw new IllegalArgumentException('No terminal defined!')
 				}
 			}

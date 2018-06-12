@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
+import de.sebastianruziczka.buildcycle.CobolHelloWorld
 import de.sebastianruziczka.buildcycle.CobolRunDebug
 import de.sebastianruziczka.buildcycle.CobolRunExecutable
 import de.sebastianruziczka.buildcycle.CobolUnit
@@ -18,6 +19,19 @@ class Cobol implements Plugin<Project> {
 		def conf = project.extensions.create('cobol', CobolExtension)
 
 		project.afterEvaluate {
+			if (conf.srcMain == null || conf.srcMain == '') {
+				def allSourceFiles = []
+				def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
+				tree.each { File file ->
+					allSourceFiles << file.absolutePath
+				}
+				if(allSourceFiles.size() == 1) {
+					conf.srcMain = allSourceFiles[0].replace(project.file(conf.srcMainPath).absolutePath + '/', '')//
+							.replace(conf.srcFileType, '')
+					println 'Autoconfigured srcMain: ' + conf.srcMain
+				}
+			}
+
 			Logger logger = LoggerFactory.getLogger('cobolPlugin')
 			conf.projectFileResolver = { s -> project.file(s)}
 
@@ -26,6 +40,7 @@ class Cobol implements Plugin<Project> {
 			new CobolRunExecutable().apply(project, conf)
 			new CobolRunDebug().apply(project, conf)
 			new CobolUnit().apply(project, conf)
+			new CobolHelloWorld().apply(project, conf)
 
 			project.task ('clean', type: Delete){
 				group 'COBOL'
