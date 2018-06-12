@@ -40,9 +40,9 @@ Further Reading:
 
 
 
-## Quickstart guide
+## 3-Steps Quickstart
 
-### Install
+### 1. Install
 
 
 Import the plugin from the provided repo (in your settings.gradle):
@@ -71,7 +71,7 @@ On Arch (via yaourt):
     yaourt gnu-cobol gradle
 
 
-### Configure the plugin
+### 2. Add the plugin to your project
 
 Add to your build.gradle (preferred):
 
@@ -86,13 +86,13 @@ Or hardcode a specific version:
          id 'de.sebastianruziczka.Cobol' version 'gradle.actualVersion'
     }
 
+### 3. Run HELLOWORLD.cbl
 
-And a minimal configuration:
+Insert HelloWorld in src/main/cobol and run it with the single command:
 
-    cobol {
-         srcMain = 'HelloWorld' // Path to your main file in src/main/cobol
-    }
+    gradle helloWorld
 
+### Running
 
 Run your application with
 
@@ -101,6 +101,16 @@ Run your application with
 or build an complete executable and run it with:
 
     gradle runExecutable
+
+### Additional configuration
+
+A minimal configuration for more than one file:
+
+    cobol {
+         srcMain = 'HelloWorld' // Path to your main file in src/main/cobol without the file extension .cbl
+    }
+
+### Unit testing
 
 Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
 
@@ -168,7 +178,8 @@ Set the parameter _terminal_ in the cobol block in your build gradle, to use one
 | terminal | value | default |
 | -------- | ----- | --------|
 | gnome-terminal | 'gnome-terminal' ||
-| xterm | 'xterm' | yes |
+| xterm | 'xterm' ||
+| current terminal | 'current' | yes |
 
 
 ### configure own terminal
@@ -195,6 +206,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 
 | name | input | output | dependsOn |
 | ---- | ----- | ------ | --------- |
+| _helloWorld_ |  | HELLOWORLD.cbl + executable | _runDebug_ |
 | _compileDebug_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
 | _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
