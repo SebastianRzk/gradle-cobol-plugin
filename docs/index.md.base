@@ -31,7 +31,7 @@ Further Reading:
 ## Compatibility
 
 | Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | testcoverage (plugin) |
-| -------- | ----------- | ------------------ | --------------------- |
+| -------- | ----------- | ------------------ | --------------------- | ------------------ | --------------------- |
 | GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support |
 | GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested yet | not tested yet |
 | GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support |
