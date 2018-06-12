@@ -55,6 +55,8 @@ class CobolRunExecutable {
 			onlyIf {!project.fileTree(conf.srcMainPath).getFiles().isEmpty()}
 			from conf.projectFileResolver(conf.resMainPath).absolutePath
 			into conf.projectFileResolver(conf.binMainPath).absolutePath
+			//Customize permissions so that resources are read and writable
+			fileMode = 0666
 		}
 	}
 }
