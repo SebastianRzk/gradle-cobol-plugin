@@ -11,7 +11,7 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 * Simple and adaptable configuration
 * Incremental compilation
 * Create and run cobol-unit-tests
-* Compute code coverage of your cobol-unit-tests (work in progress)
+* Compute code coverage of your cobol-unit-tests (generates an cobertura coverage xml file)
 * Expandable with custom plugin extensions
 * Simple and fast continuous integration e.g. with jenkins or travis.
 
@@ -26,6 +26,18 @@ Further Reading:
 
 * [GNUCobol-compiler](https://open-cobol.sourceforge.io/) The cobol compiler
 * [cobol-unit-test](https://github.com/neopragma/cobol-unit-test) The documentation of the unit-test feature
+
+
+## Compatibility
+
+| Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | testcoverage (plugin) |
+| -------- | ----------- | ------------------ | --------------------- |
+| GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support |
+| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested yet | not tested yet |
+| GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support |
+| GnuCobol 2 | free | full support | full support | not tested yet | not tested yet |
+| GnuCobol 3rc | not tested yet | not tested yet | not tested yet |
+
 
 
 ## Quickstart guide
