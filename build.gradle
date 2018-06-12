@@ -54,6 +54,9 @@ jar {
 			"Build-Date": new Date().format( 'dd.MM.yyyy' )
 		)
 	}
+	into 'res', {
+		from 'res/main/groovy'
+	}
 	from {
 		configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }
 	}
