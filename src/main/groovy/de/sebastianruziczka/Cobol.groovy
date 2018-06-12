@@ -19,6 +19,19 @@ class Cobol implements Plugin<Project> {
 		def conf = project.extensions.create('cobol', CobolExtension)
 
 		project.afterEvaluate {
+			if (conf.srcMain == null || conf.srcMain == '') {
+				def allSourceFiles = []
+				def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
+				tree.each { File file ->
+					allSourceFiles << file.absolutePath
+				}
+				if(allSourceFiles.size() == 1) {
+					conf.srcMain = allSourceFiles[0].replace(project.file(conf.srcMainPath).absolutePath + '/', '')//
+							.replace(conf.srcFileType, '')
+					println 'Autoconfigured srcMain: ' + conf.srcMain
+				}
+			}
+
 			Logger logger = LoggerFactory.getLogger('cobolPlugin')
 			conf.projectFileResolver = { s -> project.file(s)}
 

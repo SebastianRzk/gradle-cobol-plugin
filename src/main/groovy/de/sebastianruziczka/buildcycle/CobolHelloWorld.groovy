@@ -45,7 +45,7 @@ class CobolHelloWorld {
 		File targetFile = new File(destination)
 
 		if(!targetFile.getParentFile().exists()) {
-			targetFile.mkdirs()
+			targetFile.getParentFile().mkdirs()
 		}
 
 		OutputStream outStream = new FileOutputStream(targetFile)

@@ -21,7 +21,7 @@ class CobolExtension {
 
 	String fileFormat = 'fixed'
 
-	String terminal = 'xterm'
+	String terminal = 'current'
 	String customTerminal = ''
 	int terminalRows = 43
 	int terminalColumns = 80
