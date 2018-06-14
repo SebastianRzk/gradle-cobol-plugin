@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.buildcycle.compile.CobolCompileDebugTask
-import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableImpl
 import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
+import de.sebastianruziczka.buildcycle.compile.CobolMultitargetCompileTask
 
 class CobolCompile {
 	void apply (Project project, CobolExtension conf){
@@ -56,18 +56,18 @@ class CobolCompile {
 
 
 
-		project.task ('compileMultiTarget') {
+		project.task ('compileMultiTarget', Type: CobolMultitargetCompileTask) {
 			group 'COBOL'
 			description 'Compiles additional executables when defined in multiCompileTargets'
+
 			onlyIf({
 				return !conf.multiCompileTargets.isEmpty()
 			})
-			doFirst {
-				prepareBinFolder(conf)
-				conf.multiCompileTargets.each{
-					new CobolCompileExecutableImpl().compile(project, conf, it)
-				}
-			}
+
+			allTargets = conf.multiCompileTargets
+			configuration = conf
+
+			doFirst { prepareBinFolder(conf) }
 		}
 	}
 
