@@ -6,32 +6,20 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.buildcycle.demo.HelloWorldTask
 
-class CobolHelloWorld {
+class CobolDemo {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('runCobol')
 
 
-		project.task ('helloWorld') {
+		project.task ('helloWorld', type: HelloWorldTask) {
 			group 'COBOL Demo'
 			description 'Copys HelloWorld.cbl in src/main/cobol and executes it'
 			doFirst {
 				if (conf.fileFormat == 'fixed') {
 					copy('res/fixed/HELLOWORLD.cbl', conf.srcMainPath + '/HELLOWORLD.cbl' , logger)
 				}
-			}
-			doLast{
-				println 'Overwrite configured srcMain settings'
-				conf.srcMain = 'HELLOWORLD'
-				new File(conf.absoluteBinMainPath()).getParentFile().mkdirs()
-				conf.compiler.buildDebug(conf)
-						.setTargetAndBuild(conf.absoluteSrcMainPath())
-						.setExecutableDestinationPath(conf.absoluteDebugMainPath(conf.srcMain))
-						.execute('COMPILE DEBUG: ' + conf.absoluteBinMainPath())
-
-				println 'Overwriting configured terminal with console terminal'
-				conf.terminal = 'current'
-				project.tasks.runDebug.execute()
 			}
 		}
 	}
