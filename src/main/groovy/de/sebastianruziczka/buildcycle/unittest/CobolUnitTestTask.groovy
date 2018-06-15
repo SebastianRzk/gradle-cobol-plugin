@@ -6,8 +6,8 @@ import org.gradle.api.tasks.TaskAction
 
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.api.CobolSourceFile
-import de.sebastianruziczka.buildcycle.test.TestFailedException
 import de.sebastianruziczka.buildcycle.test.TestResult
+import de.sebastianruziczka.buildcycle.test.TestResultConsolePrinter
 import de.sebastianruziczka.buildcycle.test.UnitTestError
 
 class CobolUnitTestTask extends DefaultTask{
@@ -71,45 +71,7 @@ class CobolUnitTestTask extends DefaultTask{
 					errors << new UnitTestError(it, t)
 				}
 			}
-			println 'Collecting results'
-			int successfull  = result.successfullTests()
-			int failed = result.failedTests()
-			println 'Result: ' + successfull + ' sucessfull tests, ' + failed + ' tests failed ' + errors.size() + ' tests errored'
-			if (failed != 0) {
-				println '-------------------------------------------------------------------------'
-				println '-------------------------------FAILED TESTS------------------------------'
-				println '-------------------------------------------------------------------------'
-				println ''
-				result.visitFailedTests ({ testFile,testMethod ->
-					println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-					println 'File:'
-					println '\t' + testFile.name() + '>' + testMethod.name() + ':'
-					println 'Message:'
-					println '\t' + testMethod.message()
-					println 'Console:'
-					println '\t' + testMethod.console()
-					println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-				})
-				throw new TestFailedException()
-			}
-
-			if (!errors.isEmpty()) {
-				println '-------------------------------------------------------------------------'
-				println '-------------------------------ERRORED TESTS-----------------------------'
-				println '-------------------------------------------------------------------------'
-				println ''
-				errors.each{
-					println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-					println 'Errored at files:'
-					println '\t' + it.srcFile() + '<>' + it.testFile()
-					println 'Exception:'
-					println '\t' + it.throwable().dump()
-					println 'Trace:'
-					println '\t' + it.throwable().printStackTrace()
-					println '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-				}
-				throw new TestFailedException()
-			}
+			new TestResultConsolePrinter().print(result, errors)
 		}
 	}
 
