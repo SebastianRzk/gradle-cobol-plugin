@@ -1,21 +1,23 @@
 package de.sebastianruziczka.buildcycle
 
-import java.lang.reflect.Constructor
-
 import org.gradle.api.*
 import org.gradle.api.tasks.*
-import org.reflections.Reflections
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.api.CobolTestFramework
 import de.sebastianruziczka.api.CobolUnitFrameworkProvider
+import de.sebastianruziczka.buildcycle.test.FrameworkResolver
 import de.sebastianruziczka.buildcycle.unittest.CobolUnitTestTask
 
 class CobolUnit {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('testUnit')
-		def allUnitTestFrameworks = this.resolveUnitTestFrameworks(logger, conf, project)
+
+		FrameworkResolver frameworkResolver = new FrameworkResolver('de')
+		def allUnitTestFrameworks =  frameworkResolver.resolve(CobolUnitFrameworkProvider, CobolTestFramework, conf, project)
+
 		project.task ('cobolUnitTestConfiguration'){
 			group 'COBOL Configuration'
 			description 'Returns the detected unittest frameworks'
@@ -40,27 +42,6 @@ class CobolUnit {
 		}
 	}
 
-
-
-	private def resolveUnitTestFrameworks(Logger logger, CobolExtension configuration, Project project) {
-		def allUnitTestFrameworks = []
-		try {
-			Reflections reflections = new Reflections("de");
-			Set<Class<? extends CobolUnitFrameworkProvider>> cobolUnitFrameworks = reflections.getTypesAnnotatedWith(CobolUnitFrameworkProvider.class)
-			cobolUnitFrameworks.each{
-				logger.info('Detected framworks: ' + cobolUnitFrameworks)
-				Constructor constructor = it.getDeclaredConstructors0(true)[0]
-				def cobolUnitInstance = constructor.newInstance()
-				allUnitTestFrameworks << cobolUnitInstance
-				cobolUnitInstance.configure(configuration, project);
-			}
-		} catch (Throwable t) {
-			logger.error('Failed while searching for cobol unit frameworks', t)
-			logger.error(t.message)
-			t.printStackTrace()
-		}
-		return allUnitTestFrameworks
-	}
 
 	private org.gradle.api.tasks.util.PatternFilterable sourceTree(Project project, CobolExtension conf) {
 		return project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
