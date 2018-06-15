@@ -30,8 +30,8 @@ class CobolUnit {
 		}
 
 		project.task ('testUnit', type:CobolUnitTestTask){
-			group 'COBOL'
-			description 'Executes UnitTests'
+			group 'COBOL Development'
+			description 'Executes unit tests'
 
 			onlyIf({
 				this.testPresets(logger, project, conf, allUnitTestFrameworks)

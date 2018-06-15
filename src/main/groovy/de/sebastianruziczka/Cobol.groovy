@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory
 import de.sebastianruziczka.buildcycle.CobolCompile
 import de.sebastianruziczka.buildcycle.CobolConfiguration
 import de.sebastianruziczka.buildcycle.CobolDemo
+import de.sebastianruziczka.buildcycle.CobolIntegration
 import de.sebastianruziczka.buildcycle.CobolRunDebug
 import de.sebastianruziczka.buildcycle.CobolRunExecutable
 import de.sebastianruziczka.buildcycle.CobolUnit
@@ -41,6 +42,7 @@ class Cobol implements Plugin<Project> {
 			new CobolRunExecutable().apply(project, conf)
 			new CobolRunDebug().apply(project, conf)
 			new CobolUnit().apply(project, conf)
+			new CobolIntegration().apply(project, conf)
 			new CobolDemo().apply(project, conf)
 
 			project.task ('clean', type: Delete){
@@ -52,6 +54,7 @@ class Cobol implements Plugin<Project> {
 			}
 
 			project.task ('check', dependsOn: [
+				'testIntegration',
 				'testUnit',
 				'compileMultiTarget',
 				'compile',

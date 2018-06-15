@@ -11,7 +11,7 @@ import de.sebastianruziczka.api.CobolTestFramework
 import de.sebastianruziczka.buildcycle.integrationtest.CobolIntegrationTestTask
 import de.sebastianruziczka.buildcycle.test.FrameworkResolver
 
-class CobolIntegrationUnit {
+class CobolIntegration {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('testIntegration')
 
@@ -30,8 +30,8 @@ class CobolIntegrationUnit {
 		}
 
 		project.task ('testIntegration', type:CobolIntegrationTestTask){
-			group 'COBOL'
-			description 'Executes UnitTests'
+			group 'COBOL Development'
+			description 'Executes integration tests'
 
 			onlyIf({
 				this.testPresets(logger, project, conf, allIntegrationTestFrameworks)
@@ -71,6 +71,6 @@ class CobolIntegrationUnit {
 		logger.info("\t 2. ... is in the package de.*")
 		logger.info("\t 3. ... implements the interface de.sebastianruziczka.CobolTestFramework")
 		logger.info("\t 4. ... is annotated with @CobolIntegrationTestFrameworkProvider")
-		println 'No unittest framework found. Use --info for more information'
+		println 'No integration framework found. Use --info for more information'
 	}
 }
