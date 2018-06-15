@@ -16,6 +16,7 @@ class CobolDemo {
 		project.task ('helloWorld', type: HelloWorldTask) {
 			group 'COBOL Demo'
 			description 'Copys HelloWorld.cbl in src/main/cobol and executes it'
+			configuration = conf
 			doFirst {
 				if (conf.fileFormat == 'fixed') {
 					copy('res/fixed/HELLOWORLD.cbl', conf.srcMainPath + '/HELLOWORLD.cbl' , logger)
