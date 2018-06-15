@@ -1,5 +1,7 @@
 package de.sebastianruziczka
 
+import org.gradle.api.file.FileTree
+
 import de.sebastianruziczka.compiler.api.CompilerBuilder
 import de.sebastianruziczka.compiler.gnucobol.GnuCompilerBuilder
 
@@ -9,6 +11,10 @@ class CobolExtension {
 
 	String unittestPostfix = 'UT'
 	String unittestCodeCoverage = false
+
+	String integrationtestPostfix = 'IT'
+	String integrationtestCodeCoverage = false
+
 
 	String srcMainPath = 'src/main/cobol'
 	String buildPath = 'build'
@@ -27,17 +33,25 @@ class CobolExtension {
 	int terminalColumns = 80
 
 	Closure<File> projectFileResolver = null
+	Closure<FileTree> projectFileTreeResolver = null
 
 	CompilerBuilder compiler = new GnuCompilerBuilder()
 
 	String compilerLogLevel = 'FINE'
 
+
+	private String groovyPattern = '**/*'
+
 	String filetypePattern(){
-		'**/*' + this.srcFileType
+		this.groovyPattern + this.srcFileType
 	}
 
 	String unitTestFileTypePattern() {
-		return '**/*' + this.unittestPostfix + srcFileType
+		return this.groovyPattern + this.unittestPostfix + this.srcFileType
+	}
+
+	String integrationTestFileTypePattern() {
+		return this.groovyPattern + this.integrationtestPostfix + this.srcFileType
 	}
 
 	String absoluteSrcMainModulePath(){
@@ -92,5 +106,17 @@ class CobolExtension {
 
 	String absoluteUnitTestFrameworkPath(String frameWorkName) {
 		return this.projectFileResolver(this.buildPath).absolutePath + '/' + frameWorkName
+	}
+
+	org.gradle.api.tasks.util.PatternFilterable sourceTree() {
+		return this.projectFileTreeResolver(this.srcMainPath).include(this.filetypePattern())
+	}
+
+	org.gradle.api.tasks.util.PatternFilterable unitTestTree() {
+		return this.projectFileTreeResolver(this.srcTestPath).include(this.unitTestFileTypePattern())
+	}
+
+	org.gradle.api.tasks.util.PatternFilterable integrationTestTree() {
+		return this.projectFileTreeResolver(this.srcTestPath).include(this.integrationTestFileTypePattern())
 	}
 }

@@ -1,4 +1,4 @@
-package de.sebastianruziczka.buildcycle.unittest
+package de.sebastianruziczka.buildcycle.integrationtest
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -9,15 +9,15 @@ import de.sebastianruziczka.buildcycle.test.TestResult
 import de.sebastianruziczka.buildcycle.test.TestResultConsolePrinter
 import de.sebastianruziczka.buildcycle.test.UnitTestError
 
-class CobolUnitTestTask extends DefaultTask{
-	def unitTestFrameworks = []
+class CobolIntegrationTestTask extends DefaultTask{
+	def integrationTestFrameworks = []
 	def CobolExtension configuration
 
 	@TaskAction
 	public void test() {
-		unitTestFrameworks.forEach({ it.clean() })
+		integrationTestFrameworks.forEach({ it.clean() })
 
-		def testTree = this.configuration.unitTestTree()
+		def testTree = this.configuration.integrationTestTree()
 		def allTests = []
 
 		testTree.each { File file ->
@@ -53,13 +53,13 @@ class CobolUnitTestTask extends DefaultTask{
 		}
 
 		logger.info('Number of Src<>Test pairs found: ' + cobolTestPairs.size())
-		unitTestFrameworks.each{
+		integrationTestFrameworks.each{
 			logger.info('Preparing: ' + it.toString())
 			it.prepare();
 		}
 		logger.info('All unittest frameworks prepared')
 
-		unitTestFrameworks.each{ framework ->
+		integrationTestFrameworks.each{ framework ->
 			println 'Starting Cobol-Unittest with framework: ' + framework.toString()
 			def errors = []
 			TestResult result = new TestResult()

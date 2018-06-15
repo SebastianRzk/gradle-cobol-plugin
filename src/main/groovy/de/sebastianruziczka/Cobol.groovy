@@ -17,11 +17,13 @@ class Cobol implements Plugin<Project> {
 
 	void apply(Project project) {
 		def conf = project.extensions.create('cobol', CobolExtension)
+		conf.projectFileResolver = { s -> project.file(s)}
+		conf.projectFileTreeResolver {s -> project.fileTree(s)}
 
 		project.afterEvaluate {
 			if (conf.srcMain == null || conf.srcMain == '') {
 				def allSourceFiles = []
-				def tree = project.fileTree(conf.srcMainPath).include(conf.filetypePattern())
+				def tree = conf.sourceTree()
 				tree.each { File file ->
 					allSourceFiles << file.absolutePath
 				}
@@ -33,7 +35,6 @@ class Cobol implements Plugin<Project> {
 			}
 
 			Logger logger = LoggerFactory.getLogger('cobolPlugin')
-			conf.projectFileResolver = { s -> project.file(s)}
 
 			new CobolConfiguration().apply(project, conf)
 			new CobolCompile().apply(project, conf)
