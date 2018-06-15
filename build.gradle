@@ -22,7 +22,7 @@ dependencies {
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
 
-version = '0.0.29'
+version = '0.0.30'
 def realVersion = ''
 if (project.hasProperty("generateLatest")) {
 	realVersion = ' (' + version + ')'
