@@ -6,10 +6,12 @@ import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.buildcycle.test.TestFile
 
 
-interface CobolUnitFramework {
+interface CobolTestFramework {
 	void configure(CobolExtension configuration, Project project)
 
 	int prepare()
 
-	TestFile test(String srcName, String testName)
+	TestFile test(CobolSourceFile file)
+
+	void clean()
 }

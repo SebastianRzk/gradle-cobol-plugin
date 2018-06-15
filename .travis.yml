@@ -4,9 +4,6 @@ jdk:
   - oraclejdk8
 
 sudo: required
-install: 
-  - sh ci/install_requirements.sh
-
 
 script:
      - gradle --version

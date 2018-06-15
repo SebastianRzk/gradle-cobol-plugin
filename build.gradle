@@ -13,19 +13,34 @@ dependencies {
 	compile gradleApi()
 	compile localGroovy()
 	compileOnly group: 'org.reflections', name: 'reflections', version: '0.9.11'
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.+'
+	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.+'
 }
 
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
-version = '0.0.7'
+
+version = '0.0.30'
+def realVersion = ''
+if (project.hasProperty("generateLatest")) {
+	realVersion = ' (' + version + ')'
+	println 'Publishing latest-' + realVersion
+	version = 'latest'
+}
+
+
+GradlePropertyFilter propFilter = new GradlePropertyFilter([
+	'gradle.actualVersion' : version,
+	'gradle.unitVersion' : '0.0.20'
+	])
 
 gradlePlugin{
 	plugins {
 		cobol {
 			id = 'de.sebastianruziczka.Cobol'
 			implementationClass = 'de.sebastianruziczka.Cobol'
-		
 		}
 	}
 }
@@ -35,9 +50,12 @@ jar {
 	manifest {
 		attributes(
 			"Implementation-Title": project.name,
-			"Implementation-Version": version,
+			"Implementation-Version": (version + realVersion),
 			"Build-Date": new Date().format( 'dd.MM.yyyy' )
 		)
+	}
+	into 'res', {
+		from 'res/main/groovy'
 	}
 	from {
 		configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }
@@ -57,3 +75,20 @@ publishing {
         }
     }
 }
+
+
+task (switchOffline, type:Copy){
+	from '.'
+	into '.'
+	include '**/*.offline'
+	rename {it - '.offline'}
+}
+
+
+task (generateVersions, type: Copy){
+	from '.'
+	into '.'
+	include '**/*.base'
+	rename {it - '.base'}
+	filter { line ->propFilter.filter(line)}
+} 

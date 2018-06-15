@@ -1,7 +1,0 @@
-plugins {
-	id 'de.sebastianruziczka.Cobol' version '0.0.7' apply false
-}
-
-subprojects {
-	apply plugin: 'de.sebastianruziczka.Cobol'		
-}
