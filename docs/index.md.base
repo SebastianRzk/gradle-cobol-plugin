@@ -164,9 +164,10 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | name | usage | default | other |
 | ---- | ----- | ------- | ----- |
 | srcTestPath | _testUnit_ | 'src/test/cobol' | |
-| unittestCodeCoverage | _testUnit_ | `false` | `true` |
 | unittestPostfix | _testUnit_ | 'UT' | e.g. 'UNIT', 'TEST' ... |
-| unittestCodeCoverage | | false | true |
+| unittestCodeCoverage | _testUnit_ | `false` | `true` |
+| integratinotestPostfix | _testIntegration_ | 'IT' | e.g. 'INTEGRATION', 'INTEGRATIONTEST' ... |
+| integrationtestCodeCoverage | | false | true |
 
 ## Terminal configuration
 
@@ -212,6 +213,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
 | _testUnit_ | `srcTest` | result of tests |  |
+| _testIntegraion | `srcTest` | result of tests |  |
 | _check_ | everything | check result | _testUnit_, _compile_, _cobolConfiguration_ |
 
 
@@ -246,7 +248,7 @@ Make sure your main framework class:
 * ... is in the classpath of this plugin (via buildscript dependencies)
 * ... is in the package de.*
 * ... implements the interface de.sebastianruziczka.CobolTestFramework
-* ... is annotated with @CobolUnitFrameworkProvider
+* ... is annotated with @CobolUnitFrameworkProvider or @CobolIntegrationTestFrameworkProvider
 		
 Methods of the interface CobolTestFramework:
 
