@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.buildcycle.demo.HelloWorldTask
 
-class CobolDemo {
+class CobolBuildcycleDemo {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('runCobol')
 

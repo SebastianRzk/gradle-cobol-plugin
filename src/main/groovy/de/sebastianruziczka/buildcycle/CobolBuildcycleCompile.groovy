@@ -10,7 +10,7 @@ import de.sebastianruziczka.buildcycle.compile.CobolCompileDebugTask
 import de.sebastianruziczka.buildcycle.compile.CobolCompileExecutableTask
 import de.sebastianruziczka.buildcycle.compile.CobolMultitargetCompileTask
 
-class CobolCompile {
+class CobolBuildcycleCompile {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('COBOL COMPILE')
 

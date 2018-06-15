@@ -6,13 +6,13 @@ import org.gradle.api.tasks.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import de.sebastianruziczka.buildcycle.CobolCompile
-import de.sebastianruziczka.buildcycle.CobolConfiguration
-import de.sebastianruziczka.buildcycle.CobolDemo
-import de.sebastianruziczka.buildcycle.CobolIntegration
-import de.sebastianruziczka.buildcycle.CobolRunDebug
-import de.sebastianruziczka.buildcycle.CobolRunExecutable
-import de.sebastianruziczka.buildcycle.CobolUnit
+import de.sebastianruziczka.buildcycle.CobolBuildcycleCompile
+import de.sebastianruziczka.buildcycle.CobolBuildcycleConfiguration
+import de.sebastianruziczka.buildcycle.CobolBuildcycleDemo
+import de.sebastianruziczka.buildcycle.CobolBuildcycleIntegration
+import de.sebastianruziczka.buildcycle.CobolBuildcycleRunDebug
+import de.sebastianruziczka.buildcycle.CobolBuildcycleRunExecutable
+import de.sebastianruziczka.buildcycle.CobolBuildcycleUnit
 
 class Cobol implements Plugin<Project> {
 
@@ -37,13 +37,13 @@ class Cobol implements Plugin<Project> {
 
 			Logger logger = LoggerFactory.getLogger('cobolPlugin')
 
-			new CobolConfiguration().apply(project, conf)
-			new CobolCompile().apply(project, conf)
-			new CobolRunExecutable().apply(project, conf)
-			new CobolRunDebug().apply(project, conf)
-			new CobolUnit().apply(project, conf)
-			new CobolIntegration().apply(project, conf)
-			new CobolDemo().apply(project, conf)
+			new CobolBuildcycleConfiguration().apply(project, conf)
+			new CobolBuildcycleCompile().apply(project, conf)
+			new CobolBuildcycleRunExecutable().apply(project, conf)
+			new CobolBuildcycleRunDebug().apply(project, conf)
+			new CobolBuildcycleUnit().apply(project, conf)
+			new CobolBuildcycleIntegration().apply(project, conf)
+			new CobolBuildcycleDemo().apply(project, conf)
 
 			project.task ('clean', type: Delete){
 				group 'COBOL'

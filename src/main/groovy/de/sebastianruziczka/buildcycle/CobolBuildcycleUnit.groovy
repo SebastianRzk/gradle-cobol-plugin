@@ -6,42 +6,41 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
-import de.sebastianruziczka.api.CobolIntegrationTestFrameworkProvider
 import de.sebastianruziczka.api.CobolTestFramework
-import de.sebastianruziczka.buildcycle.integrationtest.CobolIntegrationTestTask
+import de.sebastianruziczka.api.CobolUnitFrameworkProvider
 import de.sebastianruziczka.buildcycle.test.FrameworkResolver
+import de.sebastianruziczka.buildcycle.unittest.CobolUnitTestTask
 
-class CobolIntegration {
+class CobolBuildcycleUnit {
 	void apply (Project project, CobolExtension conf){
-		Logger logger = LoggerFactory.getLogger('testIntegration')
+		Logger logger = LoggerFactory.getLogger('testUnit')
 
 		FrameworkResolver frameworkResolver = new FrameworkResolver('de')
-		def allIntegrationTestFrameworks =  frameworkResolver.resolve(CobolIntegrationTestFrameworkProvider, CobolTestFramework, conf, project)
+		def allUnitTestFrameworks =  frameworkResolver.resolve(CobolUnitFrameworkProvider, CobolTestFramework, conf, project)
 
-		project.task ('cobolIntegrationTestConfiguration'){
+		project.task ('cobolUnitTestConfiguration'){
 			group 'COBOL Configuration'
-			description 'Returns the detected integration test frameworks'
+			description 'Returns the detected unittest frameworks'
 			doLast {
-				println 'Detected integration test frameworks : ' + allIntegrationTestFrameworks.size()
-				allIntegrationTestFrameworks.each{
+				println 'Detected unittest frameworks : ' + allUnitTestFrameworks.size()
+				allUnitTestFrameworks.each{
 					println '\t'+it.toString()
 				}
 			}
 		}
 
-		project.task ('testIntegration', type:CobolIntegrationTestTask){
+		project.task ('testUnit', type:CobolUnitTestTask){
 			group 'COBOL Development'
-			description 'Executes integration tests'
+			description 'Executes unit tests'
 
 			onlyIf({
-				this.testPresets(logger, project, conf, allIntegrationTestFrameworks)
+				this.testPresets(logger, project, conf, allUnitTestFrameworks)
 			})
 
-			integrationTestFrameworks = allIntegrationTestFrameworks
+			unitTestFrameworks = allUnitTestFrameworks
 			configuration = conf
 		}
 	}
-
 
 	private boolean testPresets(Logger logger, Project project, CobolExtension conf, def allUnitTestFrameworks) {
 		if (allUnitTestFrameworks.isEmpty()) {
@@ -49,7 +48,7 @@ class CobolIntegration {
 			return false
 		}
 
-		if (conf.integrationTestTree().getFiles().isEmpty()) {
+		if (conf.unitTestTree().getFiles().isEmpty()) {
 			logger.info("No test files found!")
 			println "No test files found!"
 			return false
@@ -65,12 +64,12 @@ class CobolIntegration {
 	}
 
 	private printNoUnittestFrameworkDefined(Logger logger) {
-		logger.info("No cobol integration framework found.")
+		logger.info("No cobol unit framework found.")
 		logger.info("Make sure your framework class:")
 		logger.info("\t 1. ... is in the classpath of this plugin (via buildscript dependencies)")
 		logger.info("\t 2. ... is in the package de.*")
 		logger.info("\t 3. ... implements the interface de.sebastianruziczka.CobolTestFramework")
-		logger.info("\t 4. ... is annotated with @CobolIntegrationTestFrameworkProvider")
-		println 'No integration framework found. Use --info for more information'
+		logger.info("\t 4. ... is annotated with @CobolUnitFrameworkProvider")
+		println 'No unittest framework found. Use --info for more information'
 	}
 }

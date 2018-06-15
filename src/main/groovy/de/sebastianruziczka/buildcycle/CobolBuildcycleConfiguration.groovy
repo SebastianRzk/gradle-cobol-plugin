@@ -7,7 +7,7 @@ import org.gradle.util.GradleVersion
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.metainf.MetaInfPropertyResolver
 
-class CobolConfiguration {
+class CobolBuildcycleConfiguration {
 	void apply(Project project, CobolExtension conf) {
 
 		project.task ('cobolPluginVersion'){

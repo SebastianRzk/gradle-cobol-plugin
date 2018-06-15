@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 
-class CobolRunExecutable {
+class CobolBuildcycleRunExecutable {
 	void apply (Project project, CobolExtension conf){
 		Logger logger = LoggerFactory.getLogger('runCobol')
 
