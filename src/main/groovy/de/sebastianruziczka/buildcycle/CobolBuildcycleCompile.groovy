@@ -50,8 +50,6 @@ class CobolBuildcycleCompile {
 			}
 		}
 
-
-
 		project.task ('compileMultiTarget', type: CobolMultitargetCompileTask) {
 			group 'COBOL'
 			description 'Compiles additional executables when defined in multiCompileTargets'
