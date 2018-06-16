@@ -39,10 +39,6 @@ class CobolBuildcycleCompile {
 			group 'COBOL Development'
 			description 'Compiles each cobol source code itself to *.so into build folder.'
 
-			onlyIf {
-				conf.srcMain != null && !conf.srcMain.equals('')
-			}
-
 			outputDir = conf.projectFileResolver(conf.binMainPath)
 			inputDir = new File(conf.absoluteSrcMainModulePath())
 
