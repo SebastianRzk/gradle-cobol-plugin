@@ -210,7 +210,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | ---- | ----- | ------ | --------- |
 | _helloWorld_ |  | HELLOWORLD.cbl + executable | _runDebug_ |
 | _compileDebug_ | changed files since last build in `srcMain` | gcc modules for each cobol file ion `build` |
-| _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
+| _buildDebug_ | | compiled cobol files in build directory with ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
 | _testUnit_ | `srcTest` | result of tests |  |
 | _testIntegraion | `srcTest` | result of tests |  |
