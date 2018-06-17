@@ -125,7 +125,7 @@ Or hardcode with specific version (not preferred):
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.20'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.21'
      	}
      }
 
