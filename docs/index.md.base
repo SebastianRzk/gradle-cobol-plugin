@@ -50,6 +50,18 @@ Import the plugin from the provided repo (in your settings.gradle):
 
     mvn: https://sebastianruziczka.de/repo/mvn
     ivy: https://sebastianruziczka.de/repo/ivy
+
+E.g. settings.gradle :
+
+	pluginManagement {
+		repositories {
+			maven {
+				url 'https://sebastianruziczka.de/repo/mvn/'
+	
+			}
+		}
+	}
+
     
 
 or build your your own versioned jar with the command
