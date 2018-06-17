@@ -84,7 +84,7 @@ Add to your build.gradle (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.31'
+         id 'de.sebastianruziczka.Cobol' version '0.0.32'
     }
 
 ### 3. Run HELLOWORLD.cbl
@@ -168,6 +168,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | unittestCodeCoverage | _testUnit_ | `false` | `true` |
 | integratinotestPostfix | _testIntegration_ | 'IT' | e.g. 'INTEGRATION', 'INTEGRATIONTEST' ... |
 | integrationtestCodeCoverage | | false | true |
+| resIntegrationTest | testIntegration | 'res/integrationtest/cobol' | |
 
 ## Terminal configuration
 

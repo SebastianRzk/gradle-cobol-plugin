@@ -11,13 +11,13 @@ class GnuDebugCompilerBuilder implements DebugCompilerBuilder {
 
 	private CobolExtension configuration
 	private CompileStandard compileStandard = CompileStandard.none
-	private ArrayList<String> includePaths
+	private List<String> includePaths = new ArrayList<>()
 
 	public GnuDebugCompilerBuilder(CobolExtension configuration) {
 		this.configuration = configuration
 	}
 
-	private GnuDebugCompilerBuilder(CobolExtension configuration, CompileStandard compileStandard, ArrayList<String> includePaths) {
+	private GnuDebugCompilerBuilder(CobolExtension configuration, CompileStandard compileStandard, List<String> includePaths) {
 		this.configuration = configuration
 		this.compileStandard = compileStandard
 		this.includePaths = includePaths
