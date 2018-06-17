@@ -21,6 +21,7 @@ class CobolExtension {
 	String binMainPath = 'build/bin/main/cobol'
 	String resMainPath = 'res/main/cobol'
 	String srcTestPath = 'src/test/cobol'
+	String resIntegrationTest = 'res/integrationtest/cobol'
 	String incrementsBuildPath = 'build/incremental/'
 
 	def multiCompileTargets = []
@@ -102,7 +103,6 @@ class CobolExtension {
 	String absoluteSrcTestPath() {
 		return this.projectFileResolver(this.srcTestPath).absolutePath
 	}
-
 
 	String absoluteUnitTestFrameworkPath(String frameWorkName) {
 		return this.projectFileResolver(this.buildPath).absolutePath + '/' + frameWorkName

@@ -24,6 +24,8 @@ class CobolSourceFile {
 			return this.configuration.srcMainPath + '/' + this.mainFileModule + this.configuration.srcFileType
 		}else if (type == CobolCodeType.integration_test) {
 			return this.configuration.srcTestPath + '/' + this.mainFileModule + this.configuration.integrationtestPostfix + this.configuration.srcFileType
+		}else if (type == CobolCodeType.integration_test_ressources) {
+			return this.configuration.resIntegrationTest + '/' + this.mainFileModule
 		}
 		return null
 	}
