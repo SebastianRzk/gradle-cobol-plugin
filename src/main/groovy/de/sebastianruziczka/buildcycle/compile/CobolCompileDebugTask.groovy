@@ -56,6 +56,7 @@ class CobolCompileDebugTask extends DefaultTask{
 		this.configuration.compiler.buildDebug(this.configuration)
 				.setTargetAndBuild(absoluteTargetPath)
 				.setExecutableDestinationPath(this.configuration.absoluteDebugMainPath(target))
+				.addAdditionalOption(this.configuration.fileFormat)
 				.execute('COMPILE DEBUG: ' + target)
 	}
 
