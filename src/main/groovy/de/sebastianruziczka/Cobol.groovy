@@ -49,7 +49,7 @@ class Cobol implements Plugin<Project> {
 				group 'COBOL'
 				description 'Cleans cobol build directory'
 				doFirst {
-					delete conf.projectFileResolver(conf.binMainPath).absolutePath
+					delete conf.projectFileResolver(conf.buildPath).absolutePath
 				}
 			}
 
