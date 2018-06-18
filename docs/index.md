@@ -96,7 +96,7 @@ Add to your build.gradle (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.32'
+         id 'de.sebastianruziczka.Cobol' version '0.0.33'
     }
 
 ### 3. Run HELLOWORLD.cbl

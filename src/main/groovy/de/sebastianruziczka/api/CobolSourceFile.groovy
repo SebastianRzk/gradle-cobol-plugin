@@ -34,6 +34,10 @@ class CobolSourceFile {
 		return this.configuration.projectFileResolver(this.getAbsolutePath(type)).getParent()
 	}
 
+	public String baseFileName() {
+		return new File(this.mainFileModule).getName()
+	}
+
 	public String getAbsolutePath(CobolCodeType type) {
 		return this.configuration.projectFileResolver(this.getRelativePath(type))
 	}
