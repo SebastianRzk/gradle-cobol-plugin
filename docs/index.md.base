@@ -17,9 +17,9 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 
 ## Gradle-cobol environment
 
-* [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin)  [gradle-cobol-plugin](https://github.com/RosesTheN00b/gradle-cobol-plugin) The base gradle plugin (compile, run)
+* [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin)  [gradle-cobol-plugin](https://gradle-cobol.sebastianruziczka.de) The base gradle plugin (compile, run)
 * [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension)  
-[gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension) Adds unittests and testcoverage to the base plugin
+[gradle-cobol-plugin-unittest-extension](https://gradle-cobol-unit.sebastianruziczka.de) Adds unittests and testcoverage to the base plugin
 * [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example)[![codecov](https://codecov.io/gh/RosesTheN00b/gradle-cobol-plugin-example/branch/master/graph/badge.svg)](https://codecov.io/gh/RosesTheN00b/gradle-cobol-plugin-example)[gradle-cobol-plugin-example](https://github.com/RosesTheN00b/gradle-cobol-plugin-example) 
 This Project contains many gradle-cobol example projects
 
@@ -46,6 +46,26 @@ Further Reading:
 ### 1. Install
 
 
+To use the plugin, you need [GNUCobol](https://sourceforge.net/projects/open-cobol/) and [Gradle](https://gradle.org/).
+
+On Ubuntu:
+
+    sudo apt install gradle open-cobol
+
+On Arch (via yaourt):
+
+    yaourt gnu-cobol gradle
+
+
+### 2. Configure your project
+
+Initial project structure:
+
+	.
+	├── build.gradle  (empty)
+	└── settings.gradle  (empty)
+
+
 Import the plugin from the provided repo (in your settings.gradle):
 
     mvn: https://sebastianruziczka.de/repo/mvn
@@ -57,7 +77,6 @@ E.g. settings.gradle :
 		repositories {
 			maven {
 				url 'https://sebastianruziczka.de/repo/mvn/'
-	
 			}
 		}
 	}
@@ -73,20 +92,8 @@ use the parameter `-PgenerateLatest` for publishing a jar with the version _late
     gradle publish -PgenerateLatest
 
 
-To use the plugin, you need [GNUCobol](https://sourceforge.net/projects/open-cobol/) and [Gradle](https://gradle.org/).
 
-On ubuntu:
-
-    sudo apt install gradle open-cobol
-
-On Arch (via yaourt):
-
-    yaourt gnu-cobol gradle
-
-
-### 2. Add the plugin to your project
-
-Add to your build.gradle (preferred):
+Add to your build.gradle the last version of the plugin (preferred):
 
     plugins {
          id 'de.sebastianruziczka.Cobol' version 'latest'
@@ -98,6 +105,7 @@ Or hardcode a specific version:
     plugins {
          id 'de.sebastianruziczka.Cobol' version 'gradle.actualVersion'
     }
+
 
 ### 3. Run HELLOWORLD.cbl
 
@@ -117,7 +125,7 @@ or build an complete executable and run it with:
 
 ### Additional configuration
 
-A minimal configuration for more than one file:
+A minimal configuration for more than one cobol source file:
 
     cobol {
          srcMain = 'HelloWorld' // Path to your main file in src/main/cobol without the file extension .cbl
@@ -125,7 +133,7 @@ A minimal configuration for more than one file:
 
 ### Unit testing
 
-Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension)):
+Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://gradle-cobol-unit.sebastianruziczka.de)):
 
      buildscript {
      	 dependencies {
