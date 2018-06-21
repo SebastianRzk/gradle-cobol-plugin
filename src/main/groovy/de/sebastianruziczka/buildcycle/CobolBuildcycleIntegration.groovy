@@ -29,7 +29,7 @@ class CobolBuildcycleIntegration {
 			}
 		}
 
-		project.task ('testIntegration', type:CobolIntegrationTestTask, dependsOn: ['buildDebug']){
+		project.task ('testIntegration', type:CobolIntegrationTestTask, dependsOn: ['compileDebugWithTracing']){
 			group 'COBOL Development'
 			description 'Executes integration tests'
 
