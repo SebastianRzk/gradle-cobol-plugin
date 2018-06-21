@@ -9,10 +9,12 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs
 
 import de.sebastianruziczka.CobolExtension
+import de.sebastianruziczka.compiler.api.CompileJob
 
 class CobolCompileDebugTask extends DefaultTask{
 
 	CobolExtension configuration
+	boolean tracing = false
 
 	@SkipWhenEmpty
 	@InputDirectory
@@ -53,10 +55,14 @@ class CobolCompileDebugTask extends DefaultTask{
 			logger.info('Create folder for compile: ' + modulePath)
 			module.mkdirs()
 		}
-		this.configuration.compiler.buildDebug(this.configuration)
+		CompileJob compileJob = this.configuration.compiler.buildDebug(this.configuration)
 				.setTargetAndBuild(absoluteTargetPath)
 				.setExecutableDestinationPath(this.configuration.absoluteDebugMainPath(target))
 				.addAdditionalOption(this.configuration.fileFormat)
+		if (this.tracing) {
+			compileJob = compileJob.addCodeCoverageOption()
+		}
+		compileJob
 				.execute('COMPILE DEBUG: ' + target)
 	}
 

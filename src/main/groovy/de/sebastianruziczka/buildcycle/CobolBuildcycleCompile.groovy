@@ -50,6 +50,22 @@ class CobolBuildcycleCompile {
 			}
 		}
 
+		project.task ('compileDebugWithTracing', type:CobolCompileDebugTask) {
+			group 'COBOL Development'
+			description 'Compiles each cobol source code itself to *.so into build folder. Enables statement based tracing.'
+
+			outputDir = conf.projectFileResolver(conf.binMainPath)
+			inputDir = new File(conf.absoluteSrcMainModulePath())
+
+			configuration = conf
+			tracing = true
+
+			doFirst {
+				checkIfMainFileIsSet(logger, conf)
+				prepareBinFolder(conf)
+			}
+		}
+
 		project.task ('compileMultiTarget', type: CobolMultitargetCompileTask) {
 			group 'COBOL'
 			description 'Compiles additional executables when defined in multiCompileTargets'
