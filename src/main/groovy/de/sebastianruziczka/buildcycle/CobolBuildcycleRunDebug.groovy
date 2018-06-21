@@ -20,6 +20,14 @@ class CobolBuildcycleRunDebug {
 			description 'Builds incremental an cobcrun-runnable programm in build folder'
 		}
 
+		project.task ('buildDebugWithTracing', dependsOn: [
+			'compileDebugWithTracing',
+			'copyRessources'
+		]){
+			group 'COBOL Development'
+			description 'Builds incremental an cobcrun-runnable programm in build folder with statement based tracing.'
+		}
+
 		project.task ('runDebug', type:Exec, dependsOn: ['buildDebug']) {
 			group 'COBOL Development'
 			description 'Compiles incremental the cobol programm sourcecode and runs it with cobcrun'
