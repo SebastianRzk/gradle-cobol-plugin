@@ -76,15 +76,6 @@ publishing {
     }
 }
 
-
-task (switchOffline, type:Copy){
-	from '.'
-	into '.'
-	include '**/*.offline'
-	rename {it - '.offline'}
-}
-
-
 task (generateVersions, type: Copy){
 	from '.'
 	into '.'
