@@ -38,7 +38,7 @@ Further Reading:
 | GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support | full support | full support |
 | GnuCobol 2 | free | full support | full support | not tested yet | not tested | not tested | not tested |
 | GnuCobol 3rc | fixed | full support | full support | full support | full support | full support | full support |
-| GnuCobol 3rc | free | not tested | not tested | not tested | not tested | not tested |
+| GnuCobol 3rc | free | not tested | not tested | not tested | not tested | not tested | not tested |
 
 
 
