@@ -55,7 +55,7 @@ class CobolBuildcycleCompile {
 			description 'Compiles each cobol source code itself to *.so into build folder. Enables statement based tracing.'
 
 			outputDir = conf.projectFileResolver(conf.binMainPath)
-			inputDir = new File(conf.absoluteSrcMainModulePath())
+			inputDir = new File(conf.srcMainPath)
 
 			configuration = conf
 			tracing = true
