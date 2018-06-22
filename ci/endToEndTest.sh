@@ -23,7 +23,7 @@ cd ..
 echo "<<<<<<<"
 
 echo ">>>>>>> prepare test-repository"
-gradle generateVersions switchOffline
+gradle switchOffline
 echo "<<<<<<<"
 
 echo ">>>>>>> exec test"
