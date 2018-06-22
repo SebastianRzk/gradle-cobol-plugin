@@ -36,7 +36,7 @@ Further Reading:
 | GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support | --- | --- |
 | GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested | not tested| --- | --- |
 | GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support | full support | full support |
-| GnuCobol 2 | free | full support | full support | not tested yet | not tested | not tested | not tested |
+| GnuCobol 2 | free | full support | full support | not tested | not tested | not tested | not tested |
 | GnuCobol 3rc | fixed | full support | full support | full support | full support | full support | full support |
 | GnuCobol 3rc | free | not tested | not tested | not tested | not tested | not tested | not tested |
 
