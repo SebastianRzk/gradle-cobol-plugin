@@ -23,7 +23,10 @@ cd ..
 echo "<<<<<<<"
 
 echo ">>>>>>> prepare test-repository"
-gradle generateVersions switchOffline
+cd endToEndTest/gradle-cobol-plugin-example
+gradle switchOffline
+cd ..
+cd ..
 echo "<<<<<<<"
 
 echo ">>>>>>> exec test"
