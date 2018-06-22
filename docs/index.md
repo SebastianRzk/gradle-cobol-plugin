@@ -31,13 +31,13 @@ Further Reading:
 
 ## Compatibility
 
-| Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | testcoverage (plugin) |
-| -------- | ----------- | ------------------ | --------------------- | ------------------ | --------------------- |
-| GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support |
-| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested yet | not tested yet |
-| GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support |
-| GnuCobol 2 | free | full support | full support | not tested yet | not tested yet |
-| GnuCobol 3rc | not tested yet | not tested yet | not tested yet |
+| Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | unit testcoverage (plugin) | integration test (plugin) | integration testcoverage (plugin) |
+| -------- | ----------- | ------------------ | --------------------- | ------------------ | -------------------------- | ------------------------- | --------------------------------- |
+| GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support | --- | --- |
+| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested yet | not tested yet | --- | --- |
+| GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support | full support | full support |
+| GnuCobol 2 | free | full support | full support | not tested yet | not tested yet | not tested yet |
+| GnuCobol 3 | fixed | full support | full support | full support | full support | full support | full support |
 
 
 
@@ -103,7 +103,7 @@ Add to your build.gradle the last version of the plugin (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.34'
+         id 'de.sebastianruziczka.Cobol' version '0.0.35'
     }
 
 
@@ -145,7 +145,7 @@ Or hardcode with specific version (not preferred):
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.24'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.25'
      	}
      }
 
