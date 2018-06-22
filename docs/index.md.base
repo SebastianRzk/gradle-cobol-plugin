@@ -49,14 +49,14 @@ Further Reading:
 
 To use the plugin, you need [GNUCobol](https://sourceforge.net/projects/open-cobol/) and [Gradle](https://gradle.org/).
 
-On Ubuntu:
+On Ubuntu (18.10 and higher):
 
-    sudo apt install gradle open-cobol
+    sudo apt install gradle gnucobol
+
 
 On Arch (via yaourt):
 
     yaourt gnu-cobol gradle
-
 
 ### 2. Configure your project
 
