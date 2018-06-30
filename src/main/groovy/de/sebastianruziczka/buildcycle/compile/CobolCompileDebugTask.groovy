@@ -38,7 +38,7 @@ class CobolCompileDebugTask extends DefaultTask{
 		logger.info('Compiled Files: ' + done)
 
 		inputs.removed { change ->
-			def targetFile = this.configuration.projectFileResolver(change.file.absolutePath())
+			def targetFile = this.configuration.projectFileResolver(change.file.absolutePath)
 			if (targetFile.exists()) {
 				targetFile.delete()
 			}
