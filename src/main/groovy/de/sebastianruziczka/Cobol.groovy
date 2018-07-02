@@ -22,17 +22,9 @@ class Cobol implements Plugin<Project> {
 		conf.projectFileTreeResolver {s -> project.fileTree(s)}
 
 		project.afterEvaluate {
-			if (conf.srcMain == null || conf.srcMain == '') {
-				def allSourceFiles = []
-				def tree = conf.sourceTree()
-				tree.each { File file ->
-					allSourceFiles << file.absolutePath
-				}
-				if(allSourceFiles.size() == 1) {
-					conf.srcMain = allSourceFiles[0].replace(project.file(conf.srcMainPath).absolutePath + '/', '')//
-							.replace(conf.srcFileType, '')
-					println 'Autoconfigured srcMain: ' + conf.srcMain
-				}
+
+			if (this.mainNotSet(conf)) {
+				conf = this.setMain(conf)
 			}
 
 			Logger logger = LoggerFactory.getLogger('cobolPlugin')
@@ -66,5 +58,23 @@ class Cobol implements Plugin<Project> {
 				description 'Execute full build cycle (clean+compile+test)'
 			}
 		}
+	}
+
+	private boolean mainNotSet(CobolExtension conf) {
+		return conf.srcMain == null || conf.srcMain == ''
+	}
+
+	private CobolExtension setMain(CobolExtension conf) {
+		def allSourceFiles = []
+		def tree = conf.sourceTree()
+		tree.each { File file ->
+			allSourceFiles << file.absolutePath
+		}
+		if(allSourceFiles.size() == 1) {
+			conf.srcMain = allSourceFiles[0].replace(project.file(conf.srcMainPath).absolutePath + '/', '')//
+					.replace(conf.srcFileType, '')
+			println 'Autoconfigured srcMain: ' + conf.srcMain
+		}
+		return conf
 	}
 }
