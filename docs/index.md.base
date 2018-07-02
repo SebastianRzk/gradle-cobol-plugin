@@ -31,13 +31,21 @@ Further Reading:
 
 ## Compatibility
 
+### Fixed file format
+
 | Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | unit testcoverage (plugin) | integration test (plugin) | integration testcoverage (plugin) |
 | -------- | ----------- | ------------------ | --------------------- | ------------------ | -------------------------- | ------------------------- | --------------------------------- |
 | GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support | --- | --- |
-| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested | not tested| --- | --- |
 | GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support | full support | full support |
-| GnuCobol 2 | free | full support | full support | not tested | not tested | not tested | not tested |
 | GnuCobol 3rc | fixed | full support | full support | full support | full support | full support | full support |
+
+
+### Free file format
+
+| Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | unit testcoverage (plugin) | integration test (plugin) | integration testcoverage (plugin) |
+| -------- | ----------- | ------------------ | --------------------- | ------------------ | -------------------------- | ------------------------- | --------------------------------- |
+| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested | not tested| --- | --- |
+| GnuCobol 2 | free | full support | full support | not tested | not tested | not tested | not tested |
 | GnuCobol 3rc | free | not tested | not tested | not tested | not tested | not tested | not tested |
 
 
