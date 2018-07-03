@@ -10,16 +10,15 @@ You can discover some examples [here](https://github.com/RosesTheN00b/gradle-cob
 * Compile, assemble and run your cobol code with a single command
 * Simple and adaptable configuration
 * Incremental compilation
-* Create and run cobol-unit-tests
-* Compute code coverage of your cobol-unit-tests (generates an cobertura coverage xml file)
+* Create and run cobol-unit-tests and cobol-unit-integration tests
+* Compute code coverage of your tests (generates an cobertura coverage xml file)
 * Expandable with custom plugin extensions
 * Simple and fast continuous integration e.g. with jenkins or travis.
 
 ## Gradle-cobol environment
 
 * [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin)  [gradle-cobol-plugin](https://gradle-cobol.sebastianruziczka.de) The base gradle plugin (compile, run)
-* [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension)  
-[gradle-cobol-plugin-unittest-extension](https://gradle-cobol-unit.sebastianruziczka.de) Adds unittests and testcoverage to the base plugin
+* [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-unittest-extension)[gradle-cobol-plugin-unittest-extension](https://gradle-cobol-unit.sebastianruziczka.de) Adds unittests and testcoverage to the base plugin
 * [![Build Status](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example.svg?branch=master)](https://travis-ci.org/RosesTheN00b/gradle-cobol-plugin-example)[![codecov](https://codecov.io/gh/RosesTheN00b/gradle-cobol-plugin-example/branch/master/graph/badge.svg)](https://codecov.io/gh/RosesTheN00b/gradle-cobol-plugin-example)[gradle-cobol-plugin-example](https://github.com/RosesTheN00b/gradle-cobol-plugin-example) 
 This Project contains many gradle-cobol example projects
 
@@ -31,13 +30,21 @@ Further Reading:
 
 ## Compatibility
 
+### Fixed file format
+
 | Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | unit testcoverage (plugin) | integration test (plugin) | integration testcoverage (plugin) |
 | -------- | ----------- | ------------------ | --------------------- | ------------------ | -------------------------- | ------------------------- | --------------------------------- |
 | GnuCobol / Open Cobol 1.1 | fixed | full support | full support | full support | full support | --- | --- |
-| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested | not tested| --- | --- |
 | GnuCobol 2 *recommended* | fixed | full support | full support | full support | full support | full support | full support |
-| GnuCobol 2 | free | full support | full support | not tested | not tested | not tested | not tested |
 | GnuCobol 3rc | fixed | full support | full support | full support | full support | full support | full support |
+
+
+### Free file format
+
+| Compiler | Code format | compile/run executable | compile/run debug | unit test (plugin) | unit testcoverage (plugin) | integration test (plugin) | integration testcoverage (plugin) |
+| -------- | ----------- | ------------------ | --------------------- | ------------------ | -------------------------- | ------------------------- | --------------------------------- |
+| GnuCobol / Open Cobol 1.1 | free | full support | full support | not tested | not tested| --- | --- |
+| GnuCobol 2 | free | full support | full support | not tested | not tested | not tested | not tested |
 | GnuCobol 3rc | free | not tested | not tested | not tested | not tested | not tested | not tested |
 
 
@@ -158,38 +165,38 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 
 ### Compile
 
-| name | usage | default | other |
-| ---- | ----- | ------- | ----- |
-| srcFileType | _compile_, _run_, _test_, _compileMultiTarget_ | '.cbl' | e.g. '.CBL' |
-| srcMain | _compile_, _run_ | '' | |
-| srcMainPath | _compile_, _run_, _test_, _compileMultiTarget_ | 'src/main/cobol' ||
-| binMainPath | _compile_, _run_, _test_ | 'build/bin/main/cobol' ||
-| resMainPath | _compile_, _run_ | 'res/main/cobol' ||
-| multiCompileTargets | _compileMultiTarget_ | [] | other files to be compiled |
-| fileFormat | _compile_, _run_, _test_, _compileMultiTarget_ | 'fixed' |'free'|
-| compiler | all tasks, key variable to use the configured cobol compiler | instance of GnuCobol |  |
-| compilerLogLevel | all tasks with compiling via compiler interface | 'FINE' | 'FINER', 'FINEST' |
+| name | default | other |
+| ---- | ------- | ----- |
+| srcFileType | '.cbl' | e.g. '.CBL' |
+| srcMain | '' | |
+| srcMainPath | 'src/main/cobol' ||
+| binMainPath | 'build/bin/main/cobol' ||
+| resMainPath | 'res/main/cobol' ||
+| multiCompileTargets | [] | other files to be compiled |
+| fileFormat | 'fixed' |'free'|
+| compiler | instance of GnuCobol |  |
+| compilerLogLevel | 'FINE' | 'FINER', 'FINEST' |
 
 
 ### Run
 
-| name | usage | default | other |
-| ---- | ----- | ------- | ----- |
-| terminal | _run_ | 'xterm' | 'gnome-terminal' |
-| terminalRows | _run_ | 43 |  |
-| terminalColumns | _run_ | 80 |  |
-| customTerminal | _run_ | '' | |
+| name | default | other |
+| ---- | ------- | ----- |
+| terminal | 'current' | 'gnome-terminal' or 'xterm' |
+| terminalRows | 43 |  |
+| terminalColumns | 80 |  |
+| customTerminal | '' | |
 
 ### Test
 
-| name | usage | default | other |
-| ---- | ----- | ------- | ----- |
-| srcTestPath | _testUnit_ | 'src/test/cobol' | |
-| unittestPostfix | _testUnit_ | 'UT' | e.g. 'UNIT', 'TEST' ... |
-| unittestCodeCoverage | _testUnit_ | `false` | `true` |
-| integratinotestPostfix | _testIntegration_ | 'IT' | e.g. 'INTEGRATION', 'INTEGRATIONTEST' ... |
-| integrationtestCodeCoverage | | false | true |
-| resIntegrationTest | testIntegration | 'res/integrationtest/cobol' | |
+| name | default | other |
+| ---- | ------- | ----- |
+| srcTestPath | 'src/test/cobol' | |
+| unittestPostfix | 'UT' | e.g. 'UNIT', 'TEST' ... |
+| unittestCodeCoverage | `false` | `true` |
+| integratinotestPostfix | 'IT' | e.g. 'INTEGRATION', 'INTEGRATIONTEST' ... |
+| integrationtestCodeCoverage | false | true |
+| resIntegrationTest | 'res/integrationtest/cobol' | |
 
 ## Terminal configuration
 
