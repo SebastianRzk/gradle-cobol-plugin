@@ -111,7 +111,7 @@ Add to your build.gradle the last version of the plugin (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.36'
+         id 'de.sebastianruziczka.Cobol' version '0.0.37'
     }
 
 
@@ -186,6 +186,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | terminalRows | 43 |  |
 | terminalColumns | 80 |  |
 | customTerminal | '' | |
+| additionalRuntimeEnvironmentVariables | [] | e.g. [MY_KEY:'MY_VALUE'] |
 
 ### Test
 
@@ -197,6 +198,7 @@ Following properties can be modified in the _cobol_ block in your _build.gradle_
 | integratinotestPostfix | 'IT' | e.g. 'INTEGRATION', 'INTEGRATIONTEST' ... |
 | integrationtestCodeCoverage | false | true |
 | resIntegrationTest | 'res/integrationtest/cobol' | |
+| additionalRuntimeEnvironmentVariables | [] | e.g. [MY_KEY:'MY_VALUE'] |
 
 ## Terminal configuration
 
@@ -242,7 +244,7 @@ Insert the full qualified terminal command string. Use `{path}` as placeholder f
 | _buildDebug_ | | compiled cobol files in build directory witrh ressources | _compileDebug_, _cobolCopyRessources_ |
 | _runDebug_ | everything in build directory | terminal process | _buildDebug_ |
 | _testUnit_ | `srcTest` | result of tests |  |
-| _testIntegraion | `srcTest` | result of tests |  |
+| _testIntegration_ | `srcTest` | result of tests |  |
 | _check_ | everything | check result | _testUnit_, _compile_, _cobolConfiguration_ |
 
 

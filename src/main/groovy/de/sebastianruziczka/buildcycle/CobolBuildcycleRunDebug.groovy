@@ -39,6 +39,8 @@ class CobolBuildcycleRunDebug {
 				terminalCommand << conf.absoluteBinMainModule(conf.srcMain) + '/ '// Add dynamic module path
 				terminalCommand << conf.srcMain
 
+				environment << conf.additionalRuntimeEnvironmentVariables
+
 				if (!conf.customTerminal.equals('')) {
 					logger.info('Compiling terminal String, replace {path} with actual terminal command')
 					logger.info('Before:')

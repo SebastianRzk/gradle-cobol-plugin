@@ -26,6 +26,8 @@ class CobolBuildcycleRunExecutable {
 			doFirst {
 				standardInput = System.in
 				workingDir = conf.binMainPath
+				environment << conf.additionalRuntimeEnvironmentVariables
+
 				if (!conf.customTerminal.equals('')) {
 					logger.info('Compiling terminal String, replace {path} with actual executable')
 					logger.info('Before:')
