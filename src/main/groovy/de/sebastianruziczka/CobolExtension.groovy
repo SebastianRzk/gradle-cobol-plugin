@@ -33,6 +33,9 @@ class CobolExtension {
 	int terminalRows = 43
 	int terminalColumns = 80
 
+
+	Map<String, String> additionalRuntimeEnvironmentVariables = new HashMap<>()
+
 	Closure<File> projectFileResolver = null
 	Closure<FileTree> projectFileTreeResolver = null
 
