@@ -111,7 +111,7 @@ Add to your build.gradle the last version of the plugin (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.37'
+         id 'de.sebastianruziczka.Cobol' version '0.0.38'
     }
 
 
