@@ -43,4 +43,12 @@ class TestFile {
 	public void visitFailedTests(Closure c) {
 		this.testMethods.each{ it.visitFailedTests(c, this)}
 	}
+
+	@Override
+	public String toString() {
+		String value = 'TestFile(' + this.name + '){\n'
+		this.testMethods.each{ value += ('\t' + it.toString() + '\n')}
+		value += '}'
+		return value
+	}
 }
