@@ -16,7 +16,7 @@ class CobolBuildcycleIntegration {
 		Logger logger = LoggerFactory.getLogger('testIntegration')
 
 		FrameworkResolver frameworkResolver = new FrameworkResolver('de')
-		def allIntegrationTestFrameworks =  frameworkResolver.resolve(CobolIntegrationTestFrameworkProvider, CobolTestFramework, conf, project)
+		def allIntegrationTestFrameworks =  []
 
 		project.task ('cobolIntegrationTestConfiguration'){
 			group 'COBOL Configuration'
@@ -40,6 +40,8 @@ class CobolBuildcycleIntegration {
 			integrationTestFrameworks = allIntegrationTestFrameworks
 			configuration = conf
 		}
+
+		allIntegrationTestFrameworks.addAll(frameworkResolver.resolve(CobolIntegrationTestFrameworkProvider, CobolTestFramework, conf, project))
 	}
 
 
