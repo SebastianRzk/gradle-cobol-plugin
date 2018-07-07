@@ -16,7 +16,7 @@ class CobolBuildcycleUnit {
 		Logger logger = LoggerFactory.getLogger('testUnit')
 
 		FrameworkResolver frameworkResolver = new FrameworkResolver('de')
-		def allUnitTestFrameworks =  frameworkResolver.resolve(CobolUnitFrameworkProvider, CobolTestFramework, conf, project)
+		def allUnitTestFrameworks = []
 
 		project.task ('cobolUnitTestConfiguration'){
 			group 'COBOL Configuration'
@@ -40,6 +40,8 @@ class CobolBuildcycleUnit {
 			unitTestFrameworks = allUnitTestFrameworks
 			configuration = conf
 		}
+
+		allUnitTestFrameworks.addAll(frameworkResolver.resolve(CobolUnitFrameworkProvider, CobolTestFramework, conf, project))
 	}
 
 	private boolean testPresets(Logger logger, Project project, CobolExtension conf, def allUnitTestFrameworks) {

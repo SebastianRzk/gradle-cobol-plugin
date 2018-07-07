@@ -5,6 +5,7 @@ import org.gradle.api.tasks.TaskAction
 
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.api.CobolSourceFile
+import de.sebastianruziczka.buildcycle.test.TestFile
 import de.sebastianruziczka.buildcycle.test.TestResult
 import de.sebastianruziczka.buildcycle.test.TestResultConsolePrinter
 import de.sebastianruziczka.buildcycle.test.UnitTestError
@@ -65,7 +66,11 @@ class CobolIntegrationTestTask extends DefaultTask{
 			TestResult result = new TestResult()
 			cobolTestPairs.each{
 				try{
-					result.addTest(	framework.test(it))
+					TestFile testFile = framework.test(it)
+					result.addTest(testFile)
+					if (project.hasProperty("showResults")) {
+						println  testFile
+					}
 				}catch (Throwable t) {
 					errors << new UnitTestError(it, t)
 				}

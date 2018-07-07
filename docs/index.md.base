@@ -139,7 +139,7 @@ A minimal configuration for more than one cobol source file:
          srcMain = 'HelloWorld' // Path to your main file in src/main/cobol without the file extension .cbl
     }
 
-### Unit testing
+###  Testing (Unit + Integration)
 
 Add this lines at the top of your build.gradle to enable unittests (more information: [gradle-cobol-plugin-unittest-extension](https://gradle-cobol-unit.sebastianruziczka.de)):
 
@@ -156,6 +156,27 @@ Or hardcode with specific version (not preferred):
      		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: 'gradle.unitVersion'
      	}
      }
+     
+#### Unit testing
+
+To run your unit-tests enter:
+
+	gradle testUnit
+	
+The additional parameter 'showResults' prints out all results (successfull + failing)
+
+	gradle testUnit -PshowResults
+
+     
+#### Integration testing
+
+To run your unit-tests enter:
+
+	gradle testIntegration
+	
+The additional parameter 'showResults' prints out all results (successfull + failing)
+
+	gradle testIntegration -PshowResults
 
 # Deep documentation
 

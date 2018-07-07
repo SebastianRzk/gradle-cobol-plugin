@@ -50,4 +50,9 @@ class TestMethod {
 		}
 		c(parent, this)
 	}
+
+	@Override
+	public String toString() {
+		return this.result.name() + ' ::: ' + this.name
+	}
 }
