@@ -44,6 +44,7 @@ class Cobol implements Plugin<Project> {
 					delete conf.projectFileResolver(conf.buildPath).absolutePath
 				}
 			}
+			project.tasks.testIntegration.shouldRunAfter(project.tasks.testUnit)
 
 			project.task ('check', dependsOn: [
 				'testIntegration',
