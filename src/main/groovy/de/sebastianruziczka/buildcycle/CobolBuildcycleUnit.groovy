@@ -71,7 +71,7 @@ class CobolBuildcycleUnit {
 		logger.info("\t 1. ... is in the classpath of this plugin (via buildscript dependencies)")
 		logger.info("\t 2. ... is in the package de.*")
 		logger.info("\t 3. ... implements the interface de.sebastianruziczka.CobolTestFramework")
-		logger.info("\t 4. ... is annotated with @CobolUnitFrameworkProvider")
+		logger.info("\t 4. ... is annotated with @CobolUnitTestFrameworkProvider")
 		println 'No unittest framework found. Use --info for more information'
 	}
 }

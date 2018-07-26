@@ -111,7 +111,7 @@ Add to your build.gradle the last version of the plugin (preferred):
 Or hardcode a specific version:
 
     plugins {
-         id 'de.sebastianruziczka.Cobol' version '0.0.39'
+         id 'de.sebastianruziczka.Cobol' version '0.0.40'
     }
 
 
@@ -153,7 +153,7 @@ Or hardcode with specific version (not preferred):
 
      buildscript {
      	 dependencies {
-     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.27'
+     		classpath group: 'de.sebastianruziczka', name: 'gradle-cobol-plugin-unittest-extension', version: '0.0.30'
      	}
      }
      
@@ -300,7 +300,7 @@ Make sure your main framework class:
 * ... is in the classpath of this plugin (via buildscript dependencies)
 * ... is in the package de.*
 * ... implements the interface de.sebastianruziczka.CobolTestFramework
-* ... is annotated with @CobolUnitFrameworkProvider or @CobolIntegrationTestFrameworkProvider
+* ... is annotated with @CobolUnitTestFrameworkProvider or @CobolIntegrationTestFrameworkProvider
 		
 Methods of the interface CobolTestFramework:
 

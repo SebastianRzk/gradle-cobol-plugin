@@ -300,7 +300,7 @@ Make sure your main framework class:
 * ... is in the classpath of this plugin (via buildscript dependencies)
 * ... is in the package de.*
 * ... implements the interface de.sebastianruziczka.CobolTestFramework
-* ... is annotated with @CobolUnitFrameworkProvider or @CobolIntegrationTestFrameworkProvider
+* ... is annotated with @CobolUnitTestFrameworkProvider or @CobolIntegrationTestFrameworkProvider
 		
 Methods of the interface CobolTestFramework:
 
