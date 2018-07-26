@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 
 import de.sebastianruziczka.CobolExtension
 import de.sebastianruziczka.api.CobolTestFramework
-import de.sebastianruziczka.api.CobolUnitFrameworkProvider
+import de.sebastianruziczka.api.CobolUnitTestFrameworkProvider
 import de.sebastianruziczka.buildcycle.test.FrameworkResolver
 import de.sebastianruziczka.buildcycle.unittest.CobolUnitTestTask
 
@@ -41,7 +41,7 @@ class CobolBuildcycleUnit {
 			configuration = conf
 		}
 
-		allUnitTestFrameworks.addAll(frameworkResolver.resolve(CobolUnitFrameworkProvider, CobolTestFramework, conf, project))
+		allUnitTestFrameworks.addAll(frameworkResolver.resolve(CobolUnitTestFrameworkProvider, CobolTestFramework, conf, project))
 	}
 
 	private boolean testPresets(Logger logger, Project project, CobolExtension conf, def allUnitTestFrameworks) {
@@ -71,7 +71,7 @@ class CobolBuildcycleUnit {
 		logger.info("\t 1. ... is in the classpath of this plugin (via buildscript dependencies)")
 		logger.info("\t 2. ... is in the package de.*")
 		logger.info("\t 3. ... implements the interface de.sebastianruziczka.CobolTestFramework")
-		logger.info("\t 4. ... is annotated with @CobolUnitFrameworkProvider")
+		logger.info("\t 4. ... is annotated with @CobolUnitTestFrameworkProvider")
 		println 'No unittest framework found. Use --info for more information'
 	}
 }
