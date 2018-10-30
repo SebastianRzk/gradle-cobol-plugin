@@ -5,6 +5,7 @@ import de.sebastianruziczka.compiler.api.CompileJob
 import de.sebastianruziczka.compiler.api.CompileStandard
 import de.sebastianruziczka.compiler.api.ExecutableCompilerBuilder
 import de.sebastianruziczka.process.ProcessWrapper
+import de.sebastianruziczka.compiler.api.CompilerBuilder
 
 class GnuExecutableCompilerBuilder implements ExecutableCompilerBuilder {
 
@@ -12,14 +13,16 @@ class GnuExecutableCompilerBuilder implements ExecutableCompilerBuilder {
 	private List<String> includePaths = new ArrayList<String>()
 	private List<String> dependencyPaths = new ArrayList<String>()
 	private CobolExtension configuration
+	private CompilerBuilder compilerBuilder
 
-	public GnuExecutableCompilerBuilder(CobolExtension configuration) {
+	public GnuExecutableCompilerBuilder(CobolExtension configuration, CompilerBuilder compilerBuilder) {
 		this.configuration = configuration
+		this.compilerBuilder = compilerBuilder;
 	}
 
 	@Override
 	public ExecutableCompilerBuilder setCompileStandard(CompileStandard standard) {
-		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration)
+		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration, this.compilerBuilder)
 		copy.standard = standard
 		copy.dependencyPaths = this.dependencyPaths
 		copy.includePaths = this.includePaths
@@ -29,7 +32,7 @@ class GnuExecutableCompilerBuilder implements ExecutableCompilerBuilder {
 
 	@Override
 	public ExecutableCompilerBuilder addIncludePath(String path) {
-		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration)
+		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration, this.compilerBuilder)
 		copy.standard = this.standard
 		copy.dependencyPaths = this.dependencyPaths
 		copy.includePaths = new LinkedList(this.includePaths)
@@ -40,7 +43,7 @@ class GnuExecutableCompilerBuilder implements ExecutableCompilerBuilder {
 
 	@Override
 	public ExecutableCompilerBuilder addDependencyPath(String path) {
-		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration)
+		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration, this.compilerBuilder)
 		copy.standard = this.standard
 		copy.dependencyPaths = new LinkedList(this.dependencyPaths)
 		copy.dependencyPaths.add(path)
@@ -50,7 +53,7 @@ class GnuExecutableCompilerBuilder implements ExecutableCompilerBuilder {
 
 	@Override
 	public ExecutableCompilerBuilder addDependencyPaths(List<String> list) {
-		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration)
+		GnuExecutableCompilerBuilder copy = new GnuExecutableCompilerBuilder(this.configuration, this.compilerBuilder)
 		copy.standard = this.standard
 		copy.dependencyPaths = new LinkedList(this.dependencyPaths)
 
@@ -64,13 +67,12 @@ class GnuExecutableCompilerBuilder implements ExecutableCompilerBuilder {
 
 	@Override
 	public CompileJob setTargetAndBuild(String targetPath) {
-		return new GnuCompileJob(this.standard, this.includePaths, this.dependencyPaths, targetPath, this.configuration)
+		return new GnuCompileJob(this.standard, this.includePaths, this.dependencyPaths, targetPath, this.configuration, this.compilerBuilder)
 	}
 }
 
 class GnuCompileJob implements CompileJob  {
 
-	static final String COBC = 'cobc'
 	private CompileStandard standard = CompileStandard.none
 	private List<String> dependencyPaths
 	private List<String> includePaths
@@ -78,20 +80,22 @@ class GnuCompileJob implements CompileJob  {
 
 	private String target
 	private String outputPath = null
+	private CompilerBuilder compilerBuilder
 
 	private CobolExtension configuration
 
-	public GnuCompileJob(CompileStandard standard, List<String> includePaths, List<String> dependencyPaths, String target, CobolExtension configuration){
+	public GnuCompileJob(CompileStandard standard, List<String> includePaths, List<String> dependencyPaths, String target, CobolExtension configuration, CompilerBuilder compilerBuilder){
 		this.standard = standard
 		this.includePaths = includePaths
 		this.target = target
 		this.dependencyPaths = dependencyPaths
 		this.configuration = configuration
+		this.compilerBuilder = compilerBuilder
 	}
 
 	@Override
 	public CompileJob setExecutableDestinationPath(String outputPath) {
-		GnuCompileJob copy = new GnuCompileJob(this.standard, this.includePaths, this.dependencyPaths, this.target, this.configuration)
+		GnuCompileJob copy = new GnuCompileJob(this.standard, this.includePaths, this.dependencyPaths, this.target, this.configuration, this.compilerBuilder)
 		copy.outputPath = outputPath
 		copy.additionalOptions = this.additionalOptions
 		return copy
@@ -99,7 +103,7 @@ class GnuCompileJob implements CompileJob  {
 
 	@Override
 	public int execute(String processName) {
-		def args = [COBC]
+		def args = [this.compilerBuilder.getBaseCompilerCommand()]
 
 		args << new GnuCobolLoglevelOptionResolver().resolve(this.configuration)
 
@@ -143,7 +147,7 @@ class GnuCompileJob implements CompileJob  {
 
 	@Override
 	public CompileJob addAdditionalOption(String option) {
-		GnuCompileJob copy = new GnuCompileJob(this.standard, this.includePaths, this.dependencyPaths, this.target, this.configuration)
+		GnuCompileJob copy = new GnuCompileJob(this.standard, this.includePaths, this.dependencyPaths, this.target, this.configuration, this.compilerBuilder)
 		copy.outputPath = this.outputPath
 		copy.additionalOptions = new LinkedList(this.additionalOptions)
 		copy.additionalOptions.add(option)

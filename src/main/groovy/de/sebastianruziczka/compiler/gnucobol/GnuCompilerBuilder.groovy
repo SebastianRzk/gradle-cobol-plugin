@@ -9,7 +9,7 @@ class GnuCompilerBuilder implements CompilerBuilder {
 
 	@Override
 	public ExecutableCompilerBuilder buildExecutable(CobolExtension configuration) {
-		return new GnuExecutableCompilerBuilder(configuration)
+		return new GnuExecutableCompilerBuilder(configuration, this)
 	}
 
 	@Override
@@ -19,7 +19,7 @@ class GnuCompilerBuilder implements CompilerBuilder {
 
 	@Override
 	public DebugCompilerBuilder buildDebug(CobolExtension configuration) {
-		return new GnuDebugCompilerBuilder(configuration)
+		return new GnuDebugCompilerBuilder(configuration, this)
 	}
 }
 
