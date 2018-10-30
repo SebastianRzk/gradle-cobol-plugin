@@ -15,8 +15,9 @@ class GnuDebugCompilerBuilder implements DebugCompilerBuilder {
 	private List<String> includePaths = new ArrayList<>()
 	private CompilerBuilder compilerBuilder;
 
-	public GnuDebugCompilerBuilder(CobolExtension configuration) {
+	public GnuDebugCompilerBuilder(CobolExtension configuration, CompilerBuilder compilerBuilder) {
 		this.configuration = configuration
+		this.compilerBuilder = compilerBuilder
 	}
 
 	private GnuDebugCompilerBuilder(CobolExtension configuration, CompileStandard compileStandard, List<String> includePaths, CompilerBuilder compilerBuilder) {
