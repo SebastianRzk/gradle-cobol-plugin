@@ -46,7 +46,6 @@ class GnuDebugCompilerBuilder implements DebugCompilerBuilder {
 
 class GnuDebugCompileJob implements CompileJob {
 
-	static final String COBC = 'cobc'
 	private String target
 	private List<String> includePaths
 	private CompileStandard compileStandard

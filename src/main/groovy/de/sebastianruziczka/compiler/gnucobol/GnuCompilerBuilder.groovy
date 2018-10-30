@@ -14,7 +14,7 @@ class GnuCompilerBuilder implements CompilerBuilder {
 
 	@Override
 	public String getBaseCompilerCommand() {
-		return GnuCompileJob.COBC
+		return 'cobc'
 	}
 
 	@Override
