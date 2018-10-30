@@ -9,17 +9,17 @@ class GnuCompilerBuilder implements CompilerBuilder {
 
 	@Override
 	public ExecutableCompilerBuilder buildExecutable(CobolExtension configuration) {
-		return new GnuExecutableCompilerBuilder(configuration)
+		return new GnuExecutableCompilerBuilder(configuration, this)
 	}
 
 	@Override
 	public String getBaseCompilerCommand() {
-		return GnuCompileJob.COBC
+		return 'cobc'
 	}
 
 	@Override
 	public DebugCompilerBuilder buildDebug(CobolExtension configuration) {
-		return new GnuDebugCompilerBuilder(configuration)
+		return new GnuDebugCompilerBuilder(configuration, this)
 	}
 }
 
