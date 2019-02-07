@@ -5,4 +5,4 @@ This project is part of my master thesis.
 
 This repo is the sourcecode of the gradle-cobol-plugin.
 
-More information can be found on the [website/documentation](https://github.com/RosesTheN00b/gradle-cobol-plugin/blob/master/docs/index.md)
+More information can be found on the [website/documentation](https://github.com/RosesTheN00b/gradle-cobol-plugin-core/blob/master/docs/index.md)
