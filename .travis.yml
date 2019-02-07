@@ -7,4 +7,5 @@ sudo: required
 
 script:
      - gradle --version
+     - git submodule init
      - gradle check
