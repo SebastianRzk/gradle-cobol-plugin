@@ -31,10 +31,7 @@ if (project.hasProperty("generateLatest")) {
 }
 
 
-GradlePropertyFilter propFilter = new GradlePropertyFilter([
-	'gradle.actualVersion' : version,
-	'gradle.unitVersion' : '0.0.30'
-	])
+
 
 gradlePlugin{
 	plugins {
@@ -76,10 +73,3 @@ publishing {
     }
 }
 
-task (generateVersions, type: Copy){
-	from '.'
-	into '.'
-	include '**/*.base'
-	rename {it - '.base'}
-	filter { line ->propFilter.filter(line)}
-} 

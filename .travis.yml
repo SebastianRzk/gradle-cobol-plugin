@@ -8,4 +8,3 @@ sudo: required
 script:
      - gradle --version
      - gradle check
-     - sh ci/endToEndTest.sh
