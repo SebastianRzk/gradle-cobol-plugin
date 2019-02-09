@@ -1,0 +1,6 @@
+[submodule "gradle-cobol-plugin-core"]
+	path = gradle-cobol-plugin-core
+	url = https://github.com/RosesTheN00b/gradle-cobol-plugin-core
+[submodule "gradle-cobol-plugin-unittest-extension"]
+	path = gradle-cobol-plugin-unittest-extension
+	url = https://github.com/RosesTheN00b/gradle-cobol-plugin-unittest-extension
