@@ -9,13 +9,6 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	compile gradleApi()
-	compile localGroovy()
-  implementation project(':gradle-cobol-plugin-core')
-  implementation project(':gradle-cobol-plugin-unittest-extension')
-}
-
 
 def applicationName = "CobolPlugin"
 group = 'de.sebastianruziczka'
@@ -27,8 +20,6 @@ if (project.hasProperty("generateLatest")) {
 	println 'Publishing latest-' + realVersion
 	version = 'latest'
 }
-
-
 
 
 gradlePlugin{
@@ -55,11 +46,12 @@ jar {
 	from {
 		configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }
 	}
-  subprojects.each { subproject ->
+    subprojects.each { subproject ->
       from subproject.configurations.archives.allArtifacts.files.collect {
          zipTree(it)
        }
     }
+    subprojects.each { dependsOn("${it.name}:jar") }
 }
 
 
