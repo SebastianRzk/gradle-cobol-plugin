@@ -9,3 +9,4 @@ script:
      - gradle --version
      - git submodule init
      - gradle check
+     - sh ci/run_tests.sh
