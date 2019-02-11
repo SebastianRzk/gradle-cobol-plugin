@@ -1,5 +1,13 @@
+pluginManagement {
+	repositories {
+		maven {
+			url 'https://sebastianruziczka.de/repo/mvn/'
+
+		}
+	}
+}
+
 rootProject.name = 'gradle-cobol-plugin'
 include 'gradle-cobol-plugin-core'
 include 'gradle-cobol-plugin-unittest-extension'
-
 
