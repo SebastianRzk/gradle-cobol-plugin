@@ -6,7 +6,7 @@ jdk:
 sudo: required
 
 script:
-     - gradle --version
+     - ./gradlew --version
      - git submodule init
-     - gradle check
+     - ./gradlew check
      - sh ci/run_tests.sh
